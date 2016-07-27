@@ -10,6 +10,9 @@ from sito.models import *
 from django.core.mail import send_mail
 from filer.models import *
 
+
+
+
 # Create your views here.
 def HomePage(request):
     slider_list = Slider.objects.filter(active=True).order_by('id')
@@ -23,6 +26,16 @@ def HomePage(request):
                 'product_list':product_list,
                 'offerte_list':offerte_list}
     return render_to_response('index.html', context, context_instance=RequestContext(request))
+
+
+
+
+def ProductFilterView(request, post_id):
+    product = Product.objects.get(pk=post_id)
+    filer_list = Image.objects.filter(folder_id = product.album)
+    context = {'product': product,
+    			'filer_list':filer_list}
+    return render_to_response('detail.html', context, context_instance=RequestContext(request))
 
 
 

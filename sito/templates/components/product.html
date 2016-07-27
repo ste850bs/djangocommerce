@@ -8,7 +8,9 @@
 			<h3 class="box-titolo" style="margin-top:15px;">{{pro.name}}</h3>
 			<h4 class="box-tipologia">{{pro.category.all.first}}</h4>
 			{% load cropping %}
-			<img src="{% cropped_thumbnail pro "thumb" %}" class="img-responsive">
+			<a href="{% url 'detail' pro.id %}">
+				<img src="{% cropped_thumbnail pro "thumb" %}" class="img-responsive">
+			</a>
 			<h3>
 				{% if pro.promo == True %}
 				<span class="prezzo">€{{pro.price}}</span>
@@ -16,7 +18,9 @@
 				{% else %}
 				<span class="prezzo-scontato" style="margin-left: 0px;">€{{pro.price}}</span>
 				{% endif %}
-				<span class="cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+				<a href="{% url 'detail' pro.id %}">
+					<span class="cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+				</a>
 			</h3>
 		</div>
 	</div>

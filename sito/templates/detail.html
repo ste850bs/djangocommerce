@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+
+<div id="dettaglio-offerte" class="container">
+	<div class="col-xs-12 col-bianca">
+		<div class="col-xs-12 col-sm-8">{% load cropping %}
+			<img src="{% cropped_thumbnail product "thumbdue" %}" class="img-responsive">
+		</div>
+		<div class="col-xs-12 col-sm-4">
+			<h3 class="sconto">-{{product.discount}}%</h3>
+			<h2 class="titolo">{{product.name}}</h2>
+			<h3 class="sottotitolo">{{product.category.all.first}}</h3>
+			<h3 class="prezzi">
+				<span class="prezzo-originale">prezzo originale:</span>
+				<span class="prezzo-barrato">€{{product.price}}</span>
+				<span class="prezzo-scontato">€{{product.price_offer}}</span>
+			</h3>
+			<!-- colori -->
+			<h4>Colori Disponibili:<br>
+				{% for colore in product.color.all %}
+					<i class="fa fa-circle" aria-hidden="true" style="color: {{colore.code}}"></i>
+				{% endfor %}
+			</h4>
+			
+			<a href="#" class="btn btn-primary">RICHIEDI INFORMAZIONI</a>
+			
+			<span class="ico-social">
+				<i class="fa fa-facebook" aria-hidden="true"></i>
+				<i class="fa fa-twitter" aria-hidden="true"></i>
+				<i class="fa fa-youtube-play" aria-hidden="true"></i>
+				<i class="fa fa-google-plus" aria-hidden="true"></i>
+				<i class="fa fa-instagram" aria-hidden="true"></i>
+			</span>
+		</div>
+	</div>
+</div>
+
+<div id="offerte-miniatura" class="container">
+	{% for filer in filer_list %}
+	<div class="col-xs-12 col-sm-2">{% load thumbnail %}
+		<a href="/media/{{ filer.file }}" data-lightbox="roadtrip">
+			<img src="{% thumbnail filer.file 400x250 crop %}" class="img-responsive">
+		</a>
+	</div>
+	{% endfor %}
+</div>
+
+<div id="descrizione-offerta" class="container">
+	<p>
+		<strong>DESCRIZIONE</strong><br>
+		{{product.description|safe}}
+		<br>
+		<br>
+		<br>
+		<br>
+	</p>
+</div>
+
+
+
+
+{% endblock %}
