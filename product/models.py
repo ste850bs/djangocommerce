@@ -17,7 +17,7 @@ class Category(models.Model):
     subtitle = models.CharField('sottotitolo', max_length=250, null=True, blank=True)
 
     def __unicode__(self):
-        return self.titolo
+        return self.title
 
     class Meta:
         verbose_name_plural = "Categorie"
@@ -32,7 +32,7 @@ class Color(models.Model):
     image = image = models.ImageField('immagine colore', blank=True, null=True, upload_to='color')
 
     def __unicode__(self):
-        return self.titolo
+        return self.name
 
     class Meta:
         verbose_name_plural = "Colori"
@@ -69,7 +69,7 @@ class Manufacturer(models.Model):
     image_img.allow_tags = True
 
     def __unicode__(self):
-        return self.titolo
+        return self.name
 
     class Meta:
         verbose_name_plural = "Produttore"
@@ -128,7 +128,7 @@ class Accessory(models.Model):
     image_img.allow_tags = True
 
     def __unicode__(self):
-        return self.titolo
+        return self.name
 
     class Meta:
         verbose_name_plural = "Accessori"
@@ -190,7 +190,7 @@ class Product(models.Model):
     image_img.allow_tags = True
 
     def __unicode__(self):
-        return self.titolo
+        return self.name
 
     class Meta:
         verbose_name_plural = "Prodotti"
@@ -252,7 +252,7 @@ class Composition(models.Model):
     image_img.allow_tags = True
 
     def __unicode__(self):
-        return self.titolo
+        return self.name
 
     class Meta:
         verbose_name_plural = "Composizioni"

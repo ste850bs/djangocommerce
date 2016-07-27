@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.contrib import admin
 from product.models import *
 from image_cropping import ImageCroppingMixin
 
@@ -21,9 +20,9 @@ class ProductAdmin(ImageCroppingMixin, admin.ModelAdmin):
 admin.site.register(Category, MyModelAdmin)
 admin.site.register(Color, MyModelAdmin)
 admin.site.register(Material, MyModelAdmin)
-admin.site.register(Accessory, MyModelAdmin)
-admin.site.register(Product, MyModelAdmin)
-admin.site.register(Composition, MyModelAdmin)
+admin.site.register(Accessory, ProductAdmin)
+admin.site.register(Product, ProductAdmin)
+admin.site.register(Composition, ProductAdmin)
 
 
 

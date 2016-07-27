@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'mptt',
     'image_cropping',
     'product',
+    'sito',
 ]
 
 MIDDLEWARE_CLASSES = [
