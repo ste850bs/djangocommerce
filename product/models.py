@@ -49,7 +49,7 @@ class Material(models.Model):
         return self.titolo
 
     class Meta:
-        verbose_name_plural = "Colori"
+        verbose_name_plural = "Materiali"
 
 
 

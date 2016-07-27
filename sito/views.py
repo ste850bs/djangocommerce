@@ -13,7 +13,17 @@ from filer.models import *
 # Create your views here.
 def HomePage(request):
     slider_list = Slider.objects.filter(active=True).order_by('id')
+    offerte_list = Product.objects.filter(promo=True).order_by('-id')
     product_list = Product.objects.all()
     context = {'slider_list':slider_list,
-                'product_list':product_list}
+                'product_list':product_list,
+                'offerte_list':offerte_list}
     return render_to_response('index.html', context, context_instance=RequestContext(request))
+
+
+
+###  GLOBALI ###
+def CategoryMenuView(request):
+    category_list = Category.objects.all()
+    context = {'category_list': category_list}
+    return context

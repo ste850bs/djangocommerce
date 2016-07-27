@@ -1,0 +1,75 @@
+<section id="top">{% load staticfiles %}
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><i class="fa fa-user"></i></a></li>
+        <li><a href="#"><i class="fa fa-lock"></i></a></li>
+        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+</section>
+
+
+<section id="menu-bar">
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <div class="col-xs-12 col-sm-4"><img src="{% static 'img/light.png' %}" class="light center-block"></div>
+      <div class="col-xs-12 col-sm-4">
+        <a href="{% url 'home' %}"><img src="{% static 'img/logo.png' %}" class="logo center-block"></a>
+      </div>
+      <div class="col-xs-12 col-sm-4"><img src="{% static 'img/light.png' %}" class="light center-block"></div>
+    </div>
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+  
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav" data-hook>
+          <li class="active"><a href="{% url 'home' %}">HOME</a></li>
+          {% for cat in category_list %}
+          <li><a href="#">{{cat.title}}</a></li>
+          {% endfor %}
+        </ul>
+        
+        <form class="navbar-form navbar-right" role="search">
+          <div class="form-group">
+              <div class="input-group">
+              <input type="text" class="form-control" id="exampleInputAmount" placeholder="Amount">
+              <div class="input-group-addon">
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </div>
+          </div>
+          </div>
+          </form>
+          
+        <ul id="social-menu" class="nav navbar-nav navbar-right">
+          <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+           <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+           <li><a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+</section>

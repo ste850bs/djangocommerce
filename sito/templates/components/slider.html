@@ -1,0 +1,37 @@
+<div id="slider-offerte" class="container">{% load staticfiles %}
+
+  <ul class="slides">
+
+    {% for offerta in offerte_list %}
+    <li>
+      <div id="scritta-slider" class="col-xs-12 col-sm-3">
+    		<h2 style="font-family: 'Montserrat', sans-serif;">{{offerta.name}}<br></h2>
+    		<h4 style="font-family: 'Montserrat', sans-serif;"><span style="font-size: 24px;"></span><br>
+            {{offerta.category.all.first}}<br>
+        </h4>
+    		<h3 style="font-family: 'Montserrat', sans-serif;">€{{offerta.price}}<br></h3>
+    		<a class="btn btn-default" href="#" role="button">
+    			<h5 style="font-family: 'Montserrat', sans-serif;">SCONTO</h5>
+    			<h1 style="font-family: 'Montserrat', sans-serif;">{{offerta.discount}}%</h1>
+    		</a>
+    		<br>
+    		<br>
+    	</div>
+    	<div id="offerte-slider" class="col-xs-12 col-sm-9">{% load cropping %}
+          <img src="{% cropped_thumbnail offerta "slider" %}" alt="{{offerta.name}}" class="img-responsive">
+    	</div><!-- col-xs-9 -->
+    </li>
+    {% endfor %}
+
+  </ul>
+
+</div>
+
+<script>
+// Can also be used with $(document).ready()
+$(window).load(function() {
+  $('#slider-offerte').flexslider({
+    animation: "slide"
+  });
+});
+</script>

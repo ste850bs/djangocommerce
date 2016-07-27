@@ -4,4 +4,5 @@ media/*
 static
 static/img/*
 static/images/*
+static/berge
 !.gitignore

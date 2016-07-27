@@ -1,4 +1,12 @@
-{% for pro in product_list %}
 
-<h1>{{pro.name}}</h1>
-{% endfor %}
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+
+{% include 'components/slider.html' %}
+
+
+{% endblock %}
