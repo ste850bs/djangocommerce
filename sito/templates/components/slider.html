@@ -1,37 +1,96 @@
-<div id="slider-offerte" class="container">{% load staticfiles %}
+<section id="slider">{% load staticfiles %}
+  <!-- revolution -->
 
-  <ul class="slides">
+      <div class="tp-banner-container">
+          <div class="tp-banner" >
+            <ul>
+              <!-- SLIDE  -->
+              <li data-transition="random" data-slotamount="5" data-masterspeed="700" >
+                <!-- MAIN IMAGE -->
+                <img src="{% static 'img/imagegallery.png' %}"   alt="gallery 1"  data-bgfit="cover" data-bgposition="center center" data-bgrepeat="no-repeat">
+                <!-- Layer 1 -->
+          <div class="tp-caption  lft customout pieno"
+            data-x="0"
+            data-y="190"
+            data-customout="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.75;scaleY:0.75;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+            data-speed="500"
+            data-start="1200"
+            data-easing="Power4.easeOut"
+            data-endspeed="500"
+            data-endeasing="Power4.easeIn"
+            data-captionhidden="on">
+            <h1 class="stext h1">CAMPIONATO ITALIANO FRECCETTE</h1>
+          </div>
+          <!-- Layer Logo -->
+          <!--div class="tp-caption logo-nuovo"
+            data-x="0"
+            data-y="-30"
+            data-customout="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.75;scaleY:0.75;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+            data-speed="500"
+            data-start="1200"
+            data-easing="Power4.easeOut"
+            data-endspeed="500"
+            data-endeasing="Power4.easeIn"
+            data-captionhidden="on">
+            <img src="img/logo_nuovo.png" class="logo-nuovo">
+          </div -->
+              </li>
 
-    {% for offerta in promo_list %}
-    <li>
-      <div id="scritta-slider" class="col-xs-12 col-sm-3">
-    		<h2 style="font-family: 'Montserrat', sans-serif;">{{offerta.name}}<br></h2>
-    		<h4 style="font-family: 'Montserrat', sans-serif;"><span style="font-size: 24px;"></span><br>
-            {{offerta.category.all.first}}<br>
-        </h4>
-    		<h3 style="font-family: 'Montserrat', sans-serif;">€{{offerta.price}}<br></h3>
-    		<a class="btn btn-default" href="#" role="button">
-    			<h5 style="font-family: 'Montserrat', sans-serif;">SCONTO</h5>
-    			<h1 style="font-family: 'Montserrat', sans-serif;">{{offerta.discount}}%</h1>
-    		</a>
-    		<br>
-    		<br>
-    	</div>
-    	<div id="offerte-slider" class="col-xs-12 col-sm-9">{% load cropping %}
-          <img src="{% cropped_thumbnail offerta "slider" %}" alt="{{offerta.name}}" class="img-responsive">
-    	</div><!-- col-xs-9 -->
-    </li>
-    {% endfor %}
+              <!-- SLIDE  -->
+              <li data-transition="random" data-slotamount="5" data-masterspeed="700" >
+                <!-- MAIN IMAGE -->
+                <img src="{% static 'img/frecciahome.png' %}"   alt="gallery 1"  data-bgfit="cover" data-bgposition="center center" data-bgrepeat="no-repeat">
+                <div class="tp-caption  lft customout pieno2"
+            data-x="360"
+            data-y="0"
+            data-customout="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.75;scaleY:0.75;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+            data-speed="500"
+            data-start="1200"
+            data-easing="Power4.easeOut"
+            data-endspeed="500"
+            data-endeasing="Power4.easeIn"
+            data-captionhidden="on">
+            <h1 class="stext2 h1">SILVER DART</h1>
+          </div>
+              </li>
+              
+               <!-- SLIDE  -->
+              <li data-transition="fade" data-slotamount="5" data-masterspeed="700" >
+                <!-- MAIN IMAGE -->
+                <img src="{% static 'img/uomofreccia.png' %}"   alt="gallery 1"  data-bgfit="cover" data-bgposition="center center" data-bgrepeat="no-repeat">
+                <div class="tp-caption  lft customout pieno"
+            data-x="0"
+            data-y="190"
+            data-customout="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.75;scaleY:0.75;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+            data-speed="500"
+            data-start="1200"
+            data-easing="Power4.easeOut"
+            data-endspeed="500"
+            data-endeasing="Power4.easeIn"
+            data-captionhidden="on">
+            <h1 class="stext h1">DARTS PLAYER</h1>
+          </div>
+              </li>
 
-  </ul>
+            </ul>
 
-</div>
+          </div>
+      </div>
+              <script type="text/javascript">
+              var revapi;
+              jQuery(document).ready(function() {
+                   revapi = jQuery('.tp-banner').revolution(
+                  {
+                    delay:9000,
+                    startwidth:1170,
+                    startheight:500,
+                    hideThumbs:10,
+                    fullWidth:"on",
+                    forceFullWidth:"on",
+                    fullScreen:"on"
+                  });
+              }); //ready
+            </script>
 
-<script>
-// Can also be used with $(document).ready()
-$(window).load(function() {
-  $('#slider-offerte').flexslider({
-    animation: "slide"
-  });
-});
-</script>
+            <!-- END REVOLUTION SLIDER -->
+</section>
