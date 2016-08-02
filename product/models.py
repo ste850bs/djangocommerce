@@ -54,6 +54,20 @@ class Material(models.Model):
 
 
 
+class Shape(models.Model):
+    name = models.CharField('nome colore', max_length=100)
+    image = image = models.ImageField('immagine colore', blank=True, null=True, upload_to='color')
+    description = models.TextField('descrizione', null=True, blank=True)
+
+    def __unicode__(self):
+        return self.titolo
+
+    class Meta:
+        verbose_name_plural = "Forme"
+
+
+
+
 class Manufacturer(models.Model):
     name = models.CharField(max_length=100)
     link = models.CharField(max_length=250, null=True, blank=True)
@@ -73,6 +87,7 @@ class Manufacturer(models.Model):
 
     class Meta:
         verbose_name_plural = "Produttore"
+
 
 
 
@@ -108,9 +123,6 @@ class Accessory(models.Model):
     models.IntegerField(blank=True, null=True, verbose_name="sconto percentuale")
     descrizione = models.TextField(null=True, blank=True, verbose_name="MATERIALE/FINITURA/COLORE")
     ## Delivery
-    prompt_delivery = models.BooleanField('Pronta Consegna', default=False)
-    delivery = models.BooleanField('Consegna 40gg', default=False)
-
     tags = TaggableManager(verbose_name="Parole chiave", blank=True)
     pub_date = models.DateTimeField('date published')
     active = models.BooleanField('attiva', default=False)
@@ -137,6 +149,7 @@ class Accessory(models.Model):
 
 
 
+
 class Product(models.Model):
     name = models.CharField(max_length=100, verbose_name="Titolo:")
     code = models.CharField('Codice', max_length=250, null=True, blank=True)
@@ -157,6 +170,7 @@ class Product(models.Model):
     ## Composition
     color = models.ManyToManyField(Color, null=True, blank=True, verbose_name="Seleziona Colori")
     material = models.ManyToManyField(Material, null=True, blank=True, verbose_name="Seleziona Materiali")
+    shape = models.ManyToManyField(Shape, null=True, blank=True, verbose_name="Seleziona Materiali")
     ## Data
     quantity = models.IntegerField(blank=True, null=True, verbose_name="sconto percentuale")
     size = models.CharField('Misure', max_length=250, null=True, blank=True)
