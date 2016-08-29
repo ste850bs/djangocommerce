@@ -1,0 +1,16 @@
+cart.html{% extends 'base.html' %}
+
+{% block body %}
+    <table>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Total Price</th>
+        </tr>
+        {% for item in cart %}
+        <tr>
+            <td>{{ item.product.id }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

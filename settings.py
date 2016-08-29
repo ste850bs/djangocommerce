@@ -44,8 +44,6 @@ INSTALLED_APPS = [
     'mptt',
     'image_cropping',
     'product',
-    'cart',
-    'order',
     'sito',
 ]
 
@@ -88,9 +86,9 @@ WSGI_APPLICATION = 'djangocommerce.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'djangocommerce',
+        'NAME': 'berge',
         'USER': 'root',
-        'PASSWORD': 'alnitek',
+        'PASSWORD': 'alnitek82',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -135,13 +133,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = '/Users/pierangelo/Desktop/Django/djangocommercebox/djangocommerce'
+STATIC_ROOT = '/var/www/djangocommercebox/djangocommerce'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-MEDIA_ROOT = '/Users/pierangelo/Desktop/Django/djangocommercebox/djangocommerce/media/'
+MEDIA_ROOT = '/var/www/djangocommercebox/djangocommerce/media/'
 
-MEDIA_URL = "http://127.0.0.1:8000/media/"
+MEDIA_URL = "http://berge.solinas.me/media/"
 
 
 

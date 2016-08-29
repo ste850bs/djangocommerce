@@ -2,65 +2,169 @@
 
 
 
+{% block personaljs %}
+	
+
+
+	{% load staticfiles %}
+	<script type='text/javascript' src="{% static 'unitegallery/js/jquery-11.0.min.js' %}"></script>
+    <!-- multizoom -->
+    <script type="text/javascript" src="{% static 'js/multizoom.js' %}"></script>
+	<link href="{% static 'css/multizoom.css' %}" rel="stylesheet">
+{% endblock %}
+
+
+
 {% block content %}
+<form class="white-row" action="/test/" method="post">{% csrf_token %}
 
+	<div id="dettaglio-offerte" class="container">
+		<div class="col-xs-12 col-bianca">
+			<div class="col-xs-12 col-sm-8">{% load cropping %}
+				<a data-large="/media/{{product.image}}" data-title="{{product.name}}">
+				<img src="{% cropped_thumbnail product "thumbdue" %}" class="img-responsive" id="image1">
+				</a>
 
-<div id="dettaglio-offerte" class="container">
-	<div class="col-xs-12 col-bianca">
-		<div class="col-xs-12 col-sm-8">{% load cropping %}
-			<img src="{% cropped_thumbnail product "thumbdue" %}" class="img-responsive">
-		</div>
-		<div class="col-xs-12 col-sm-4">
-			<h3 class="sconto">-{{product.discount}}%</h3>
-			<h2 class="titolo">{{product.name}}</h2>
-			<h3 class="sottotitolo">{{product.category.all.first}}</h3>
-			<h3 class="prezzi">
-				<span class="prezzo-originale">prezzo originale:</span>
-				<span class="prezzo-barrato">€{{product.price}}</span>
-				<span class="prezzo-scontato">€{{product.price_offer}}</span>
-			</h3>
-			<!-- colori -->
-			<h4>Colori Disponibili:<br>
-				{% for colore in product.color.all %}
-					<i class="fa fa-circle" aria-hidden="true" style="color: {{colore.code}}"></i>
-				{% endfor %}
-			</h4>
+				<div id="offerte-miniatura" class="container">
+					{% for filer in filer_list %}
+					<div class="col-xs-12 col-sm-2">{% load thumbnail %}
+						<a href="/media/{{ filer.file }}" data-lightbox="roadtrip">
+							<img src="{% thumbnail filer.file 400x250 crop %}" class="img-responsive">
+						</a>
+					</div>
+					{% endfor %}
+				</div>
+
+			</div>
+
 			
-			<a href="#" class="btn btn-primary">RICHIEDI INFORMAZIONI</a>
-			
-			<span class="ico-social">
-				<i class="fa fa-facebook" aria-hidden="true"></i>
-				<i class="fa fa-twitter" aria-hidden="true"></i>
-				<i class="fa fa-youtube-play" aria-hidden="true"></i>
-				<i class="fa fa-google-plus" aria-hidden="true"></i>
-				<i class="fa fa-instagram" aria-hidden="true"></i>
-			</span>
+			<div class="col-xs-12 col-sm-4">
+				{% if product.promo == True %}
+				<h3 class="sconto">-{{product.discount}}%</h3>
+				{% endif %}
+				<h2 class="titolo">ART.{{product.code}} | {{product.name}}</h2>
+				<h3 class="sottotitolo">{{product.category.all.first}}</h3>
+				<h3 class="prezzi">
+					<span class="prezzo-originale">prezzo originale:</span>
+					<span class="prezzo-barrato">€{{product.price}}</span>
+					<span class="prezzo-scontato">€{{product.price_offer}}</span>
+				</h3>
+				
+				<!-- quantità -->
+				<label>Quantità:</label>
+				<input name="quantity" type="number" min="1" step="1" class="form-control"/>				
+				
+				<!-- colori -->
+				<br>
+				<label>Colori Disponibili:</label><br>
+				<ul>
+					{% for col in product.color.all %}
+					<li>
+					<input type="checkbox" name="vehicle" value="{{col.id}}">
+					{% if col.image %}
+						<img src="{% cropped_thumbnail col "thumb" %}" class="img-color">
+					{% else %}
+						<i class="fa fa-circle" aria-hidden="true" style="color: {{col.css_color}}"></i>
+					{% endif %}
+					</li>
+					{% endfor %}
+				</ul>
+
+				<!-- materiale -->
+				{% if product.material.all %}
+				<br>
+				<label>Tipologia Metallo:</label><br>
+				<ul>
+					{% for mat in product.material.all %}
+					<li>
+					<input type="checkbox" name="vehicle" value="{{col.id}}">
+					{% if mat.image %}
+						<img src="{% cropped_thumbnail mat "thumb" %}" class="img-metal">
+					{% else %}
+						<i class="fa fa-circle" aria-hidden="true" style="color: {{mat.css_color}}"></i>
+					{% endif %}<br>
+					{{mat.name}}&nbsp;&nbsp;&nbsp;
+					</li>
+					{% endfor %}
+				</ul>
+				{% endif %}
+
+				<!-- Misura Scarpe -->
+				{% if product.scarpemisura.all %}
+				<br>
+				<br>
+				<label>Misure Scarpe:</label>
+				<select name="scarpemisura" class="form-control">
+					{% for sc in product.scarpemisura.all %}
+					<option value="{{sc.id}}">{{sc.name}}</option>
+					{% endfor %}
+				</select> 
+				{% endif %}
+				
+				<input id="contact_submit" type="submit" value="AGGIUNGI AL CARRELLO" class="btn btn-primary btn-md" data-loading-text="Loading...">
+
+			</div>
 		</div>
 	</div>
-</div>
 
-<div id="offerte-miniatura" class="container">
-	{% for filer in filer_list %}
-	<div class="col-xs-12 col-sm-2">{% load thumbnail %}
-		<a href="/media/{{ filer.file }}" data-lightbox="roadtrip">
-			<img src="{% thumbnail filer.file 400x250 crop %}" class="img-responsive">
-		</a>
+	<div id="descrizione-offerta" class="container">
+		<p>
+			<strong>DESCRIZIONE</strong><br>
+			{{product.description|safe}}
+			<br>
+			<br>
+			<br>
+			<br>
+		</p>
 	</div>
-	{% endfor %}
-</div>
-
-<div id="descrizione-offerta" class="container">
-	<p>
-		<strong>DESCRIZIONE</strong><br>
-		{{product.description|safe}}
-		<br>
-		<br>
-		<br>
-		<br>
-	</p>
-</div>
 
 
 
+	</script>
 
+	<script type="text/javascript">
+
+	jQuery(document).ready(function($){
+
+		$('#image1').addimagezoom({ // single image zoom
+			zoomrange: [3, 6],
+			magnifiersize: [300,300],
+			magnifierpos: 'right',
+			cursorshade: true,
+			largeimage: '/media/{{product.image}}' //<-- No comma after last option!
+		})
+
+
+		$('#image2').addimagezoom() // single image zoom with default options
+		
+		$('#multizoom1').addimagezoom({ // multi-zoom: options same as for previous Featured Image Zoomer's addimagezoom unless noted as '- new'
+			descArea: '#description', // description selector (optional - but required if descriptions are used) - new
+			speed: 1500, // duration of fade in for new zoomable images (in milliseconds, optional) - new
+			descpos: true, // if set to true - description position follows image position at a set distance, defaults to false (optional) - new
+			imagevertcenter: true, // zoomable image centers vertically in its container (optional) - new
+			magvertcenter: true, // magnified area centers vertically in relation to the zoomable image (optional) - new
+			zoomrange: [3, 10],
+			magnifiersize: [250,250],
+			magnifierpos: 'right',
+			cursorshadecolor: '#fdffd5',
+			cursorshade: true //<-- No comma after last option!
+		});
+		
+		$('#multizoom2').addimagezoom({ // multi-zoom: options same as for previous Featured Image Zoomer's addimagezoom unless noted as '- new'
+			descArea: '#description2', // description selector (optional - but required if descriptions are used) - new
+			disablewheel: true // even without variable zoom, mousewheel will not shift image position while mouse is over image (optional) - new
+					//^-- No comma after last option!	
+		});
+		
+	})
+
+	</script>
+
+</form>
+
+{% endblock %}
+
+
+{% block footerjs %}
+   
 {% endblock %}

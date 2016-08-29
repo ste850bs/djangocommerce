@@ -9,6 +9,8 @@ from filer.fields.folder import FilerFolderField
 from taggit.managers import TaggableManager
 from tinymce.models import HTMLField
 from django.utils import timezone
+#from product.forms import *
+
 from django import forms
 
 
@@ -26,10 +28,12 @@ class Category(models.Model):
 
 
 class Color(models.Model):
+    category = models.ForeignKey(Category, null=True, blank=True, verbose_name="Seleziona Categoria")
     name = models.CharField('nome colore', max_length=100)
     code = models.CharField('codice colore', max_length=250, null=True, blank=True)
     css_color = models.CharField('css colore', max_length=250, null=True, blank=True)
     image = image = models.ImageField('immagine colore', blank=True, null=True, upload_to='color')
+    thumb = ImageRatioField('image', '300x300', verbose_name="Miniatura")
 
     def __unicode__(self):
         return self.name
@@ -38,19 +42,59 @@ class Color(models.Model):
         verbose_name_plural = "Colori"
 
 
+'''
+class ColorFoulard(models.Model):
+    name = models.CharField('nome colore', max_length=100)
+    code = models.CharField('codice colore', max_length=250, null=True, blank=True)
+    css_color = models.CharField('css colore', max_length=250, null=True, blank=True)
+    image = image = models.ImageField('immagine colore', blank=True, null=True, upload_to='color')
+    thumb = ImageRatioField('image', '800x578', verbose_name="Miniatura")
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Colori Foulard"
+'''
+
 
 
 class Material(models.Model):
     name = models.CharField('nome colore', max_length=100)
     image = image = models.ImageField('immagine colore', blank=True, null=True, upload_to='color')
     description = models.TextField('descrizione', null=True, blank=True)
+    thumb = ImageRatioField('image', '300x300', verbose_name="Miniatura")
 
     def __unicode__(self):
-        return self.titolo
+        return self.name
 
     class Meta:
-        verbose_name_plural = "Materiali"
+        verbose_name_plural = "Metalli"
 
+
+
+class TagliaScarpe(models.Model):
+    name = models.CharField('nome', max_length=100)
+    taglia = models.CharField('taglia', max_length=250, null=True, blank=True)
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Taglia Scarpe"
+
+
+
+class CintureLunghezza(models.Model):
+    name = models.CharField('nome', max_length=100)
+    misure = models.CharField('taglia', max_length=250, null=True, blank=True)
+    lunghezza = models.IntegerField(blank=True, null=True, verbose_name="lunghezza")
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Lunghezza Cinture"
 
 
 
@@ -98,7 +142,7 @@ class Accessory(models.Model):
     color = models.ManyToManyField(Color, null=True, blank=True, verbose_name="Seleziona Colori")
     material = models.ManyToManyField(Material, null=True, blank=True, verbose_name="Seleziona Materiali")
     ## Data
-    quantity = models.IntegerField(blank=True, null=True, verbose_name="sconto percentuale")
+    quantity = models.IntegerField(blank=True, null=True, verbose_name="Quantita")
     size = models.CharField('Misure', max_length=250, null=True, blank=True)
     width = models.IntegerField(blank=True, null=True, verbose_name="larghezza")
     lenght = models.IntegerField(blank=True, null=True, verbose_name="lunghezza")
@@ -106,7 +150,7 @@ class Accessory(models.Model):
     height = models.IntegerField(blank=True, null=True, verbose_name="altezza")
     volume = models.DecimalField('Volume', max_digits=10, decimal_places=2, blank=True, null=True)
     models.IntegerField(blank=True, null=True, verbose_name="sconto percentuale")
-    descrizione = models.TextField(null=True, blank=True, verbose_name="MATERIALE/FINITURA/COLORE")
+    descrizione = models.TextField(null=True, blank=True, verbose_name="Descrizione")
     ## Delivery
     prompt_delivery = models.BooleanField('Pronta Consegna', default=False)
     delivery = models.BooleanField('Consegna 40gg', default=False)
@@ -156,7 +200,10 @@ class Product(models.Model):
     album = FilerFolderField(null=True, blank=True)
     ## Composition
     color = models.ManyToManyField(Color, null=True, blank=True, verbose_name="Seleziona Colori")
-    material = models.ManyToManyField(Material, null=True, blank=True, verbose_name="Seleziona Materiali")
+    #colorfoulard = models.ManyToManyField(ColorFoulard, null=True, blank=True, verbose_name="Colori Foulard")
+    scarpemisura = models.ManyToManyField(TagliaScarpe, null=True, blank=True, verbose_name="Taglia Scarpe")
+    cintureLunghezza = models.ManyToManyField(CintureLunghezza, null=True, blank=True, verbose_name="Lungheza Cinture")
+    material = models.ManyToManyField(Material, null=True, blank=True, verbose_name="Seleziona Metallo")
     ## Data
     quantity = models.IntegerField(blank=True, null=True, verbose_name="sconto percentuale")
     size = models.CharField('Misure', max_length=250, null=True, blank=True)
@@ -165,12 +212,12 @@ class Product(models.Model):
     depth = models.IntegerField(blank=True, null=True, verbose_name="Profondita")
     height = models.IntegerField(blank=True, null=True, verbose_name="altezza")
     volume = models.DecimalField('Volume', max_digits=10, decimal_places=2, blank=True, null=True)
-    descrizione = models.TextField(null=True, blank=True, verbose_name="MATERIALE/FINITURA/COLORE")
+    descrizione = models.TextField(null=True, blank=True, verbose_name="Descrizione")
     ## Delivery
     prompt_delivery = models.BooleanField('Pronta Consegna', default=False)
     delivery = models.BooleanField('Consegna 40gg', default=False)
     ## Accessory
-    material = models.ManyToManyField(Accessory, null=True, blank=True, verbose_name="Accessori")
+    accessory = models.ManyToManyField(Accessory, null=True, blank=True, verbose_name="Accessori")
 
     tags = TaggableManager(verbose_name="Parole chiave", blank=True)
     pub_date = models.DateTimeField('date published')
@@ -230,8 +277,7 @@ class Composition(models.Model):
     depth = models.IntegerField(blank=True, null=True, verbose_name="Profondita")
     height = models.IntegerField(blank=True, null=True, verbose_name="altezza")
     volume = models.DecimalField('Volume', max_digits=10, decimal_places=2, blank=True, null=True)
-    models.IntegerField(blank=True, null=True, verbose_name="sconto percentuale")
-    descrizione = models.TextField(null=True, blank=True, verbose_name="MATERIALE/FINITURA/COLORE")
+    descrizione = models.TextField(null=True, blank=True, verbose_name="descrizione")
     ## Delivery
     prompt_delivery = models.BooleanField('Pronta Consegna', default=False)
     delivery = models.BooleanField('Consegna 40gg', default=False)
@@ -257,5 +303,16 @@ class Composition(models.Model):
         verbose_name_plural = "Composizioni"
         ordering = ['id']
 
+
+
+## forms
+class ProductForm(forms.Form):
+    product = Product.objects.first
+    nome = forms.CharField(label='Nome', max_length=100)
+    quantity = forms.IntegerField(label='Quantita')
+    color = forms.ModelChoiceField(queryset=Color.objects.all().order_by('-id'))
+    material = forms.ModelChoiceField(queryset=Material.objects.all().order_by('-id'))
+    scarpemisura = forms.ModelChoiceField(queryset=TagliaScarpe.objects.all().order_by('-id'))
+    cintureLunghezza = forms.ModelChoiceField(queryset=CintureLunghezza.objects.all().order_by('-id'))
 
 

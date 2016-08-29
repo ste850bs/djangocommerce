@@ -15,10 +15,16 @@ class ProductAdmin(ImageCroppingMixin, admin.ModelAdmin):
     list_display = ("image_img", "code", "name", "price", "discount", "price_offer", "prompt_delivery", "delivery", "promo", "active")
 
 
+class ColorAdmin(ImageCroppingMixin, admin.ModelAdmin):
+	list_display = ("category", "name")
+
+
 
 
 admin.site.register(Category, MyModelAdmin)
-admin.site.register(Color, MyModelAdmin)
+admin.site.register(Color, ColorAdmin)
+admin.site.register(TagliaScarpe, MyModelAdmin)
+admin.site.register(CintureLunghezza, MyModelAdmin)
 admin.site.register(Material, MyModelAdmin)
 admin.site.register(Accessory, ProductAdmin)
 admin.site.register(Product, ProductAdmin)

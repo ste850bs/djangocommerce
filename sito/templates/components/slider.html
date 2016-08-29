@@ -1,4 +1,5 @@
 <div id="slider-offerte" class="container">{% load staticfiles %}
+<div class="flexslider">
 
   <ul class="slides">
 
@@ -24,13 +25,13 @@
     {% endfor %}
 
   </ul>
-
+</div>
 </div>
 
 <script>
 // Can also be used with $(document).ready()
 $(window).load(function() {
-  $('#slider-offerte').flexslider({
+  $('.flexslider').flexslider({
     animation: "slide"
   });
 });
