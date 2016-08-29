@@ -22,6 +22,11 @@
     <script type="text/javascript" src="{% static 'rs-plugin/js/jquery.themepunch.revolution.min.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'rs-plugin/css/settings.css' %}" media="screen" />
 
+    <!-- lightbox -->
+    <link href="{% static 'css/lightbox.css' %}" rel="stylesheet">
+
+
+
 
     {% block personaljs%}{% endblock %}
     
@@ -75,8 +80,8 @@
     {% endblock %}
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/lightbox.js' %}"></script>
 
   
 

@@ -24,6 +24,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.HomePage, name='home'),
     url(r'^product/(?P<post_id>\d+)/$', views.ProductFilterView, name='detail'),
+    url(r'^category/(?P<post_id>\d+)/$', views.ProductFilterCategory, name='categoria'),
+    url(r'^tags/(?P<post_id>\d+)/$', views.ProductFilterTag, name='tag-filter'),
     url(r'^test', views.add_to_cart),
 ]
 

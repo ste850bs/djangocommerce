@@ -37,17 +37,31 @@
 
 			</div>
 
-			
+
 			<div class="col-xs-12 col-sm-4">
 				{% if product.promo == True %}
 				<h3 class="sconto">-{{product.discount}}%</h3>
 				{% endif %}
 				<h2 class="titolo">ART.{{product.code}} | {{product.name}}</h2>
 				<h3 class="sottotitolo">{{product.category.all.first}}</h3>
+				<h5>
+					{%  if product.descrizione %}<br>{{product.descrizione|safe}}<br><br>{% endif %}
+					{% if product.size %}<strong>Dimensioni:</strong> {{product.size}} mm.{% endif %}
+					{% if product.width %}<strong>Larghezza:</strong> {{product.width}} mm.<br>{% endif %}
+					{% if product.lenght %}<strong>Lunghezza:</strong> {{product.lenght}} mm<br>{% endif %}
+					{% if product.depth %}<strong>Profondità:</strong> {{product.depth}} mm.<br>{% endif %}
+					{% if product.height %}<strong>Altezza:</strong> {{product.height}} mm.<br>{% endif %}
+					{% if product.volume %}<strong>Volume:</strong> {{product.volume}} m3<br>{% endif %}
+				</h5>
 				<h3 class="prezzi">
 					<span class="prezzo-originale">prezzo originale:</span>
+					{% if product.promo %}
 					<span class="prezzo-barrato">€{{product.price}}</span>
 					<span class="prezzo-scontato">€{{product.price_offer}}</span>
+					{% else %}
+					<span class="prezzo-barrato"></span>
+					<span class="prezzo-scontato">€{{product.price}}</span>
+					{% endif %}
 				</h3>
 				
 				<!-- quantità -->
@@ -102,20 +116,22 @@
 				{% endif %}
 				
 				<input id="contact_submit" type="submit" value="AGGIUNGI AL CARRELLO" class="btn btn-primary btn-md" data-loading-text="Loading...">
-
+				<br>
+				<br>
 			</div>
 		</div>
 	</div>
 
 	<div id="descrizione-offerta" class="container">
 		<p>
-			<strong>DESCRIZIONE</strong><br>
-			{{product.description|safe}}
-			<br>
-			<br>
-			<br>
 			<br>
 		</p>
+	</div>
+
+	<div id="descrizione-tag" class="container">
+		{% for tag in product.tags.all %}
+		<a href="{% url 'tag-filter' tag.id %}">{{tag.name}}</a>
+		{% endfor %}
 	</div>
 
 
