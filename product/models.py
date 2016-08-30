@@ -15,6 +15,12 @@ from django import forms
 class Category(models.Model):
     title = models.CharField('titolo', max_length=100)
     subtitle = models.CharField('sottotitolo', max_length=250, null=True, blank=True)
+    image = models.ImageField(blank=True, null=True, upload_to='categorie')
+    slider = ImageRatioField('image', '1170x600', verbose_name="Slider")
+    thumb = ImageRatioField('image', '370x224', verbose_name="Miniatura")
+    thumbdue = ImageRatioField('image', '745x558', verbose_name="Miniatura pagina dettaglio")
+    croplibero = ImageRatioField('image', '595x335', free_crop=True, verbose_name="Ritaglio Libero")
+    show = models.BooleanField('mostra', default=False)
 
     def __unicode__(self):
         return self.title
@@ -60,7 +66,7 @@ class Shape(models.Model):
     description = models.TextField('descrizione', null=True, blank=True)
 
     def __unicode__(self):
-        return self.titolo
+        return self.name
 
     class Meta:
         verbose_name_plural = "Forme"
@@ -160,6 +166,8 @@ class Product(models.Model):
     price = models.DecimalField('Prezzo', max_digits=10, decimal_places=2, blank=True, null=True)
     discount = models.IntegerField(blank=True, null=True, verbose_name="sconto percentuale")
     price_offer = models.DecimalField('Prezzo Scontato', max_digits=10, decimal_places=2, blank=True, null=True)
+    spinning = models.BooleanField('Spinning', default=False)
+    locked = models.BooleanField('Locked', default=False)
     ##MULTIMEDIA
     image = models.ImageField(blank=True, null=True, upload_to='product', verbose_name="Immagine")
     slider = ImageRatioField('image', '1170x600', verbose_name="Slider")
@@ -169,8 +177,8 @@ class Product(models.Model):
     album = FilerFolderField(null=True, blank=True)
     ## Composition
     color = models.ManyToManyField(Color, null=True, blank=True, verbose_name="Seleziona Colori")
-    material = models.ManyToManyField(Material, null=True, blank=True, verbose_name="Seleziona Materiali")
-    shape = models.ManyToManyField(Shape, null=True, blank=True, verbose_name="Seleziona Materiali")
+    material = models.ManyToManyField(Material, null=True, blank=True, verbose_name="Seleziona Forme")
+    shape = models.ManyToManyField(Shape, null=True, blank=True, verbose_name="Seleziona Forme")
     ## Data
     quantity = models.IntegerField(blank=True, null=True, verbose_name="sconto percentuale")
     size = models.CharField('Misure', max_length=250, null=True, blank=True)
@@ -179,7 +187,7 @@ class Product(models.Model):
     depth = models.IntegerField(blank=True, null=True, verbose_name="Profondita")
     height = models.IntegerField(blank=True, null=True, verbose_name="altezza")
     volume = models.DecimalField('Volume', max_digits=10, decimal_places=2, blank=True, null=True)
-    descrizione = models.TextField(null=True, blank=True, verbose_name="MATERIALE/FINITURA/COLORE")
+    descrizione = models.TextField(null=True, blank=True, verbose_name="Descrizione")
     ## Delivery
     prompt_delivery = models.BooleanField('Pronta Consegna', default=False)
     delivery = models.BooleanField('Consegna 40gg', default=False)

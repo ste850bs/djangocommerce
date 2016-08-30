@@ -5,72 +5,26 @@
           <div class="tp-banner" >
             <ul>
               <!-- SLIDE  -->
+              {% for slider in slider_list %}
               <li data-transition="random" data-slotamount="5" data-masterspeed="700" >
-                <!-- MAIN IMAGE -->
-                <img src="{% static 'img/imagegallery.png' %}"   alt="gallery 1"  data-bgfit="cover" data-bgposition="center center" data-bgrepeat="no-repeat">
+                <!-- MAIN IMAGE -->{% load cropping %}
+                <img src="{% cropped_thumbnail slider "slider" %}"   alt="gallery 1"  data-bgfit="cover" data-bgposition="center center" data-bgrepeat="no-repeat">
                 <!-- Layer 1 -->
-          <div class="tp-caption  lft customout pieno"
-            data-x="0"
-            data-y="190"
-            data-customout="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.75;scaleY:0.75;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
-            data-speed="500"
-            data-start="1200"
-            data-easing="Power4.easeOut"
-            data-endspeed="500"
-            data-endeasing="Power4.easeIn"
-            data-captionhidden="on">
-            <h1 class="stext h1">CAMPIONATO ITALIANO FRECCETTE</h1>
-          </div>
-          <!-- Layer Logo -->
-          <!--div class="tp-caption logo-nuovo"
-            data-x="0"
-            data-y="-30"
-            data-customout="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.75;scaleY:0.75;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
-            data-speed="500"
-            data-start="1200"
-            data-easing="Power4.easeOut"
-            data-endspeed="500"
-            data-endeasing="Power4.easeIn"
-            data-captionhidden="on">
-            <img src="img/logo_nuovo.png" class="logo-nuovo">
-          </div -->
+                  <div class="tp-caption  lft customout pieno"
+                    data-x="250"
+                    data-y="190"
+                    data-customout="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.75;scaleY:0.75;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+                    data-speed="500"
+                    data-start="1200"
+                    data-easing="Power4.easeOut"
+                    data-endspeed="500"
+                    data-endeasing="Power4.easeIn"
+                    data-captionhidden="on">
+                    <h1 class="stext h1">{{slider.scritta}}</h1>
+                  </div>
               </li>
+              {% endfor %}
 
-              <!-- SLIDE  -->
-              <li data-transition="random" data-slotamount="5" data-masterspeed="700" >
-                <!-- MAIN IMAGE -->
-                <img src="{% static 'img/frecciahome.png' %}"   alt="gallery 1"  data-bgfit="cover" data-bgposition="center center" data-bgrepeat="no-repeat">
-                <div class="tp-caption  lft customout pieno2"
-            data-x="360"
-            data-y="0"
-            data-customout="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.75;scaleY:0.75;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
-            data-speed="500"
-            data-start="1200"
-            data-easing="Power4.easeOut"
-            data-endspeed="500"
-            data-endeasing="Power4.easeIn"
-            data-captionhidden="on">
-            <h1 class="stext2 h1">SILVER DART</h1>
-          </div>
-              </li>
-              
-               <!-- SLIDE  -->
-              <li data-transition="fade" data-slotamount="5" data-masterspeed="700" >
-                <!-- MAIN IMAGE -->
-                <img src="{% static 'img/uomofreccia.png' %}"   alt="gallery 1"  data-bgfit="cover" data-bgposition="center center" data-bgrepeat="no-repeat">
-                <div class="tp-caption  lft customout pieno"
-            data-x="0"
-            data-y="190"
-            data-customout="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.75;scaleY:0.75;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
-            data-speed="500"
-            data-start="1200"
-            data-easing="Power4.easeOut"
-            data-endspeed="500"
-            data-endeasing="Power4.easeIn"
-            data-captionhidden="on">
-            <h1 class="stext h1">DARTS PLAYER</h1>
-          </div>
-              </li>
 
             </ul>
 

@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.HomePage, name='home'),
     url(r'^product/(?P<post_id>\d+)/$', views.ProductFilterView, name='detail'),
+    url(r'^product/categoria/(?P<post_id>\d+)/$', views.ProductCategoryView, name='prodotti-filter'),
 ]
 
 if settings.DEBUG:  

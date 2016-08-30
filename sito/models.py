@@ -37,7 +37,7 @@ class Slider(models.Model):
     image_img.allow_tags = True
 
     def __unicode__(self):
-        return self.titolo
+        return self.name
 
     class Meta:
         verbose_name_plural = "Slider"

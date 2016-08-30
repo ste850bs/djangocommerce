@@ -4,7 +4,7 @@
 
 
 {% block content %}
-
+{% load staticfiles %}
 
 {% include 'components/slider.html' %}
 
@@ -13,37 +13,14 @@
     <h2>SHOP</h2>
     <div class="row">
 
+      {% for cat in category_list %}
       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-      	<a href="categoria.html">
-        	<img src="img/quadrato.jpg" class="img-responsive">
-       	</a>
-        <h3>FRECCE</h3>
+          <a href="{% url 'prodotti-filter' cat.id %}">{% load cropping %}
+        	<img src="{% cropped_thumbnail cat "thumb" %}" class="img-responsive">
+          <h3>{{cat.title}}</h3>
+          </a>
       </div>
-
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-        <img src="img/quadrato.jpg" class="img-responsive">
-        <h3>ASTINE</h3>
-      </div>
-
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-        <img src="img/quadrato.jpg" class="img-responsive">
-        <h3>ALETTE</h3>
-      </div>
-
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-        <img src="img/quadrato.jpg" class="img-responsive">
-        <h3>PUNTE</h3>
-      </div>
-
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-        <img src="img/quadrato.jpg" class="img-responsive">
-        <h3>ASTUCCI</h3>
-      </div>
-
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-        <img src="img/quadrato.jpg" class="img-responsive">
-        <h3>ACCESSORI</h3>
-      </div>
+      {% endfor %}
 
     </div><!-- row-->
   </div>
@@ -56,20 +33,14 @@
     <h2>ABBIGLIAMENTO</h2>
     <div class="row">
 
+      {% for abb in abbigliamento_list %}
       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-        <img src="img/quadrato.jpg" class="img-responsive">
-        <h3>&nbsp;</h3>
+        <a href="{% url 'prodotti-filter' 7 %}">
+          <img src="{% cropped_thumbnail abb "thumb" %}" class="img-responsive">
+          <h3>&nbsp;</h3>
+        </a>
       </div>
-
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-        <img src="img/quadrato.jpg" class="img-responsive">
-        <h3>&nbsp;</h3>
-      </div>
-
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-        <img src="img/quadrato.jpg" class="img-responsive">
-        <h3>&nbsp;</h3>
-      </div>
+      {% endfor %}
 
     </div><!-- row -->
   </div><!-- container -->
@@ -83,32 +54,17 @@
     <div class="row">
 
       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-        <img src="img/quadrato.jpg" class="img-responsive">
+        <img src="{% static 'img/quadrato.jpg' %}" class="img-responsive">
         <h3>&nbsp;</h3>
       </div>
 
       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-        <img src="img/quadrato.jpg" class="img-responsive">
+        <img src="{% static 'img/quadrato.jpg' %}" class="img-responsive">
         <h3>&nbsp;</h3>
       </div>
 
       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-        <img src="img/quadrato.jpg" class="img-responsive">
-        <h3>&nbsp;</h3>
-      </div>
-
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-        <img src="img/quadrato.jpg" class="img-responsive">
-        <h3>&nbsp;</h3>
-      </div>
-
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-        <img src="img/quadrato.jpg" class="img-responsive">
-        <h3>&nbsp;</h3>
-      </div>
-
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-        <img src="img/quadrato.jpg" class="img-responsive">
+        <img src="{% static 'img/quadrato.jpg' %}" class="img-responsive">
         <h3>&nbsp;</h3>
       </div>
       

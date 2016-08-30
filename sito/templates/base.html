@@ -17,6 +17,13 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css' %}">
     <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
 
+    <!-- lightbox -->
+    <link href="{% static 'css/lightbox.css' %}" rel="stylesheet">
+
+
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
+
     <!-- Bootstrap -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'stile.css' %}" rel="stylesheet">
@@ -38,7 +45,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#"><img src="{% static 'img/oksuperdart.png' %}" class="logo-ok"></a>
+      <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'img/oksuperdart.png' %}" class="logo-ok"></a>
       <!--a class="navbar-brand" href="#"><img src="img/logo-biancook.png" class="logo-ok"></a-->
     </div>
 
@@ -69,18 +76,18 @@
       </ul>
       
       <ul id="menu-scritte" class="nav navbar-nav navbar-right">
-        <li><a href="#">HOME <span class="sr-only">(current)</span></a></li>
+        <li><a href="{% url 'home' %}">HOME <span class="sr-only">(current)</span></a></li>
         <li><a href="#">PLAYER</a></li>
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">SHOP</a>
             <ul id="submenu" class="dropdown-menu">
-                <li><a href="#">FRECCE</a></li>
-                <li><a href="#">ASTINE</a></li>
-                <li><a href="#">ALETTE</a></li>
-                <li><a href="#">PUNTE</a></li>
-                <li><a href="#">ASTUCCI</a></li>
-                <li><a href="#">ACCESSORI</a></li>
-                <li><a href="#">ABBIGLIAMENTO</a></li>
+                <li><a href="{% url 'prodotti-filter' 4 %}">FRECCE</a></li>
+                <li><a href="{% url 'prodotti-filter' 5 %}">ASTINE</a></li>
+                <li><a href="{% url 'prodotti-filter' 2 %}">ALETTE</a></li>
+                <li><a href="{% url 'prodotti-filter' 9 %}">PUNTE</a></li>
+                <li><a href="{% url 'prodotti-filter' 3 %}">ASTUCCI</a></li>
+                <li><a href="{% url 'prodotti-filter' 10 %}">ACCESSORI</a></li>
+                <li><a href="{% url 'prodotti-filter' 7 %}">ABBIGLIAMENTO</a></li>
             </ul>
         </li>
         <li><a href="#">CONTATTI</a></li>
@@ -127,7 +134,7 @@
     
     <div class="col-xs-12 col-sm-3">
       <p><br>QUI PAGAMENTI SICURI CON:</p>
-      <img src="[% static 'img/pagamento.png' %}" class="img-responsive">
+      <img src="{% static 'img/pagamento.png' %}" class="img-responsive">
     </div>
     
     <div class="col-xs-12 col-sm-3">
@@ -155,5 +162,7 @@
     <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script-->
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/lightbox.js' %}"></script>
+
   </body>
 </html>

@@ -49,7 +49,7 @@
         <ul class="nav navbar-nav" data-hook>
           <li class="active"><a href="{% url 'home' %}">HOME</a></li>
           {% for cat in category_list %}
-          <li><a href="#">{{cat.title}}</a></li>
+          <li><a href="{% url 'prodotti-filter' cat.id %}">{{cat.title}}</a></li>
           {% endfor %}
         </ul>
         

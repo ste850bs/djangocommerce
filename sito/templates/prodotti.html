@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+<section id="categorie" style="margin-top: 160px;">
+  <div class="container">
+    <h2>CATEGORIA | {{category.title}}<br><br></h2>
+    <div class="row">
+
+    {% for pro in product_list %}
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+      	<a href="{% url 'detail' pro.id %}">{% load cropping %}
+        	<img src="{% cropped_thumbnail pro "thumb" %}" class="img-responsive">
+        	<h3 style="margin-bottom:0px;">{{pro.name}}</h3>
+        </a>
+        <p class="txtdesc">
+        	{{pro.descrizione|safe|truncatechars:100}}
+        </p>
+      </div>
+      {% endfor %}
+
+    </div><!-- row-->
+  </div>
+</section>
+
+<div class="col-xs-12"><br><br><br></div>
+
+{% endblock %}

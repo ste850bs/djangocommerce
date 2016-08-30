@@ -20,13 +20,25 @@ def HomePage(request):
     promo_list = Product.objects.filter(promo=True).order_by('-pub_date')[:4]
     offerte_list = Product.objects.filter(promo=True).order_by('-id')
     product_list = Product.objects.all()[:4]
+    category_list = Category.objects.filter(show=True).order_by('id')
+    abbigliamento_list = Product.objects.filter(category__in = '7').order_by('-id')[:4]
     context = {'slider_list':slider_list,
     			'last_list':last_list,
     			'promo_list':promo_list,
                 'product_list':product_list,
-                'offerte_list':offerte_list}
+                'offerte_list':offerte_list,
+                'category_list':category_list,
+                'abbigliamento_list':abbigliamento_list}
     return render_to_response('index.html', context, context_instance=RequestContext(request))
 
+
+
+def ProductCategoryView(request, post_id):
+    product_list = Product.objects.filter(category__in = post_id)
+    category = Category.objects.get(pk=post_id)
+    context = {'product_list': product_list,
+                'category':category}
+    return render_to_response('prodotti.html', context, context_instance=RequestContext(request))
 
 
 
