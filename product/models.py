@@ -183,48 +183,13 @@ class Accessory(models.Model):
 
 
 
-class Composition(models.Model):
-    name = models.CharField(max_length=100, verbose_name="Titolo:")
-    code = models.CharField('Codice', max_length=250, null=True, blank=True)
-    price = models.DecimalField('Prezzo', max_digits=10, decimal_places=2, blank=True, null=True)
-    image = models.ImageField(blank=True, null=True, upload_to='product', verbose_name="Immagine")
-    slider = ImageRatioField('image', '1170x600', verbose_name="Slider")
-    thumb = ImageRatioField('image', '800x578', verbose_name="Miniatura")
-    thumbdue = ImageRatioField('image', '745x558', verbose_name="Miniatura pagina dettaglio")
-    croplibero = ImageRatioField('image', '595x335', free_crop=True, verbose_name="Ritaglio Libero")
-    color = models.ForeignKey(Color, null=True, blank=True, verbose_name="Seleziona Colori")
-    material = models.ForeignKey(Material, null=True, blank=True, verbose_name="Seleziona Metallo")
-    scarpemisura = models.ForeignKey(TagliaScarpe, null=True, blank=True, verbose_name="Taglia Scarpe")
-    cintureLunghezza = models.ForeignKey(CintureLunghezza, null=True, blank=True, verbose_name="Lungheza Cinture")
-    ## Data
-    quantity = models.IntegerField(blank=True, null=True, verbose_name="quantita")
-    pub_date = models.DateTimeField('date published')
-    active = models.BooleanField('attiva', default=False)
-
-    def image_img(self):
-        if self.image:
-            return u'<img src="%s" style="width:300px"/>' % self.image.url
-        else:
-            return '(Sin imagen)'
-    image_img.short_description = 'Thumb'
-    image_img.allow_tags = True
-
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        verbose_name_plural = "Composizioni"
-        ordering = ['id']
-
-
-
 
 class Product(models.Model):
     name = models.CharField(max_length=100, verbose_name="Titolo:")
     code = models.CharField('Codice', max_length=250, null=True, blank=True)
     category = models.ManyToManyField(Category, null=True, blank=True, verbose_name="Seleziona Categorie")
     ## composizione
-    composition = models.ManyToManyField(Composition, null=True, blank=True, verbose_name="Composizioni")
+    #composition = models.ManyToManyField(Composition, null=True, blank=True, verbose_name="Composizioni")
     ##PRICE
     price = models.DecimalField('Prezzo', max_digits=10, decimal_places=2, blank=True, null=True)
     discount = models.IntegerField(blank=True, null=True, verbose_name="sconto percentuale")
@@ -273,6 +238,42 @@ class Product(models.Model):
 
     class Meta:
         verbose_name_plural = "Prodotti"
+        ordering = ['id']
+
+
+
+class Composition(models.Model):
+    product = models.ForeignKey(Product, null=True, blank=True, verbose_name="Prodotto")
+    name = models.CharField(max_length=100, verbose_name="Titolo:")
+    code = models.CharField('Codice', max_length=250, null=True, blank=True)
+    price = models.DecimalField('Prezzo', max_digits=10, decimal_places=2, blank=True, null=True)
+    image = models.ImageField(blank=True, null=True, upload_to='product', verbose_name="Immagine")
+    slider = ImageRatioField('image', '1170x600', verbose_name="Slider")
+    thumb = ImageRatioField('image', '800x578', verbose_name="Miniatura")
+    thumbdue = ImageRatioField('image', '745x558', verbose_name="Miniatura pagina dettaglio")
+    croplibero = ImageRatioField('image', '595x335', free_crop=True, verbose_name="Ritaglio Libero")
+    color = models.ForeignKey(Color, null=True, blank=True, verbose_name="Seleziona Colori")
+    material = models.ForeignKey(Material, null=True, blank=True, verbose_name="Seleziona Metallo")
+    scarpemisura = models.ForeignKey(TagliaScarpe, null=True, blank=True, verbose_name="Taglia Scarpe")
+    cintureLunghezza = models.ForeignKey(CintureLunghezza, null=True, blank=True, verbose_name="Lungheza Cinture")
+    ## Data
+    quantity = models.IntegerField(blank=True, null=True, verbose_name="quantita")
+    pub_date = models.DateTimeField('date published')
+    active = models.BooleanField('attiva', default=False)
+
+    def image_img(self):
+        if self.image:
+            return u'<img src="%s" style="width:300px"/>' % self.image.url
+        else:
+            return '(Sin imagen)'
+    image_img.short_description = 'Thumb'
+    image_img.allow_tags = True
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Composizioni"
         ordering = ['id']
 
 

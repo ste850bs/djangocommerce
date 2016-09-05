@@ -31,9 +31,12 @@ def get_scarpe_misura(self):
 class MyModelAdmin(ImageCroppingMixin, admin.ModelAdmin):
     pass
  
-
+'''
 class ProductAdmin(ImageCroppingMixin, admin.ModelAdmin):
     list_display = ("image_img", "code", "name", "price", "discount", "price_offer", "prompt_delivery", "delivery", "promo", "active")   
+'''
+class AccessoryAdmin(ImageCroppingMixin, admin.ModelAdmin):
+    list_display = ("image_img", "code", "name", "price", "discount", "price_offer", "prompt_delivery", "delivery", "promo", "active") 
 
 
 class CompositionAdmin(ImageCroppingMixin, admin.ModelAdmin):
@@ -45,7 +48,7 @@ class ColorAdmin(ImageCroppingMixin, admin.ModelAdmin):
 	list_display = ("category", "name")
 
 
-
+'''
 class AuthorInline(admin.TabularInline):
     model = Product.composition.through
     verbose_name = u"Composition"
@@ -57,9 +60,10 @@ class BookAdmin(admin.ModelAdmin):
     exclude = ("composition", )
     inlines = (
        AuthorInline,
-    )
+    )'''
 
 
+'''
 class LevelOneInline(NestedStackedInline):
     model = Color
     extra = 1
@@ -68,24 +72,32 @@ class LevelOneInline(NestedStackedInline):
 class TopLevelAdmin(NestedModelAdmin):
     model = Category
     inlines = [LevelOneInline]
-
+'''
                    
+class CompositionAssociactionAdmin(NestedStackedInline):
+    model = Composition
+    extra = 1
+    fk_name = 'product'
 
 
+class ProductAdmin(ImageCroppingMixin, admin.ModelAdmin):
+    model = Product
+    inlines = [CompositionAssociactionAdmin]
+    list_display = ("image_img", "code", "name", "price", "discount", "price_offer", "prompt_delivery", "delivery", "promo", "active")  
 
 
-#admin.site.register(Category, MyModelAdmin)
+admin.site.register(Category, MyModelAdmin)
 admin.site.register(Color, ColorAdmin)
 admin.site.register(TagliaScarpe, MyModelAdmin)
 admin.site.register(CintureLunghezza, MyModelAdmin)
 admin.site.register(Material, MyModelAdmin)
-admin.site.register(Accessory, ProductAdmin)
-#admin.site.register(Product, ProductAdmin)
+admin.site.register(Accessory, AccessoryAdmin)
+admin.site.register(Product, ProductAdmin)
 admin.site.register(Composition, CompositionAdmin)
 
-admin.site.register(Product, BookAdmin)
+#admin.site.register(Product, BookAdmin)
+#admin.site.register(Category, TopLevelAdmin)
 
-admin.site.register(Category, TopLevelAdmin)
 
 
 
