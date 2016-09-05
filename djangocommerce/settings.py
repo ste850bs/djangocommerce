@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'cart',
     'order',
     'django_filters',
+    #'nested_admin',
     'sito',
 ]
 
