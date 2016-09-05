@@ -34,12 +34,18 @@ def HomePage(request):
 def ProductFilterCategory(request, post_id):
     product_list = Product.objects.filter(category__in=post_id)
     context = {'product_list': product_list}
-    return render_to_response('category_list.html', context, context_instance=RequestContext(request))
+    return render_to_response('price_list.html', context, context_instance=RequestContext(request))
+
 
 def ProductFilterTag(request, post_id):
     product_list = Product.objects.filter(tags__in=post_id)
     context = {'product_list': product_list}
     return render_to_response('category_list.html', context, context_instance=RequestContext(request))
+
+
+def product_list(request):
+    product_list = ProductFilter(request.GET, queryset=Product.objects.all())
+    return render(request, 'price_list.html', {'product_list': product_list})
 
 
 

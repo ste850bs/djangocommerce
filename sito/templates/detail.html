@@ -72,28 +72,28 @@
 				<br>
 				<label>Colori Disponibili:</label><br>
 				<ul>
-					{% for col in product.color.all %}
+					{% for col in product.composition.all %}
 					<li>
 					<input type="checkbox" name="vehicle" value="{{col.id}}">
-					{% if col.image %}
-						<img src="{% cropped_thumbnail col "thumb" %}" class="img-color">
+					{% if col.color.image %}
+						<img src="{% cropped_thumbnail col.color "thumb" %}" class="img-color">
 					{% else %}
-						<i class="fa fa-circle" aria-hidden="true" style="color: {{col.css_color}}"></i>
+						<i class="fa fa-circle" aria-hidden="true" style="color: {{col.color.css_color}}"></i>
 					{% endif %}
 					</li>
 					{% endfor %}
 				</ul>
 
 				<!-- materiale -->
-				{% if product.material.all %}
+				{% if product.composition.all %}
 				<br>
 				<label>Tipologia Metallo:</label><br>
 				<ul>
-					{% for mat in product.material.all %}
+					{% for mat in product.composition.all %}
 					<li>
 					<input type="checkbox" name="vehicle" value="{{col.id}}">
-					{% if mat.image %}
-						<img src="{% cropped_thumbnail mat "thumb" %}" class="img-metal">
+					{% if mat.material.image %}
+						<img src="{% cropped_thumbnail mat.material "thumb" %}" class="img-metal">
 					{% else %}
 						<i class="fa fa-circle" aria-hidden="true" style="color: {{mat.css_color}}"></i>
 					{% endif %}<br>
