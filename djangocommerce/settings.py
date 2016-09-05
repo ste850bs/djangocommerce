@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'order',
     'django_filters',
     #'nested_admin',
+    'nested_inline',
     'sito',
 ]
 

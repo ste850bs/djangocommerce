@@ -2,7 +2,9 @@ from django.contrib import admin
 from product.models import *
 from image_cropping import ImageCroppingMixin
 
-import nested_admin
+#import nested_admin
+from nested_inline.admin import NestedStackedInline, NestedModelAdmin
+
 
 
 
@@ -36,6 +38,7 @@ class ProductAdmin(ImageCroppingMixin, admin.ModelAdmin):
 
 class CompositionAdmin(ImageCroppingMixin, admin.ModelAdmin):
     list_display = ("image_img", "name", "price", "active")
+    fields = ('image', 'title', 'quantity')
 
 
 class ColorAdmin(ImageCroppingMixin, admin.ModelAdmin):
@@ -57,12 +60,21 @@ class BookAdmin(admin.ModelAdmin):
     )
 
 
+class LevelOneInline(NestedStackedInline):
+    model = Color
+    extra = 1
+    fk_name = 'category'
+
+class TopLevelAdmin(NestedModelAdmin):
+    model = Category
+    inlines = [LevelOneInline]
+
                    
 
 
 
 
-admin.site.register(Category, MyModelAdmin)
+#admin.site.register(Category, MyModelAdmin)
 admin.site.register(Color, ColorAdmin)
 admin.site.register(TagliaScarpe, MyModelAdmin)
 admin.site.register(CintureLunghezza, MyModelAdmin)
@@ -70,7 +82,10 @@ admin.site.register(Material, MyModelAdmin)
 admin.site.register(Accessory, ProductAdmin)
 #admin.site.register(Product, ProductAdmin)
 admin.site.register(Composition, CompositionAdmin)
+
 admin.site.register(Product, BookAdmin)
+
+admin.site.register(Category, TopLevelAdmin)
 
 
 
