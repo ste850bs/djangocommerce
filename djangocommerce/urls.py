@@ -27,7 +27,7 @@ urlpatterns = [
     url(r'^category/(?P<post_id>\d+)/$', views.ProductFilterCategory, name='categoria'),
     url(r'^tags/(?P<post_id>\d+)/$', views.ProductFilterTag, name='tag-filter'),
     url(r'^product-list$', views.product_list, name='product-list'),
-    url(r'^test', views.add_to_cart),
+    url(r'^test/$', views.add_to_cart),
     url(r'^nested_admin/', include('nested_admin.urls')),
 ]
 

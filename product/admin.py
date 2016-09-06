@@ -22,13 +22,6 @@ def get_material(self):
     return self.material.name
 
 
-def duplicate_event(ModelAdmin, request, queryset):
-    for object in queryset:
-        object.id = None
-        object.save()
-    duplicate_event.short_description = "Duplicate selected record"
-
-
 
 class MyModelAdmin(ImageCroppingMixin, admin.ModelAdmin):
     pass
@@ -81,6 +74,13 @@ class CompositionAssociactionAdmin(NestedStackedInline):
 
 
 class ProductAdmin(ImageCroppingMixin, admin.ModelAdmin):
+    #duplicate function
+    def duplicate_event(ModelAdmin, request, queryset):
+        for object in queryset:
+            object.id = None
+            object.save()
+    duplicate_event.short_description = "Duplica Record Selezionati"
+
     model = Product
     inlines = [CompositionAssociactionAdmin]
     list_display = ("image_img", "code", "name", "price", "discount", "price_offer", "prompt_delivery", "delivery", "promo", "active")
@@ -99,11 +99,6 @@ class ProductAdmin(ImageCroppingMixin, admin.ModelAdmin):
                 ("slide", "promo"),
                 "tags", "active", "pub_date"
             )
-    def duplicate_event(ModelAdmin, request, queryset):
-        for object in queryset:
-            object.id = None
-            object.save()
-        duplicate_event.short_description = "Duplica Record Selezionati"
 
     actions = ['duplicate_event']
 
