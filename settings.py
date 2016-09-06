@@ -43,7 +43,10 @@ INSTALLED_APPS = [
     'filer',
     'mptt',
     'image_cropping',
+    'cart',
     'product',
+    'nested_inline',
+    #'nested_admin',
     'sito',
 ]
 
