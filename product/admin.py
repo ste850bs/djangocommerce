@@ -85,7 +85,21 @@ class ProductAdmin(ImageCroppingMixin, admin.ModelAdmin):
     model = Product
     inlines = [CompositionAssociactionAdmin]
     list_display = ("image_img", "code", "name", "price", "discount", "price_offer", "prompt_delivery", "delivery", "promo", "active")
-    list_editable = ('active',)  
+    list_editable = ('active',)
+    fields = (
+                ("name", "code"), 
+                ("price", "discount", "price_offer"),
+                ("color", "material"),
+                ("scarpemisura", "cintureLunghezza"),
+                "size",
+                ("width", "lenght", "depth", "height"),
+                "volume",
+                "descrizione", "album",
+                "image", "slider", "thumb", "thumbdue", "croplibero",
+                ("prompt_delivery", "delivery"),
+                ("slide", "promo"),
+                "tags", "active", "pub_date"
+            )  
 
 
 
