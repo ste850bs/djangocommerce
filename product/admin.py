@@ -40,8 +40,8 @@ class AccessoryAdmin(ImageCroppingMixin, admin.ModelAdmin):
 
 
 class CompositionAdmin(ImageCroppingMixin, admin.ModelAdmin):
-    list_display = ("image_img", "name", "price", "active")
-    fields = ('image', 'title', 'quantity')
+    list_display = ("code", "image_img", "name", "price", "active")
+    #fields = ('image', 'name', 'quantity')
 
 
 class ColorAdmin(ImageCroppingMixin, admin.ModelAdmin):
@@ -78,12 +78,16 @@ class CompositionAssociactionAdmin(NestedStackedInline):
     model = Composition
     extra = 1
     fk_name = 'product'
+    fields = ('image', ('color', 'material', 'scarpemisura', 'cintureLunghezza'), ('quantity', 'price'))
 
 
 class ProductAdmin(ImageCroppingMixin, admin.ModelAdmin):
     model = Product
     inlines = [CompositionAssociactionAdmin]
-    list_display = ("image_img", "code", "name", "price", "discount", "price_offer", "prompt_delivery", "delivery", "promo", "active")  
+    list_display = ("image_img", "code", "name", "price", "discount", "price_offer", "prompt_delivery", "delivery", "promo", "active")
+    list_editable = ('active',)  
+
+
 
 
 admin.site.register(Category, MyModelAdmin)

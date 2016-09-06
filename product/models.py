@@ -10,6 +10,7 @@ from taggit.managers import TaggableManager
 from tinymce.models import HTMLField
 from django.utils import timezone
 #from product.forms import *
+from django.utils.timezone import datetime
 
 from django import forms
 
@@ -244,8 +245,8 @@ class Product(models.Model):
 
 class Composition(models.Model):
     product = models.ForeignKey(Product, null=True, blank=True, verbose_name="Prodotto")
-    name = models.CharField(max_length=100, verbose_name="Titolo:")
-    code = models.CharField('Codice', max_length=250, null=True, blank=True)
+    name = models.CharField(max_length=100, verbose_name="Titolo:", null=True, editable=False)
+    code = models.CharField('Codice', max_length=250, null=True, blank=True, editable=False)
     price = models.DecimalField('Prezzo', max_digits=10, decimal_places=2, blank=True, null=True)
     image = models.ImageField(blank=True, null=True, upload_to='product', verbose_name="Immagine")
     slider = ImageRatioField('image', '1170x600', verbose_name="Slider")
@@ -258,7 +259,7 @@ class Composition(models.Model):
     cintureLunghezza = models.ForeignKey(CintureLunghezza, null=True, blank=True, verbose_name="Lungheza Cinture")
     ## Data
     quantity = models.IntegerField(blank=True, null=True, verbose_name="quantita")
-    pub_date = models.DateTimeField('date published')
+    pub_date = models.DateTimeField('date published', editable=False)
     active = models.BooleanField('attiva', default=False)
 
     def image_img(self):
@@ -268,6 +269,12 @@ class Composition(models.Model):
             return '(Sin imagen)'
     image_img.short_description = 'Thumb'
     image_img.allow_tags = True
+
+    def save(self, *args, **kwargs):
+        self.name = self.product.name + " - " + self.color.name
+        self.code = self.product.id + self.color.id
+        self.pub_date = datetime.now()
+        super(Composition, self).save(*args, **kwargs) # Call the "real" save() method.
 
     def __unicode__(self):
         return self.name
