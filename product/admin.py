@@ -1,6 +1,7 @@
 from django.contrib import admin
 from product.models import *
 from image_cropping import ImageCroppingMixin
+from django.forms import CheckboxSelectMultiple
 
 #import nested_admin
 from nested_inline.admin import NestedStackedInline, NestedModelAdmin
@@ -19,22 +20,20 @@ def get_color(self):
 
 def get_material(self):
     return self.material.name
-'''
-def get_cinture_lunghezza(self):
-	return self.cintureLunghezza.id
-	'''
-'''
-def get_scarpe_misura(self):
-	return self.scarpemisura.name'''
+
+
+def duplicate_event(ModelAdmin, request, queryset):
+    for object in queryset:
+        object.id = None
+        object.save()
+    duplicate_event.short_description = "Duplicate selected record"
+
 
 
 class MyModelAdmin(ImageCroppingMixin, admin.ModelAdmin):
     pass
  
-'''
-class ProductAdmin(ImageCroppingMixin, admin.ModelAdmin):
-    list_display = ("image_img", "code", "name", "price", "discount", "price_offer", "prompt_delivery", "delivery", "promo", "active")   
-'''
+
 class AccessoryAdmin(ImageCroppingMixin, admin.ModelAdmin):
     list_display = ("image_img", "code", "name", "price", "discount", "price_offer", "prompt_delivery", "delivery", "promo", "active") 
 
@@ -99,7 +98,15 @@ class ProductAdmin(ImageCroppingMixin, admin.ModelAdmin):
                 ("prompt_delivery", "delivery"),
                 ("slide", "promo"),
                 "tags", "active", "pub_date"
-            )  
+            )
+    def duplicate_event(ModelAdmin, request, queryset):
+        for object in queryset:
+            object.id = None
+            object.save()
+        duplicate_event.short_description = "Duplica Record Selezionati"
+
+    actions = ['duplicate_event']
+
 
 
 
