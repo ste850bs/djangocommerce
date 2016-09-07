@@ -86,10 +86,12 @@ class ProductAdmin(ImageCroppingMixin, admin.ModelAdmin):
     list_display = ("image_img", "code", "name", "price", "discount", "price_offer", "prompt_delivery", "delivery", "promo", "active")
     list_editable = ('active',)
     fields = (
-                ("name", "code"), 
-                ("price", "discount", "price_offer"),
-                ("color", "material"),
-                ("scarpemisura", "cintureLunghezza"),
+                ("name", "code"),
+                "category", 
+                ("price", "discount"),
+                "quantity",
+                #("color", "material"),
+                #("scarpemisura", "cintureLunghezza"),
                 "size",
                 ("width", "lenght", "depth", "height"),
                 "volume",

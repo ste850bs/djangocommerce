@@ -19,8 +19,8 @@ from filer.models import *
 def HomePage(request):
     slider_list = Slider.objects.filter(active=True).order_by('id')
     last_list = Product.objects.all().order_by('-pub_date')[:4]
-    promo_list = Product.objects.filter(promo=True).order_by('-pub_date')[:4]
-    offerte_list = Product.objects.filter(promo=True).order_by('-id')
+    promo_list = Product.objects.filter(promo=True).filter(slide = True).order_by('-pub_date')[:4]
+    offerte_list = Product.objects.filter(promo=True).order_by('-id')[:4]
     product_list = Product.objects.all()[:4]
     context = {'slider_list':slider_list,
     			'last_list':last_list,

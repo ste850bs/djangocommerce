@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from __future__ import unicode_literals
 from django.db import models
 from image_cropping import ImageRatioField, ImageCropField
@@ -191,8 +193,11 @@ class Product(models.Model):
     category = models.ManyToManyField(Category, null=True, blank=True, verbose_name="Seleziona Categorie")
     ## composizione
     #composition = models.ManyToManyField(Composition, null=True, blank=True, verbose_name="Composizioni")
+    quantity = models.IntegerField(blank=True, null=True, verbose_name="quantita",
+                                    help_text = "quantita quando non e composizione")
     ##PRICE
-    price = models.DecimalField('Prezzo', max_digits=10, decimal_places=2, blank=True, null=True)
+    price = models.DecimalField('Prezzo', max_digits=10, decimal_places=2, blank=True, null=True,
+                                help_text = "prezzo base")
     discount = models.IntegerField(blank=True, null=True, verbose_name="sconto percentuale")
     price_offer = models.DecimalField('Prezzo Scontato', max_digits=10, decimal_places=2, blank=True, null=True)
     ##MULTIMEDIA
@@ -203,10 +208,10 @@ class Product(models.Model):
     croplibero = ImageRatioField('image', '595x335', free_crop=True, verbose_name="Ritaglio Libero")
     album = FilerFolderField(null=True, blank=True)
     ## Data
-    color = models.ManyToManyField(Color, null=True, blank=True, verbose_name="Seleziona Colori")
-    material = models.ManyToManyField(Material, null=True, blank=True, verbose_name="Seleziona Metallo")
-    scarpemisura = models.ManyToManyField(TagliaScarpe, null=True, blank=True, verbose_name="Taglia Scarpe")
-    cintureLunghezza = models.ManyToManyField(CintureLunghezza, null=True, blank=True, verbose_name="Lungheza Cinture")
+    color = models.ManyToManyField(Color, null=True, blank=True, verbose_name="Seleziona Colori", editable=False)
+    material = models.ManyToManyField(Material, null=True, blank=True, verbose_name="Seleziona Metallo", editable=False)
+    scarpemisura = models.ManyToManyField(TagliaScarpe, null=True, blank=True, verbose_name="Taglia Scarpe", editable=False)
+    cintureLunghezza = models.ManyToManyField(CintureLunghezza, null=True, blank=True, verbose_name="Lungheza Cinture", editable=False)
     size = models.CharField('Misure', max_length=250, null=True, blank=True)
     width = models.IntegerField(blank=True, null=True, verbose_name="larghezza")
     lenght = models.IntegerField(blank=True, null=True, verbose_name="lunghezza")
@@ -224,7 +229,9 @@ class Product(models.Model):
     slide = models.BooleanField('Mostra in Slide', default=False)
     promo = models.BooleanField('Mostra in Promo', default=False)
 
-
+    def save(self, *args, **kwargs):
+        self.price_offer = self.price - (self.price * self.discount/100)
+        super(Product, self).save(*args, **kwargs) # Call the "real" save() method.
 
     def image_img(self):
         if self.image:
@@ -247,7 +254,8 @@ class Composition(models.Model):
     product = models.ForeignKey(Product, null=True, blank=True, verbose_name="Prodotto")
     name = models.CharField(max_length=100, verbose_name="Titolo:", null=True, editable=False)
     code = models.CharField('Codice', max_length=250, null=True, blank=True, editable=False)
-    price = models.DecimalField('Prezzo', max_digits=10, decimal_places=2, blank=True, null=True)
+    price = models.DecimalField('Prezzo', max_digits=10, decimal_places=2, blank=True, null=True,
+                                help_text = "maggiorazione di prezzo")
     image = models.ImageField(blank=True, null=True, upload_to='product', verbose_name="Immagine")
     slider = ImageRatioField('image', '1170x600', verbose_name="Slider")
     thumb = ImageRatioField('image', '800x578', verbose_name="Miniatura")
@@ -255,8 +263,10 @@ class Composition(models.Model):
     croplibero = ImageRatioField('image', '595x335', free_crop=True, verbose_name="Ritaglio Libero")
     color = models.ForeignKey(Color, null=True, blank=True, verbose_name="Colori")
     material = models.ForeignKey(Material, null=True, blank=True, verbose_name="Metallo")
-    scarpemisura = models.ForeignKey(TagliaScarpe, null=True, blank=True, verbose_name="Scarpe")
-    cintureLunghezza = models.ForeignKey(CintureLunghezza, null=True, blank=True, verbose_name="Cinture")
+    scarpemisura = models.ForeignKey(TagliaScarpe, null=True, blank=True, verbose_name="Taglia Scarpe",
+                                    help_text = "lascia vuoto se non e scarpa")
+    cintureLunghezza = models.ForeignKey(CintureLunghezza, null=True, blank=True, verbose_name="Lunghezza Cinture",
+                                    help_text = "lascia vuoto se non e cintura")
     ## Data
     quantity = models.IntegerField(blank=True, null=True, verbose_name="quantita")
     pub_date = models.DateTimeField('date published', editable=False)
