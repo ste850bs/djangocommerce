@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -129,6 +130,9 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+GRAPPELLI_ADMIN_TITLE = "Berge Urban Couture"
+
 
 
 # Static files (CSS, JavaScript, Images)

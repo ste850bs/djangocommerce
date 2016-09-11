@@ -47,21 +47,6 @@ class Color(models.Model):
         verbose_name_plural = "Colori"
 
 
-'''
-class ColorFoulard(models.Model):
-    name = models.CharField('nome colore', max_length=100)
-    code = models.CharField('codice colore', max_length=250, null=True, blank=True)
-    css_color = models.CharField('css colore', max_length=250, null=True, blank=True)
-    image = image = models.ImageField('immagine colore', blank=True, null=True, upload_to='color')
-    thumb = ImageRatioField('image', '800x578', verbose_name="Miniatura")
-
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        verbose_name_plural = "Colori Foulard"
-'''
-
 
 
 class Material(models.Model):
@@ -79,6 +64,7 @@ class Material(models.Model):
 
 
 
+
 class TagliaScarpe(models.Model):
     name = models.CharField('nome', max_length=100)
     taglia = models.CharField('taglia', max_length=250, null=True, blank=True)
@@ -88,6 +74,7 @@ class TagliaScarpe(models.Model):
 
     class Meta:
         verbose_name_plural = "Taglia Scarpe"
+
 
 
 
@@ -101,6 +88,7 @@ class CintureLunghezza(models.Model):
 
     class Meta:
         verbose_name_plural = "Lunghezza Cinture"
+
 
 
 
@@ -198,7 +186,7 @@ class Product(models.Model):
     ##PRICE
     price = models.DecimalField('Prezzo', max_digits=10, decimal_places=2, blank=True, null=True,
                                 help_text = "prezzo base")
-    discount = models.IntegerField(blank=True, null=True, verbose_name="sconto percentuale")
+    discount = models.IntegerField(blank=True, null=True, default= 0, verbose_name="sconto percentuale")
     price_offer = models.DecimalField('Prezzo Scontato', max_digits=10, decimal_places=2, blank=True, null=True)
     ##MULTIMEDIA
     image = models.ImageField(blank=True, null=True, upload_to='product', verbose_name="Immagine")
@@ -208,7 +196,8 @@ class Product(models.Model):
     croplibero = ImageRatioField('image', '595x335', free_crop=True, verbose_name="Ritaglio Libero")
     album = FilerFolderField(null=True, blank=True)
     ## Data
-    color = models.ManyToManyField(Color, null=True, blank=True, verbose_name="Seleziona Colori", editable=False)
+    color = models.ManyToManyField(Color, null=True, blank=True, verbose_name="Seleziona Colori",
+                                    help_text="solo se a 40 giorni")
     material = models.ManyToManyField(Material, null=True, blank=True, verbose_name="Seleziona Metallo", editable=False)
     scarpemisura = models.ManyToManyField(TagliaScarpe, null=True, blank=True, verbose_name="Taglia Scarpe", editable=False)
     cintureLunghezza = models.ManyToManyField(CintureLunghezza, null=True, blank=True, verbose_name="Lungheza Cinture", editable=False)
@@ -250,6 +239,7 @@ class Product(models.Model):
 
 
 
+
 class Composition(models.Model):
     product = models.ForeignKey(Product, null=True, blank=True, verbose_name="Prodotto")
     name = models.CharField(max_length=100, verbose_name="Titolo:", null=True, editable=False)
@@ -262,7 +252,7 @@ class Composition(models.Model):
     thumbdue = ImageRatioField('image', '745x558', verbose_name="Miniatura pagina dettaglio")
     croplibero = ImageRatioField('image', '595x335', free_crop=True, verbose_name="Ritaglio Libero")
     color = models.ForeignKey(Color, null=True, blank=True, verbose_name="Colori")
-    material = models.ForeignKey(Material, null=True, blank=True, verbose_name="Metallo")
+    material = models.ForeignKey(Material, null=True, blank=True, verbose_name="Metallo", editable=False)
     scarpemisura = models.ForeignKey(TagliaScarpe, null=True, blank=True, verbose_name="Taglia Scarpe",
                                     help_text = "lascia vuoto se non e scarpa")
     cintureLunghezza = models.ForeignKey(CintureLunghezza, null=True, blank=True, verbose_name="Lunghezza Cinture",
@@ -294,6 +284,8 @@ class Composition(models.Model):
         ordering = ['id']
 
 
+
+
 ## FILTER
 class ProductFilter(django_filters.FilterSet):
     #name = django_filters.CharFilter(lookup_expr='iexact')
@@ -304,6 +296,9 @@ class ProductFilter(django_filters.FilterSet):
     class Meta:
         model = Product
         fields = ['price', 'pub_date']
+
+
+
 
 ## forms
 class ProductForm(forms.Form):

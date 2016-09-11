@@ -16,7 +16,10 @@
 
 
 {% block content %}
-<form class="white-row" action="/test/" method="post">{% csrf_token %}
+<form class="white-row" action="/add/" method="get">{% csrf_token %}
+
+		<input type="hidden" name="product_id" value="{{product.id}}">
+
 
 	<div id="dettaglio-offerte" class="container">
 		<div class="col-xs-12 col-bianca">

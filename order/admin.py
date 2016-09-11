@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.contrib import admin
 from order.models import *
 from image_cropping import ImageCroppingMixin
 

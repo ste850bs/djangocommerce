@@ -7,10 +7,12 @@ from django.views.generic import ListView, DetailView
 from django.template.loader import render_to_string
 from product.models import *
 from product.forms import *
-from cart.models import *
 from sito.models import *
 from django.core.mail import send_mail
 from filer.models import *
+#carton
+from carton.cart import Cart
+
 
 
 
@@ -59,24 +61,15 @@ def ProductFilterView(request, post_id):
     return render_to_response('detail.html', context, context_instance=RequestContext(request))
 
 
+## carton
+def add(request):
+    cart = Cart(request.session)
+    product = Product.objects.get(id=request.GET.get('product_id'))
+    cart.add(product, price=product.price)
+    return HttpResponse("Added")
 
-# views.py
-from cart.cart import Cart
-from product.models import Product
-
-def add_to_cart(request, product_id, quantity):
-    product = Product.objects.get(id=product_id)
-    cart = Cart(request)
-    cart.add(product)
-
-def remove_from_cart(request, product_id):
-    product = Product.objects.get(id=product_id)
-    cart = Cart(request)
-    cart.remove(product)
-
-def get_cart(request):
-    return render_to_response('cart.html', dict(cart=Cart(request)))
-
+def show(request):
+    return render(request, 'cart.html')
 
 
 ###  GLOBALI ###

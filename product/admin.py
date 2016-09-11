@@ -65,12 +65,14 @@ class TopLevelAdmin(NestedModelAdmin):
     model = Category
     inlines = [LevelOneInline]
 '''
+
+
                    
 class CompositionAssociactionAdmin(NestedStackedInline):
     model = Composition
     extra = 1
     fk_name = 'product'
-    fields = ('image', ('color', 'material', 'scarpemisura', 'cintureLunghezza'), ('quantity', 'price'))
+    fields = ('image', ('color', 'scarpemisura', 'cintureLunghezza'), ('quantity', 'price'))
 
 
 class ProductAdmin(ImageCroppingMixin, admin.ModelAdmin):
@@ -90,6 +92,7 @@ class ProductAdmin(ImageCroppingMixin, admin.ModelAdmin):
                 "category", 
                 ("price", "discount"),
                 "quantity",
+                "color",
                 #("color", "material"),
                 #("scarpemisura", "cintureLunghezza"),
                 "size",

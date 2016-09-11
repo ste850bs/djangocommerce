@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,13 +44,13 @@ INSTALLED_APPS = [
     'filer',
     'mptt',
     'image_cropping',
+    'carton',
     'product',
-    'cart',
     'order',
     'django_filters',
-    #'nested_admin',
     'nested_inline',
     'sito',
+    #'cart',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -83,6 +84,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'djangocommerce.wsgi.application'
+
+GRAPPELLI_ADMIN_TITLE = "Berge Urban Couture"
 
 
 # Database
@@ -192,3 +195,24 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 #TINYMCE_SPELLCHECKER = True
 #TINYMCE_COMPRESSOR = True
+
+
+
+# SESSION
+# Cookie name. This can be whatever you want.
+SESSION_COOKIE_NAME = 'sessionid'
+# The module to store sessions data.
+SESSION_ENGINE = 'django.contrib.sessions.backends.db' 
+# Age of cookie, in seconds (default: 2 weeks). 
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 7 * 2
+# Whether a user's session cookie expires when the Web browser is closed 
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+# Whether the session cookie should be secure (https:// only). 
+SESSION_COOKIE_SECURE = False
+
+
+#carton
+CART_PRODUCT_MODEL = 'product.models.Product'
+
+
+

@@ -21,14 +21,20 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    #url(r'^admin/', admin.site.urls),
     url(r'^$', views.HomePage, name='home'),
     url(r'^product/(?P<post_id>\d+)/$', views.ProductFilterView, name='detail'),
     url(r'^category/(?P<post_id>\d+)/$', views.ProductFilterCategory, name='categoria'),
     url(r'^tags/(?P<post_id>\d+)/$', views.ProductFilterTag, name='tag-filter'),
     url(r'^product-list$', views.product_list, name='product-list'),
-    url(r'^test/$', views.add_to_cart),
+    #carton
+    url(r'^add/$', views.add, name='shopping-cart-add'),
+    #url(r'^remove/$', views.remove, name='shopping-cart-remove'),
+    url(r'^show/$', views.show, name='shopping-cart-show'),
+    #admin
     url(r'^nested_admin/', include('nested_admin.urls')),
+    url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
+    url(r'^admin/', include(admin.site.urls)), # admin site
 ]
 
 if settings.DEBUG:  
