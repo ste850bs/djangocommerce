@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'carton',
     'product',
     'order',
+    'customer',
     'django_filters',
     'nested_inline',
     'sito',
