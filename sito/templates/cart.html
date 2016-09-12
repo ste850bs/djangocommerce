@@ -1,13 +1,16 @@
-{% extends 'base.html' %}
 
-{% block content %}
 
 
 {% load carton_tags %}
 {% get_cart as cart %}
 
 {% for item in cart.items %}
-    {{ item.product.name }}
+    Nome: {{ item.product.name }} -|-
+    Quantità: {{ item.quantity }} -|-
+    Colore: {{ item.color }} -|-
+    Tot: {{ item.subtotal }} -|-
+    <br>
+    <br>
 {% endfor %}
 
 You can also use this convinent shortcut:
@@ -16,4 +19,3 @@ You can also use this convinent shortcut:
 {% endfor %}
 
 
-{% endblock %}

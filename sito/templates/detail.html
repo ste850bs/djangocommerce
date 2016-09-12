@@ -75,9 +75,9 @@
 				<br>
 				<label>Colori Disponibili:</label><br>
 				<ul>
-					{% for col in product.composition.all %}
+					{% for col in product.color.all %}
 					<li>
-					<input type="checkbox" name="vehicle" value="{{col.id}}">
+					<input type="checkbox" name="color_id" value="{{col.id}}">
 					{% if col.color.image %}
 						<img src="{% cropped_thumbnail col.color "thumb" %}" class="img-color">
 					{% else %}

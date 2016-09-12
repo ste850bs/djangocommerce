@@ -12,12 +12,21 @@ from django.core.mail import send_mail
 from filer.models import *
 #carton
 from carton.cart import Cart
+#login
+from django.contrib.auth.decorators import login_required
+
+from django.shortcuts import redirect
+
+
 
 
 
 
 
 # Create your views here.
+
+
+@login_required(login_url="login/")
 def HomePage(request):
     slider_list = Slider.objects.filter(active=True).order_by('id')
     last_list = Product.objects.all().order_by('-pub_date')[:4]
@@ -65,7 +74,8 @@ def ProductFilterView(request, post_id):
 def add(request):
     cart = Cart(request.session)
     product = Product.objects.get(id=request.GET.get('product_id'))
-    cart.add(product, price=product.price)
+    col = Color.objects.get(id=request.GET.get('color_id'))
+    cart.add(product, price=product.price, color=col.id)
     return HttpResponse("Added")
 
 def show(request):

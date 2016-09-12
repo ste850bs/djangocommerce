@@ -8,7 +8,11 @@
 
 {% include 'components/slider.html' %}
 
+{% if user.is_authenticated %}
 
+<h1>{{user.username}}</h1>
+
+{% endif %}
 
 <div id="colori" class="container">
 	<div class="col-xs-12">
