@@ -31,7 +31,7 @@ class CartItem(models.Model):
 		super(CartItem, self).save(*args, **kwargs) # Call the "real" save() method.
 
 	def __unicode__(self):
-		return self.codice
+		return self.user.username
 
 	class Meta:
 		verbose_name_plural = "Articoli Carrello"
