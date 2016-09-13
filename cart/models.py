@@ -8,6 +8,8 @@ from product.models import *
 from django.contrib.auth.models import User
 
 from django import forms
+from django.forms import ModelForm
+
 
 
 
@@ -37,9 +39,9 @@ class CartItem(models.Model):
 
 
 
-class AddForm(forms.Form):
+class AddForm(ModelForm):
     class Meta:
         model = CartItem
-        fields = ['user', 'product', 'color', 'cintureLunghezza', 'scarpemisura' 'composition', 'price', 'quantity']
+        fields = ['user', 'product', 'color', 'cintureLunghezza', 'scarpemisura', 'composition', 'price', 'quantity']
 
 

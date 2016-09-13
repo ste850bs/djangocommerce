@@ -88,16 +88,18 @@ def add_to_cart(request):
 
 
 
-def add_to_cart(request, offset):
-    if request.method == 'POST':
+def add_to_cart(request):
+    if request.method == "POST":
         form = AddForm(request.POST)
         if form.is_valid():
-            instance = form.save(commit=False)
-            instance.save()
-            return HttpResponseRedirect('/')
+            post = form.save(commit=False)
+            post.user = request.user
+            post.published_date = timezone.now()
+            post.save()
+            return redirect('/', pk=post.pk)
     else:
-        form = CostForm()
-    render_to_response('path/to/template.html',{'form':form},context_instance=RequestContext(request))
+        form = AddForm()
+    return render(request, 'cart-form.html', {'form': form})
 
 
 ###  GLOBALI ###
