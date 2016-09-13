@@ -21,6 +21,8 @@ import django_filters
 
 class Category(models.Model):
     title = models.CharField('titolo', max_length=100)
+    title_uk = models.CharField('Titolo Inglese', max_length=250, null=True, blank=True)
+    title_fr = models.CharField('Titolo Francese', max_length=250, null=True, blank=True)
     subtitle = models.CharField('sottotitolo', max_length=250, null=True, blank=True)
 
     def __unicode__(self):
@@ -177,6 +179,8 @@ class Accessory(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=100, verbose_name="Titolo:")
+    name_uk = models.CharField('Titolo Inglese', max_length=250, null=True, blank=True)
+    name_fr = models.CharField('Titolo Francese', max_length=250, null=True, blank=True)
     code = models.CharField('Codice', max_length=250, null=True, blank=True)
     category = models.ManyToManyField(Category, null=True, blank=True, verbose_name="Seleziona Categorie")
     ## composizione
@@ -208,18 +212,25 @@ class Product(models.Model):
     height = models.IntegerField(blank=True, null=True, verbose_name="altezza")
     volume = models.DecimalField('Volume', max_digits=10, decimal_places=2, blank=True, null=True)
     descrizione = models.TextField(null=True, blank=True, verbose_name="Descrizione")
+    descrizione_uk = models.TextField(null=True, blank=True, verbose_name="Descrizione Inglese")
+    descrizione_fr = models.TextField(null=True, blank=True, verbose_name="Descrizione Francese")
     ## Delivery
     prompt_delivery = models.BooleanField('Pronta Consegna', default=False)
     delivery = models.BooleanField('Consegna 40gg', default=False)
+    summer = models.BooleanField('Estate', default=False)
+    winter = models.BooleanField('Winter', default=False)
+    start_season = models.DateField('Inizio Stagione', blank=True, null=True)
+    end_season = models.DateField('Fine Stagione', blank=True, null=True)
     ## Accessory
     tags = TaggableManager(verbose_name="Parole chiave", blank=True)
-    pub_date = models.DateTimeField('date published')
+    pub_date = models.DateTimeField('date published', editable=False)
     active = models.BooleanField('attiva', default=False)
     slide = models.BooleanField('Mostra in Slide', default=False)
     promo = models.BooleanField('Mostra in Promo', default=False)
 
     def save(self, *args, **kwargs):
         self.price_offer = self.price - (self.price * self.discount/100)
+        self.pub_date = datetime.now()
         super(Product, self).save(*args, **kwargs) # Call the "real" save() method.
 
     def image_img(self):

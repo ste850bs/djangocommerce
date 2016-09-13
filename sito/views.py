@@ -8,10 +8,10 @@ from django.template.loader import render_to_string
 from product.models import *
 from product.forms import *
 from sito.models import *
+from cart.models import *
 from django.core.mail import send_mail
 from filer.models import *
-#carton
-from carton.cart import Cart
+#
 #login
 from django.contrib.auth.decorators import login_required
 
@@ -70,16 +70,34 @@ def ProductFilterView(request, post_id):
     return render_to_response('detail.html', context, context_instance=RequestContext(request))
 
 
-## carton
-def add(request):
-    cart = Cart(request.session)
-    product = Product.objects.get(id=request.GET.get('product_id'))
-    col = Color.objects.get(id=request.GET.get('color_id'))
-    cart.add(product, price=product.price, color=col.id)
-    return HttpResponse("Added")
 
-def show(request):
-    return render(request, 'cart.html')
+
+
+## cart
+'''
+@login_required(login_url="login/")
+def add_to_cart(request):
+    request.session['cart_list']=[]
+    cart_list = request.session['cart_list']
+    product = request.POST.get("product_id")
+    color = request.POST.get("color_id")
+    cart_list = cart_list+[[product,color]]
+    request.session['cart_list'] = cart_list
+    context = {'cart_list':cart_list}
+    return render_to_response("cart.html", context, context_instance=RequestContext(request))'''
+
+
+
+def add_to_cart(request, offset):
+    if request.method == 'POST':
+        form = AddForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.save()
+            return HttpResponseRedirect('/')
+    else:
+        form = CostForm()
+    render_to_response('path/to/template.html',{'form':form},context_instance=RequestContext(request))
 
 
 ###  GLOBALI ###

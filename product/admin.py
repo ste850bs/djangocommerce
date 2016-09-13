@@ -85,10 +85,11 @@ class ProductAdmin(ImageCroppingMixin, admin.ModelAdmin):
 
     model = Product
     inlines = [CompositionAssociactionAdmin]
-    list_display = ("image_img", "code", "name", "price", "discount", "price_offer", "prompt_delivery", "delivery", "promo", "active")
-    list_editable = ('active',)
+    list_display = ("image_img", "code", "name", "price", "discount", "price_offer", "prompt_delivery", "delivery", "promo", "summer", "winter", "active")
+    list_editable = ('summer', 'winter', 'active',)
     fields = (
-                ("name", "code"),
+                "code",
+                ("name", "name_uk", "name_fr"),
                 "category", 
                 ("price", "discount"),
                 "quantity",
@@ -98,11 +99,13 @@ class ProductAdmin(ImageCroppingMixin, admin.ModelAdmin):
                 "size",
                 ("width", "lenght", "depth", "height"),
                 "volume",
-                "descrizione", "album",
+                "descrizione", "descrizione_uk", "descrizione_fr",
+                 "album",
                 "image", "slider", "thumb", "thumbdue", "croplibero",
                 ("prompt_delivery", "delivery"),
+                ("summer", "winter", "start_season", "end_season"),
                 ("slide", "promo"),
-                "tags", "active", "pub_date"
+                "tags", "active"
             )
 
     actions = ['duplicate_event']

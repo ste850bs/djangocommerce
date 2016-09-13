@@ -44,14 +44,13 @@ INSTALLED_APPS = [
     'filer',
     'mptt',
     'image_cropping',
-    'carton',
     'product',
+    'cart',
     'order',
     'customer',
     'django_filters',
     'nested_inline',
     'sito',
-    #'cart',
 ]
 
 MIDDLEWARE_CLASSES = [

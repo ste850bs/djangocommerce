@@ -5,13 +5,15 @@ from django.utils.timezone import datetime
 
 from django import forms
 
+from product.models import *
+
 from django.contrib.auth.models import User
 
 
 # Create your models here.
 class Customer(models.Model):
     user = models.OneToOneField(User, related_name='profile')
-    discount = models.IntegerField(blank=True, null=True, verbose_name="sconto percentuale")
+    discount = models.IntegerField(blank=True, null=True, default=0, verbose_name="sconto percentuale")
     pub_date = models.DateTimeField('date published')
     active = models.BooleanField('attiva', default=False)
 

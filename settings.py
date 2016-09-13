@@ -29,7 +29,6 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'grappelli',
     'django.contrib.admin',
@@ -44,10 +43,12 @@ INSTALLED_APPS = [
     'filer',
     'mptt',
     'image_cropping',
-    'cart',
     'product',
+    'cart',
+    'order',
+    'customer',
+    'django_filters',
     'nested_inline',
-    #'nested_admin',
     'sito',
 ]
 

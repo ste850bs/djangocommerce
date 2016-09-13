@@ -1,21 +1,7 @@
 
+{% for car in cart_list %}
 
+<h1>{{car.first}}</h1>
 
-{% load carton_tags %}
-{% get_cart as cart %}
-
-{% for item in cart.items %}
-    Nome: {{ item.product.name }} -|-
-    Quantità: {{ item.quantity }} -|-
-    Colore: {{ item.color }} -|-
-    Tot: {{ item.subtotal }} -|-
-    <br>
-    <br>
 {% endfor %}
-
-You can also use this convinent shortcut:
-{% for product in cart.products %}
-    {{ product.name }}
-{% endfor %}
-
 

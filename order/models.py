@@ -13,6 +13,8 @@ from django.utils import timezone
 
 from django import forms
 
+
+
 class Order(models.Model):
 	id_user = models.CharField('id utente', max_length=250, null=True, blank=True)
 	name = models.CharField(max_length=100, verbose_name="Titolo:")
