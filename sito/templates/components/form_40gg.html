@@ -1,0 +1,46 @@
+<!-- colori -->
+<br>
+<label>Colori Disponibili:</label><br>
+<ul>
+	{% for col in product.color.all %}
+		<li>
+			<input type="checkbox" name="color_id" value="{{col.id}}">
+			{% if col.color.image %}
+				{% load cropping %}
+				<img src="{% cropped_thumbnail col.color "thumb" %}" class="img-color">
+			{% else %}
+				<i class="fa fa-circle" aria-hidden="true" style="color: {{col.color.css_color}}"></i>
+			{% endif %}
+		</li>
+	{% endfor %}
+</ul>
+
+
+
+
+<!-- Misura Scarpe -->
+{% if product.scarpemisura.all %}
+	<br>
+	<br>
+	<label>Misure Scarpe:</label>
+	<select name="scarpemisura" class="form-control">
+		{% for sc in product.scarpemisura.all %}
+			<option value="{{sc.id}}">{{sc.name}}</option>
+		{% endfor %}
+		</select> 
+{% endif %}
+
+
+
+
+<!-- Cintura Lunghezza -->
+{% if product.cintureLunghezza.all %}
+	<br>
+	<br>
+	<label>Misure Scarpe:</label>
+	<select name="cintureLunghezza" class="form-control">
+		{% for sc in product.scarpemisura.all %}
+			<option value="{{sc.id}}">{{sc.name}}</option>
+		{% endfor %}
+	</select> 
+{% endif %}
