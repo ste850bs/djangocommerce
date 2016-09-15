@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="container" style="background-color: #ffffff">
-<h1>Ciao {{request.user.username }}, Questo è il tuo carrello:</h1>
+<h1>Ciao {{request.user.username }}, questo è il tuo carrello:</h1>
 
 <table class="table table-striped">
   <tr>
@@ -38,8 +38,12 @@
       {% endif %}
     </td>
   	<td>{{cart.quantity}}</t>
-  	<td>{{cart.price}}</td>
-    <td></td>
+  	<td>{{cart.price}} €.</td>
+    <td>
+      Totale: {{cart.price_total}} €.<br>
+      Scontato: {{cart.price_discount}} €.<br>
+      Prezzo a Voi Riservato: {{cart.price_reserved}} €.<br>
+    </td>
   	<td></td>
   </tr>
 {% endfor %}

@@ -109,6 +109,7 @@ def add_to_cart(request):
             post = form.save(commit=False)
             post.user = request.user
             post.published_date = timezone.now()
+            #tmp_reserved = request.user.profile.discount
             post.save()
             return redirect('/', pk=post.pk)
     else:

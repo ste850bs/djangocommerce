@@ -4,6 +4,7 @@ from datetime import datetime, timedelta, time, date
 from django.utils.timesince import timesince
 from django.utils import timezone
 from product.models import *
+from customer.models import *
 
 from django.contrib.auth.models import User
 
@@ -33,7 +34,7 @@ class CartItem(models.Model):
 		self.pub_date = datetime.now()
 		self.price_total = self.price * self.quantity
 		self.price_discount = self.price_total - (self.price_total * self.product.discount/100)
-		self.price_reserved = self.price_discount - (self.price_discount * self.user.customer.discount/100)
+		self.price_reserved = self.price_discount - (self.price_discount * self.user.profile.discount/100)
 		super(CartItem, self).save(*args, **kwargs) # Call the "real" save() method.
 
 	def __unicode__(self):
