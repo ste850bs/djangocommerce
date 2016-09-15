@@ -40,7 +40,7 @@ class Color(models.Model):
     code = models.CharField('codice colore', max_length=250, null=True, blank=True)
     css_color = models.CharField('css colore', max_length=250, null=True, blank=True)
     image = image = models.ImageField('immagine colore', blank=True, null=True, upload_to='color')
-    thumb = ImageRatioField('image', '300x300', verbose_name="Miniatura")
+    thumb = ImageRatioField('image', '300x150', verbose_name="Miniatura: 300x150px")
 
     def __unicode__(self):
         return self.name

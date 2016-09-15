@@ -4,8 +4,6 @@
 
 {% block personaljs %}
 	
-
-
 	{% load staticfiles %}
 	<script type='text/javascript' src="{% static 'unitegallery/js/jquery-11.0.min.js' %}"></script>
     <!-- multizoom -->
@@ -18,11 +16,11 @@
 {% block content %}
 <form class="white-row" action="/add/" method="POST">{% csrf_token %}
 
-		<input type="hidden" name="product" value="{{product.id}}">
-
+	<input type="hidden" name="product" value="{{product.id}}">
 
 	<div id="dettaglio-offerte" class="container">
 		<div class="col-xs-12 col-bianca">
+			
 			<div class="col-xs-12 col-sm-8">{% load cropping %}
 				<a data-large="/media/{{product.image}}" data-title="{{product.name}}">
 				<img src="{% cropped_thumbnail product "thumbdue" %}" class="img-responsive" id="image1">
@@ -37,8 +35,7 @@
 					</div>
 					{% endfor %}
 				</div>
-
-			</div>
+			</div><!-- chiudi sm-8 -->
 
 
 			<div class="col-xs-12 col-sm-4">
@@ -68,21 +65,23 @@
 					<span class="prezzo-scontato">€{{product.price}}</span>
 					{% endif %}
 				</h3>
-				
-				<!-- quantità -->
-				<label>Quantità:</label>
-				<input name="quantity" type="number" min="1" step="1" value="0" class="form-control"/>				
-				
+							
+			</div>	
+
+			<div class="col-xs-12">
 				{% if product.composition_set.all %}
 					<h1>CIAO</h1>
 				{% else %}
 					{% include 'components/form_40gg.html' %}
 				{% endif %}
+			</div>
 
+			<div class="col-xs-12">
 				<input id="contact_submit" type="submit" value="AGGIUNGI AL CARRELLO" class="btn btn-primary btn-md" data-loading-text="Loading...">
 				<br>
 				<br>
 			</div>
+
 		</div>
 	</div>
 

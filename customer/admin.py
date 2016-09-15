@@ -23,4 +23,5 @@ class CustomerAdmin(admin.ModelAdmin):
     extra = 1
     fk_name = 'user'
 
+
 admin.site.register(Customer, CustomerAdmin)

@@ -13,7 +13,9 @@ from django.core.mail import send_mail
 from filer.models import *
 #
 #login
+from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
 
 from django.shortcuts import redirect
 
@@ -42,32 +44,45 @@ def HomePage(request):
 
 
 
+@login_required(login_url="login/")
 def ProductFilterCategory(request, post_id):
     product_list = Product.objects.filter(category__in=post_id)
     context = {'product_list': product_list}
     return render_to_response('price_list.html', context, context_instance=RequestContext(request))
 
 
+@login_required(login_url="login/")
 def ProductFilterTag(request, post_id):
     product_list = Product.objects.filter(tags__in=post_id)
     context = {'product_list': product_list}
     return render_to_response('category_list.html', context, context_instance=RequestContext(request))
 
 
+@login_required(login_url="login/")
 def product_list(request):
     product_list = ProductFilter(request.GET, queryset=Product.objects.all())
     return render(request, 'price_list.html', {'product_list': product_list})
 
 
-
+@login_required(login_url="login/")
 def ProductFilterView(request, post_id):
     product = Product.objects.get(pk=post_id)
     filer_list = Image.objects.filter(folder_id = product.album)
+    lunghezzacinture_list = CintureLunghezza.objects.all()
+    tagliascarpe_list = TagliaScarpe.objects.all()
     form = ProductForm()
     context = {'product': product,
     			'filer_list':filer_list,
+                'lunghezzacinture_list':lunghezzacinture_list,
+                'tagliascarpe_list':tagliascarpe_list,
                 'form':form}
     return render_to_response('detail.html', context, context_instance=RequestContext(request))
+
+
+def logout_view(request):
+    auth.logout(request)
+    return HttpResponseRedirect('/')
+
 
 
 

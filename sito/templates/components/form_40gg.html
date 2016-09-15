@@ -1,46 +1,51 @@
 <!-- colori -->
 <br>
 <label>Colori Disponibili:</label><br>
-<ul>
-	{% for col in product.color.all %}
-		<li>
-			<input type="checkbox" name="color_id" value="{{col.id}}">
-			{% if col.color.image %}
-				{% load cropping %}
-				<img src="{% cropped_thumbnail col.color "thumb" %}" class="img-color">
-			{% else %}
-				<i class="fa fa-circle" aria-hidden="true" style="color: {{col.color.css_color}}"></i>
-			{% endif %}
-		</li>
-	{% endfor %}
-</ul>
+
+	<div class="row">
+		{% for col in product.color.all %}
+			<div class="col-xs-12 col-sm-3 col-md-2 thumb-colori">
+				{% if col.image %}
+					{% load cropping %}
+					<img src="{% cropped_thumbnail col 'thumb' %}" class="img-responsive">
+				{% else %}
+					<i class="fa fa-circle" aria-hidden="true" style="color: #{{col.css_color}}"></i>
+				{% endif %}
+				<input type="radio" name="color_id" value="{{col.id}}"> {{col.name}}
+			</div>
+		{% endfor %}
+	</div><!-- row -->
 
 
 
 
-<!-- Misura Scarpe -->
-{% if product.scarpemisura.all %}
-	<br>
-	<br>
+<div class="col-xs-12 col-sm-8">
+{% for cat in product.category.all %}
+	{% if cat.id == 2 %}
+		<!-- Cintura Lunghezza -->
+		<label>Lunghezza Cinture:</label>
+		<select name="cintureLunghezza" class="form-control">
+			{% for sc in lunghezzacinture_list %}
+				<option value="{{sc.id}}">{{sc.name}}</option>
+			{% endfor %}
+		</select> 
+	{% endif %}
+	
+	<!-- Misura Scarpe -->
+	{% if cat.id == 5 %}
 	<label>Misure Scarpe:</label>
 	<select name="scarpemisura" class="form-control">
-		{% for sc in product.scarpemisura.all %}
-			<option value="{{sc.id}}">{{sc.name}}</option>
-		{% endfor %}
-		</select> 
-{% endif %}
-
-
-
-
-<!-- Cintura Lunghezza -->
-{% if product.cintureLunghezza.all %}
-	<br>
-	<br>
-	<label>Misure Scarpe:</label>
-	<select name="cintureLunghezza" class="form-control">
-		{% for sc in product.scarpemisura.all %}
+		{% for sc in tagliascarpe_list %}
 			<option value="{{sc.id}}">{{sc.name}}</option>
 		{% endfor %}
 	</select> 
 {% endif %}
+
+{% endfor %}
+</div>
+
+<div class="col-xs-12 col-sm-4">
+	<!-- quantità -->
+				<label>Quantità:</label>
+				<input name="quantity" type="number" min="1" step="1" value="0" class="form-control"/>	
+</div>

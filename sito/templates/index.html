@@ -8,11 +8,7 @@
 
 {% include 'components/slider.html' %}
 
-{% if user.is_authenticated %}
-
-<h1>{{user.profile.discount}}</h1>
-
-{% endif %}
+{% if user.is_authenticated %} {% endif %}
 
 <div id="colori" class="container">
 	<div class="col-xs-12">
