@@ -11,8 +11,10 @@
   	  <th>Cod.</th>
       <th>Prodotto</th>
       <th>Colore</th>
+      <th>Misure:</th>
       <th>Quantità</th>
-      <th>Prezzo</th>
+      <th>Prezzo Unitario</th>
+      <th>Prezzo Totale</th>
       <th></th>
   </tr>
 
@@ -27,8 +29,17 @@
   	<td>
   		<img src="/media/{{cart.color.image}}" class="color-thumb-circle">
   	</td>
+    <td>
+      {% if cart.cintureLunghezza %}
+        Lunghezza Cintura: {{cart.cintureLunghezza.name}}<br>
+      {% endif %}
+      {% if cart.scarpemisura %}
+        Lunghezza Cintura: {{cart.scarpemisura.name}}<br>
+      {% endif %}
+    </td>
   	<td>{{cart.quantity}}</t>
-  	<td>{{product.price}}</td>
+  	<td>{{cart.price}}</td>
+    <td></td>
   	<td></td>
   </tr>
 {% endfor %}

@@ -23,11 +23,17 @@ class CartItem(models.Model):
 	scarpemisura = models.ForeignKey(TagliaScarpe, null=True, blank=True, verbose_name="Misura scarpe")
 	#prezzo
 	price = models.DecimalField('Prezzo', max_digits=10, decimal_places=2, blank=True, null=True)
+	price_total = models.DecimalField('Prezzo', max_digits=10, decimal_places=2, blank=True, null=True)
+	price_discount = models.DecimalField('Prezzo', max_digits=10, decimal_places=2, blank=True, null=True)
+	price_reserved = models.DecimalField('Prezzo', max_digits=10, decimal_places=2, blank=True, null=True)
 	quantity = models.IntegerField(blank=True, null=True, verbose_name="quantita")
 	pub_date = models.DateTimeField('date published', editable=False)
 
 	def save(self, *args, **kwargs):
 		self.pub_date = datetime.now()
+		self.price_total = self.price * self.quantity
+		self.price_discount = self.price_total - (self.price_total * self.product.discount/100)
+		self.price_reserved = self.price_discount - (self.price_discount * self.user.customer.discount/100)
 		super(CartItem, self).save(*args, **kwargs) # Call the "real" save() method.
 
 	def __unicode__(self):
