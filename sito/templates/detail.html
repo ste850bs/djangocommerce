@@ -17,6 +17,8 @@
 <form class="white-row" action="/add/" method="POST">{% csrf_token %}
 
 	<input type="hidden" name="product" value="{{product.id}}">
+	<input type="hidden" name="price" value="{{product.price}}">
+
 
 	<div id="dettaglio-offerte" class="container">
 		<div class="col-xs-12 col-bianca">

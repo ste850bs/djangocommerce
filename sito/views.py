@@ -102,7 +102,6 @@ def add_to_cart(request):
     return render_to_response("cart.html", context, context_instance=RequestContext(request))'''
 
 
-
 def add_to_cart(request):
     if request.method == "POST":
         form = AddForm(request.POST)
@@ -115,6 +114,12 @@ def add_to_cart(request):
     else:
         form = AddForm()
     return render(request, 'cart-form.html', {'form': form})
+
+
+def show_cart(request):
+    cart_list = CartItem.objects.filter(user_id=request.user.id)
+    context = {'cart_list':cart_list}
+    return render_to_response('cart.html', context, context_instance=RequestContext(request))
 
 
 ###  GLOBALI ###

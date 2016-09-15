@@ -1,7 +1,45 @@
+{% extends 'base.html' %}
 
-{% for car in cart_list %}
 
-<h1>{{car.first}}</h1>
+{% block content %}
+<div class="container" style="background-color: #ffffff">
+<h1>Ciao {{request.user.username }}, Questo è il tuo carrello:</h1>
 
+<table class="table table-striped">
+  <tr>
+  	  <th>img</th>
+  	  <th>Cod.</th>
+      <th>Prodotto</th>
+      <th>Colore</th>
+      <th>Quantità</th>
+      <th>Prezzo</th>
+      <th></th>
+  </tr>
+
+ {% for cart in cart_list %}
+  <tr>
+  	<td>
+  		{% load cropping %}
+  		<img src="{% cropped_thumbnail cart.product "thumbdue" %}" style="width:200px;">
+  	</td>
+  	<td>{{cart.product.code}}</td>
+  	<td>{{cart.product.name}}</td>
+  	<td>
+  		<img src="/media/{{cart.color.image}}" class="color-thumb-circle">
+  	</td>
+  	<td>{{cart.quantity}}</t>
+  	<td>{{product.price}}</td>
+  	<td></td>
+  </tr>
 {% endfor %}
+
+
+
+</table>
+
+</div>
+{% endblock %}
+
+
+
 

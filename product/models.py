@@ -39,7 +39,7 @@ class Color(models.Model):
     name = models.CharField('nome colore', max_length=100)
     code = models.CharField('codice colore', max_length=250, null=True, blank=True)
     css_color = models.CharField('css colore', max_length=250, null=True, blank=True)
-    image = image = models.ImageField('immagine colore', blank=True, null=True, upload_to='color')
+    image = models.ImageField('immagine colore', blank=True, null=True, upload_to='color')
     thumb = ImageRatioField('image', '300x150', verbose_name="Miniatura: 300x150px")
 
     def __unicode__(self):
@@ -53,7 +53,7 @@ class Color(models.Model):
 
 class Material(models.Model):
     name = models.CharField('nome colore', max_length=100)
-    image = image = models.ImageField('immagine colore', blank=True, null=True, upload_to='color')
+    image = models.ImageField('immagine colore', blank=True, null=True, upload_to='color')
     description = models.TextField('descrizione', null=True, blank=True)
     thumb = ImageRatioField('image', '300x300', verbose_name="Miniatura")
     price = models.DecimalField('Prezzo', max_digits=10, decimal_places=2, blank=True, null=True)

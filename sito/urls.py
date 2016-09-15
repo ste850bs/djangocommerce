@@ -17,6 +17,7 @@ urlpatterns = [
     url(r'^product-list$', views.product_list, name='product-list'),
     #cart
     url(r'^add/$', views.add_to_cart, name='add'),
+     url(r'^cart/$', views.show_cart, name='show-cart'),
     #login
     url(r'^logout/$', views.logout_view, name='logout'),
 
