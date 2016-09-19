@@ -11,26 +11,37 @@ from tinymce.models import HTMLField
 from django.utils import timezone
 #from product.forms import *
 
+from product.models import *
+from customer.models import *
+from cart.models import *
+from order.models import *
+
+
+from django.contrib.auth.models import User
+
 from django import forms
+from django.forms import ModelForm
 
 
 
 class Order(models.Model):
-	id_user = models.CharField('id utente', max_length=250, null=True, blank=True)
-	name = models.CharField(max_length=100, verbose_name="Titolo:")
+	user = models.ForeignKey(User, null=True, blank=True, verbose_name="Utente")
 	code = models.CharField('Codice', max_length=250, null=True, blank=True)
 	tot_price = models.DecimalField('Prezzo', max_digits=10, decimal_places=2, blank=True, null=True)
-	tot_discount = models.IntegerField(blank=True, null=True, verbose_name="sconto percentuale")
-	price_reserved = models.DecimalField('Prezzo Scontato', max_digits=10, decimal_places=2, blank=True, null=True)
-	prompt_delivery = models.BooleanField('Pronta Consegna', default=False)
-	delivery = models.BooleanField('Consegna 40gg', default=False)
-	pub_date = models.DateTimeField('date published')
-	confermato = models.BooleanField('confermato', default=False)
+	tot_discount = models.DecimalField('Totale Scontato', max_digits=10, decimal_places=2, blank=True, null=True)
+	tot_price_reserved = models.DecimalField('Prezzo Scontato Riservato', max_digits=10, decimal_places=2, blank=True, null=True)
+	pub_date = models.DateTimeField('date published', editable=False)
+	inlavorazione = models.BooleanField('in lavorazione', default=False)
 	pagato = models.BooleanField('pagato', default=False)
 	spedito = models.BooleanField('spedito', default=False)
+	chiuso = models.BooleanField('chiuso', default=False)
+
+	def save(self, *args, **kwargs):
+		self.pub_date = datetime.now()
+		super(Order, self).save(*args, **kwargs) # Call the "real" save() method.
 
 	def __unicode__(self):
-		return self.name
+		return self.pub_date.strftime('%Y-%m-%d')
 
 	class Meta:
 		verbose_name_plural = "Ordine"
@@ -40,31 +51,43 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
-	id_ordine = models.CharField('id ordine', max_length=250, null=True, blank=True)
-	name = models.CharField(max_length=100, verbose_name="Titolo:")
-	code = models.CharField('Codice', max_length=250, null=True, blank=True)
-	designer = models.CharField(max_length=250, null=True, blank=True)
+	order = models.ForeignKey(Order, null=True, blank=True, verbose_name="Utente")
+	product = models.ForeignKey(Product, null=True, blank=True, verbose_name="Prodotto")
+	composition = models.ForeignKey(Composition, null=True, blank=True, verbose_name="Composizione")
+	color = models.ForeignKey(Color, null=True, blank=True, verbose_name="Colore")
+	cintureLunghezza = models.ForeignKey(CintureLunghezza, null=True, blank=True, verbose_name="Lunghezza Cinture")
+	scarpemisura = models.ForeignKey(TagliaScarpe, null=True, blank=True, verbose_name="Misura scarpe")
+	#prezzo
 	price = models.DecimalField('Prezzo', max_digits=10, decimal_places=2, blank=True, null=True)
-	discount = models.IntegerField(blank=True, null=True, verbose_name="sconto percentuale")
-	price_reserved = models.DecimalField('Prezzo Scontato', max_digits=10, decimal_places=2, blank=True, null=True)
-	image = models.ImageField(blank=True, null=True, upload_to='product', verbose_name="Immagine")
-	croplibero = ImageRatioField('image', '595x335', free_crop=True, verbose_name="Ritaglio Libero")
-	album = FilerFolderField(null=True, blank=True)
-	prompt_delivery = models.BooleanField('Pronta Consegna', default=False)
-	delivery = models.BooleanField('Consegna 40gg', default=False)
-	pub_date = models.DateTimeField('date published')
+	price_total = models.DecimalField('Prezzo', max_digits=10, decimal_places=2, blank=True, null=True)
+	price_discount = models.DecimalField('Prezzo', max_digits=10, decimal_places=2, blank=True, null=True)
+	price_reserved = models.DecimalField('Prezzo', max_digits=10, decimal_places=2, blank=True, null=True)
+	quantity = models.IntegerField(blank=True, null=True, verbose_name="quantita")
+	pub_date = models.DateTimeField('date published', editable=False)
 
-	def image_img(self):
-		if self.image:
-			return u'<img src="%s" style="width:300px"/>' % self.image.url
+	def save(self, *args, **kwargs):
+		self.pub_date = datetime.now()
+		#se lo faccio calcolare in front con js non ce bisogno di questo if (tieni solo calcolo in else)
+		if self.composition:
+			self.price_total = (self.price + self.composition.price) * self.quantity ####
 		else:
-			return '(Sin imagen)'
-		image_img.short_description = 'Thumb'
-		image_img.allow_tags = True
+			self.price_total = self.price * self.quantity ## ok ok ok 
+		self.price_discount = self.price_total - (self.price_total * self.product.discount/100)
+		self.price_reserved = self.price_discount - (self.price_discount * self.user.profile.discount/100)
+		super(CartItem, self).save(*args, **kwargs) # Call the "real" save() method.
 
 	def __unicode__(self):
-		return self.name
+		return self.order.id
 
 	class Meta:
-		verbose_name_plural = "Prodotti Ordinati"
+		verbose_name_plural = "Prodotti in Ordine"
 		ordering = ['id']
+
+
+
+
+class AddOrderForm(ModelForm):
+    class Meta:
+        model = Order
+        fields = ['user', 'tot_price', 'tot_discount', 'tot_price_reserved']
+

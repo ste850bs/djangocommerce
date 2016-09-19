@@ -32,7 +32,11 @@ class CartItem(models.Model):
 
 	def save(self, *args, **kwargs):
 		self.pub_date = datetime.now()
-		self.price_total = self.price * self.quantity
+		#se lo faccio calcolare in front con js non ce bisogno di questo if (tieni solo calcolo in else)
+		if self.composition:
+			self.price_total = (self.price + self.composition.price) * self.quantity ####
+		else:
+			self.price_total = self.price * self.quantity ## ok ok ok 
 		self.price_discount = self.price_total - (self.price_total * self.product.discount/100)
 		self.price_reserved = self.price_discount - (self.price_discount * self.user.profile.discount/100)
 		super(CartItem, self).save(*args, **kwargs) # Call the "real" save() method.

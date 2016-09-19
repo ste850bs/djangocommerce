@@ -9,6 +9,7 @@ from product.models import *
 from product.forms import *
 from sito.models import *
 from cart.models import *
+from order.models import *
 from django.core.mail import send_mail
 from filer.models import *
 #
@@ -89,19 +90,6 @@ def logout_view(request):
 
 
 ## cart
-'''
-@login_required(login_url="login/")
-def add_to_cart(request):
-    request.session['cart_list']=[]
-    cart_list = request.session['cart_list']
-    product = request.POST.get("product_id")
-    color = request.POST.get("color_id")
-    cart_list = cart_list+[[product,color]]
-    request.session['cart_list'] = cart_list
-    context = {'cart_list':cart_list}
-    return render_to_response("cart.html", context, context_instance=RequestContext(request))'''
-
-
 def add_to_cart(request):
     if request.method == "POST":
         form = AddForm(request.POST)
@@ -121,6 +109,23 @@ def show_cart(request):
     cart_list = CartItem.objects.filter(user_id=request.user.id)
     context = {'cart_list':cart_list}
     return render_to_response('cart.html', context, context_instance=RequestContext(request))
+
+
+
+## ORDER
+def add_to_order(request):
+    if request.method == "POST":
+        form = AddOrderForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user
+            post.published_date = timezone.now()
+            post.save()
+            return redirect('/', pk=post.pk)
+    else:
+        form = AddOrderForm()
+    return render(request, 'order-form.html', {'form': form})
+
 
 
 ###  GLOBALI ###

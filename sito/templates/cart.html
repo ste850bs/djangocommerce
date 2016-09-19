@@ -72,7 +72,21 @@
 
 </table>
 
-</div>
+
+
+<!-- test order -->
+<form class="white-row" action="/addorder/" method="POST">{% csrf_token %}
+  <div class="col-xs-12">
+          <input id="contact_submit" type="submit" value="ORDINA" class="btn btn-primary btn-md" data-loading-text="Loading...">
+          <br>
+          <br>
+        </div>
+  </div>
+</form>
+<!-- fine order -->
+
+
+
 {% endblock %}
 
 
