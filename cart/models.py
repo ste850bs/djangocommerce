@@ -49,6 +49,6 @@ class CartItem(models.Model):
 class AddForm(ModelForm):
     class Meta:
         model = CartItem
-        fields = ['user', 'product', 'color', 'cintureLunghezza', 'scarpemisura', 'composition', 'price', 'quantity']
+        fields = ['user', 'product', 'composition', 'color', 'cintureLunghezza', 'scarpemisura', 'price', 'quantity']
 
 

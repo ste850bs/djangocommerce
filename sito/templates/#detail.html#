@@ -16,7 +16,7 @@
 {% block content %}
 <form class="white-row" action="/add/" method="POST">{% csrf_token %}
 
-	<input type="hidden" name="product" value="{{product.id}}">
+        <input type="hidden" name="product" value="{{product.id}}">
 	<input type="hidden" name="price" value="{{product.price}}">
 
 
@@ -99,9 +99,7 @@
 		{% endfor %}
 	</div>
 
-
-
-	</script>
+        </script>
 
 	<script type="text/javascript">
 

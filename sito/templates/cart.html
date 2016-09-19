@@ -25,18 +25,38 @@
   		<img src="{% cropped_thumbnail cart.product "thumbdue" %}" style="width:200px;">
   	</td>
   	<td>{{cart.product.code}}</td>
-  	<td>{{cart.product.name}}</td>
   	<td>
-  		<img src="/media/{{cart.color.image}}" class="color-thumb-circle">
+        {% if cart.composition %}
+            <span class="badge" style="background-color: #00a19c">{{cart.composition.name}}</span>
+        {% else%}
+          <span class="badge" style="background-color: #122a4b">{{cart.product.name}}</span>
+        {% endif %}
+    </td>
+  	
+    <td>
+      {% if cart.color.image %}
+  		  <img src="/media/{{cart.color.image}}" class="color-thumb-circle">
+      {% endif %}
+      {% if cart.composition.color %}
+        <img src="/media/{{cart.composition.color.image}}" class="color-thumb-circle">
+      {% endif %}
   	</td>
+    
     <td>
       {% if cart.cintureLunghezza %}
         Lunghezza Cintura: {{cart.cintureLunghezza.name}}<br>
       {% endif %}
       {% if cart.scarpemisura %}
-        Lunghezza Cintura: {{cart.scarpemisura.name}}<br>
+        Misura Scarpe: {{cart.scarpemisura.name}}<br>
+      {% endif %}
+      {% if cart.composition.cintureLunghezza %}
+        Lunghezza Cintura: {{cart.composition.cintureLunghezza.name}}<br>
+      {% endif %}
+      {% if cart.composition.scarpemisura %}
+        Misura Scarpe: {{cart.composition.scarpemisura.name}}<br>
       {% endif %}
     </td>
+
   	<td>{{cart.quantity}}</t>
   	<td>{{cart.price}} €.</td>
     <td>
