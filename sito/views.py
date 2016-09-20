@@ -121,10 +121,37 @@ def add_to_order(request):
             post.user = request.user
             post.published_date = timezone.now()
             post.save()
-            return redirect('/', pk=post.pk)
+            cart_list = CartItem.objects.filter(user_id=request.user.id)
+            for cart in cart_list:
+                formOrder = AddOrderItemForm(request.POST)
+                post_cart = formOrder.save(commit=False)
+                post_cart.order = post
+                post_cart.product = cart.product
+                post_cart.composition = cart.composition
+                post_cart.price = cart.price
+                post_cart.quantity = cart.quantity
+                post_cart.total = cart.price_total
+                post_cart.price_discount = cart.price_discount
+                post_cart.price_reserved = cart.price_reserved
+                post_cart.save()
+            return redirect('/order', pk=post.pk)
     else:
         form = AddOrderForm()
     return render(request, 'order-form.html', {'form': form})
+
+
+
+def order(request):
+    order_list = Order.objects.filter(user_id=request.user.id).order_by('-id')
+    context = {'order_list':order_list}
+    return render_to_response('order.html', context, context_instance=RequestContext(request))
+
+
+def orderDetail(request, post_id):
+    order = Order.objects.get(pk=post_id)
+    context = {'order':order}
+    return render_to_response('orderdetail.html', context, context_instance=RequestContext(request))
+
 
 
 

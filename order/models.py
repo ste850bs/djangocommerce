@@ -51,7 +51,7 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
-	order = models.ForeignKey(Order, null=True, blank=True, verbose_name="Utente")
+	order = models.ForeignKey(Order, null=True, blank=True, verbose_name="Ordine")
 	product = models.ForeignKey(Product, null=True, blank=True, verbose_name="Prodotto")
 	composition = models.ForeignKey(Composition, null=True, blank=True, verbose_name="Composizione")
 	color = models.ForeignKey(Color, null=True, blank=True, verbose_name="Colore")
@@ -73,11 +73,11 @@ class OrderItem(models.Model):
 		else:
 			self.price_total = self.price * self.quantity ## ok ok ok 
 		self.price_discount = self.price_total - (self.price_total * self.product.discount/100)
-		self.price_reserved = self.price_discount - (self.price_discount * self.user.profile.discount/100)
-		super(CartItem, self).save(*args, **kwargs) # Call the "real" save() method.
+		self.price_reserved = self.price_discount - (self.price_discount * self.order.user.profile.discount/100)
+		super(OrderItem, self).save(*args, **kwargs) # Call the "real" save() method.
 
 	def __unicode__(self):
-		return self.order.id
+		return self.pub_date.strftime('%Y-%m-%d')
 
 	class Meta:
 		verbose_name_plural = "Prodotti in Ordine"
@@ -90,4 +90,11 @@ class AddOrderForm(ModelForm):
     class Meta:
         model = Order
         fields = ['user', 'tot_price', 'tot_discount', 'tot_price_reserved']
+
+
+
+class AddOrderItemForm(ModelForm):
+	class Meta:
+		model = OrderItem
+		fields = ['order', 'product', 'composition', 'color', 'cintureLunghezza', 'scarpemisura', 'price', 'price_total', 'price_discount', 'price_reserved']
 

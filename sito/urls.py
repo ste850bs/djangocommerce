@@ -20,6 +20,8 @@ urlpatterns = [
     url(r'^cart/$', views.show_cart, name='show-cart'),
     #order
     url(r'^addorder/$', views.add_to_order, name='add-order'),
+    url(r'^order/$', views.order, name='order'),
+    url(r'^order/(?P<post_id>\d+)/$', views.orderDetail, name='order-detail'),
     #login
     url(r'^logout/$', views.logout_view, name='logout'),
 
