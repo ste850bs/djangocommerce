@@ -70,7 +70,7 @@ class TopLevelAdmin(NestedModelAdmin):
                    
 class CompositionAssociactionAdmin(NestedStackedInline):
     model = Composition
-    extra = 1
+    extra = 10
     fk_name = 'product'
     fields = ('image', ('color', 'scarpemisura', 'cintureLunghezza'), ('quantity', 'price'))
 
@@ -82,6 +82,8 @@ class ProductAdmin(ImageCroppingMixin, admin.ModelAdmin):
             object.id = None
             object.save()
     duplicate_event.short_description = "Duplica Record Selezionati"
+    save_as = True
+
 
     model = Product
     inlines = [CompositionAssociactionAdmin]

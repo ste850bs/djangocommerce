@@ -255,7 +255,7 @@ class Composition(models.Model):
     product = models.ForeignKey(Product, null=True, blank=True, verbose_name="Prodotto")
     name = models.CharField(max_length=100, verbose_name="Titolo:", null=True, editable=False)
     code = models.CharField('Codice', max_length=250, null=True, blank=True, editable=False)
-    price = models.DecimalField('Prezzo', max_digits=10, decimal_places=2, blank=True, null=True,
+    price = models.DecimalField('Prezzo', max_digits=10, decimal_places=2, blank=True, null=True, default= 0,
                                 help_text = "maggiorazione di prezzo")
     image = models.ImageField(blank=True, null=True, upload_to='product', verbose_name="Immagine")
     slider = ImageRatioField('image', '1170x600', verbose_name="Slider")
