@@ -132,8 +132,12 @@ def add_to_order(request):
             post.user = request.user
             post.published_date = timezone.now()
             #post.tot_price = CartItem.objects.filter(user_id=request.user.id).aggregate(Sum('price_total'))
-            price_total = CartItem.objects.filter(user_id=request.user.id).aggregate(Sum('price_total'))
-            post.tot_price = price_total['price_total__sum']
+            tmp_price_total = CartItem.objects.filter(user_id=request.user.id).aggregate(Sum('price_total')) #estrapolo il campo
+            post.tot_price = tmp_price_total['price_total__sum'] #estrapolo il campo e lo sommo
+            tmp_tot_discount = CartItem.objects.filter(user_id=request.user.id).aggregate(Sum('price_discount'))
+            post.tot_discount = tmp_tot_discount['price_discount__sum']
+            tot_price_reserved = CartItem.objects.filter(user_id=request.user.id).aggregate(Sum('price_reserved'))
+            post.tot_price_reserved = tot_price_reserved['price_reserved__sum']
             post.save()
             cart_list = CartItem.objects.filter(user_id=request.user.id)
             for cart in cart_list:

@@ -72,7 +72,7 @@
 
 </table>
 
-<h3 class="text-right">
+<h3 class="text-right">
   Totale Ordine: {{order.tot_price}}<br>
   Totale Sconto: {{order.tot_discount}}<br>
   Prezzo Riservato: {{order.tot_price_reserved}}
