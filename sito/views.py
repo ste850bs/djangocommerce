@@ -146,6 +146,7 @@ def add_to_order(request):
                 post_cart.price_discount = cart.price_discount
                 post_cart.price_reserved = cart.price_reserved
                 post_cart.save()
+            cart_list.delete()
             return redirect('/order', pk=post.pk)
     else:
         form = AddOrderForm()
