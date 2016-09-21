@@ -20,6 +20,9 @@ from django.contrib.auth import authenticate, login, logout
 
 from django.shortcuts import redirect
 
+from django.db.models import Sum
+from decimal import *
+
 
 
 
@@ -29,7 +32,7 @@ from django.shortcuts import redirect
 # Create your views here.
 
 
-@login_required(login_url="login/")
+@login_required(login_url="/login/")
 def HomePage(request):
     slider_list = Slider.objects.filter(active=True).order_by('id')
     last_list = Product.objects.all().order_by('-pub_date')[:4]
@@ -45,28 +48,28 @@ def HomePage(request):
 
 
 
-@login_required(login_url="login/")
+@login_required(login_url="/login/")
 def ProductFilterCategory(request, post_id):
     product_list = Product.objects.filter(category__in=post_id)
     context = {'product_list': product_list}
     return render_to_response('price_list.html', context, context_instance=RequestContext(request))
 
 
-@login_required(login_url="login/")
+@login_required(login_url="/login/")
 def ProductFilterTag(request, post_id):
     product_list = Product.objects.filter(tags__in=post_id)
     context = {'product_list': product_list}
     return render_to_response('category_list.html', context, context_instance=RequestContext(request))
 
 
-@login_required(login_url="login/")
+@login_required(login_url="/login/")
 def product_list(request):
     product_list = ProductFilter(request.GET, queryset=Product.objects.all())
     return render(request, 'price_list.html', {'product_list': product_list})
 
 
 
-@login_required(login_url="login/")
+@login_required(login_url="/login/")
 def ProductFilterView(request, post_id):
     product = Product.objects.get(pk=post_id)
     composition_list = Composition.objects.filter(product_id=product.id)
@@ -128,6 +131,7 @@ def add_to_order(request):
             post = form.save(commit=False)
             post.user = request.user
             post.published_date = timezone.now()
+            #post.tot_price = Decimal.from_float(CartItem.objects.filter(user_id=request.user.id).aggregate(Sum('price_total')))
             post.save()
             cart_list = CartItem.objects.filter(user_id=request.user.id)
             for cart in cart_list:
