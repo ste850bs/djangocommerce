@@ -22,7 +22,7 @@ from django.shortcuts import redirect
 
 from django.db.models import Sum
 from decimal import *
-
+from decimal import Decimal
 
 
 
@@ -131,7 +131,9 @@ def add_to_order(request):
             post = form.save(commit=False)
             post.user = request.user
             post.published_date = timezone.now()
-            #post.tot_price = Decimal.from_float(CartItem.objects.filter(user_id=request.user.id).aggregate(Sum('price_total')))
+            #post.tot_price = CartItem.objects.filter(user_id=request.user.id).aggregate(Sum('price_total'))
+            price_total = CartItem.objects.filter(user_id=request.user.id).aggregate(Sum('price_total'))
+            post.tot_price = price_total['price_total__sum']
             post.save()
             cart_list = CartItem.objects.filter(user_id=request.user.id)
             for cart in cart_list:
@@ -146,7 +148,7 @@ def add_to_order(request):
                 post_cart.price_discount = cart.price_discount
                 post_cart.price_reserved = cart.price_reserved
                 post_cart.save()
-            cart_list.delete()
+            #cart_list.delete() #cancello carrello dopo ordine
             return redirect('/order', pk=post.pk)
     else:
         form = AddOrderForm()

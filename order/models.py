@@ -27,7 +27,7 @@ from django.forms import ModelForm
 class Order(models.Model):
 	user = models.ForeignKey(User, null=True, blank=True, verbose_name="Utente")
 	code = models.CharField('Codice', max_length=250, null=True, blank=True)
-	tot_price = models.DecimalField('Prezzo', max_digits=10, decimal_places=2, blank=True, null=True)
+	tot_price = models.DecimalField('Prezzo', max_digits=10, decimal_places=2, blank=True, null=True, default=0)
 	tot_discount = models.DecimalField('Totale Scontato', max_digits=10, decimal_places=2, blank=True, null=True)
 	tot_price_reserved = models.DecimalField('Prezzo Scontato Riservato', max_digits=10, decimal_places=2, blank=True, null=True)
 	pub_date = models.DateTimeField('date published', editable=False)
