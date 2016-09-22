@@ -3,6 +3,20 @@
 
 {% block content %}
 <div class="container" style="background-color: #ffffff">
+
+
+  {% if messages %}
+    <div class="container">
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+                <div class="alert alert-success" role="alert">{{ message }}</div>
+            {% elif message.tags == 'error' %}
+                <div class="alert alert-danger" role="alert">{{ message }}</div>
+            {% endif %}
+        {% endfor %}
+    </div>
+  {% endif %}
+
 <h1>Ciao {{request.user.username }}, questo è il tuo carrello:</h1>
 
 <table class="table table-striped">
@@ -15,7 +29,7 @@
       <th>Quantità</th>
       <th>Prezzo Unitario</th>
       <th>Prezzo Totale</th>
-      <th></th>
+      <th><i class="fa fa-trash" aria-hidden="true"></i></th>
   </tr>
 
  {% for cart in cart_list %}
@@ -64,7 +78,7 @@
       Scontato: {{cart.price_discount}} €.<br>
       Prezzo a Voi Riservato: {{cart.price_reserved}} €.<br>
     </td>
-  	<td></td>
+  	<td><a href="{% url 'cart-delete-item' cart.id%}"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></a></td>
   </tr>
 {% endfor %}
 

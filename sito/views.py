@@ -135,6 +135,7 @@ def show_cart(request):
 
 
 
+
 ## ORDER
 def add_to_order(request):
     if request.method == "POST":
@@ -198,6 +199,13 @@ def add_to_order(request):
 
 
 
+def delete_cart_item(request, post_id):
+    cart = CartItem.objects.get(pk=post_id).delete()
+    messages.success(request, 'Prodotto eliminato dal carrello')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+########   ORDER    #########
 def order(request):
     order_list = Order.objects.filter(user_id=request.user.id).order_by('-id')
     context = {'order_list':order_list}

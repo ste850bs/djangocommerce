@@ -18,6 +18,7 @@ urlpatterns = [
     #cart
     url(r'^add/$', views.add_to_cart, name='add'),
     url(r'^cart/$', views.show_cart, name='show-cart'),
+    url(r'^cart/(?P<post_id>\d+)/$', views.delete_cart_item, name='cart-delete-item'),
     #order
     url(r'^addorder/$', views.add_to_order, name='add-order'),
     url(r'^order/$', views.order, name='order'),
