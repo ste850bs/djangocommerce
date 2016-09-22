@@ -26,6 +26,9 @@ from decimal import Decimal
 
 from django.core.mail import EmailMultiAlternatives
 
+from django.contrib import messages
+
+
 
 # Create your views here.
 
@@ -106,9 +109,20 @@ def add_to_cart(request):
             post = form.save(commit=False)
             post.user = request.user
             post.published_date = timezone.now()
-            #tmp_reserved = request.user.profile.discount
-            post.save()
-            return redirect('/', pk=post.pk)
+            if post.composition:
+                if post.quantity > post.composition.quantity:
+                    messages.error(request, 'Quantita superiore al magazzino disponibile')
+                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                else:
+                    post.save()
+                    messages.success(request, 'Prodotto Aggiunto al carrello')
+                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                    #return redirect('/', pk=post.pk)
+            else:
+                post.save()
+                messages.success(request, 'Prodotto Aggiunto al carrello')
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                #return redirect('/', pk=post.pk)
     else:
         form = AddForm()
     return render(request, 'cart-form.html', {'form': form})
@@ -150,7 +164,7 @@ def add_to_order(request):
                 post_cart.price_discount = cart.price_discount
                 post_cart.price_reserved = cart.price_reserved
                 post_cart.save()
-            
+
             cart_list.delete() #cancello carrello dopo ordine
 
             ### email
@@ -169,7 +183,7 @@ def add_to_order(request):
             '''
             ord_list = Order.objects.get(pk=post.id) 
             ordine = "ordine id: ordine effettuato da: " + request.user.username
-            subject, from_email, to = ordine, request.user.email, 'pierangelo1982@gmail.com, stefano.solinas.bs@gmail.com'
+            subject, from_email, to = ordine, request.user.email, 'stefano.solinas.bs@gmail.com'
             text_content = 'This is an important message.'
             html_content = render_to_string('order_email.html', {'post': ord_list})
             msg = EmailMultiAlternatives(subject, html_content, from_email, [to])

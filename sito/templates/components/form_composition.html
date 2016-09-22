@@ -42,7 +42,7 @@
       {% if comp.color_id == color.id %}
       <li>
 	<p>
-	  <input type="radio" name="composition" value="{{comp.id}}"/>
+	  <input type="radio" name="composition" value="{{comp.id}}" required />
 	  {% if comp.cintureLunghezza  %}
 	  Lunghezza: {{comp.cintureLunghezza}}
 	  {% endif %}
@@ -69,5 +69,8 @@
 
 
 
+
+
+
 <label>Quantità:</label>
-<input name="quantity" type="number" min="1" step="1" value="0" class="form-control"/>
+<input name="quantity" type="number" min="1" step="1" value="0" class="form-control" required />

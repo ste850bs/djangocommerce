@@ -27,6 +27,19 @@
 
 
 {% block content %}
+
+{% if messages %}
+	<div class="container">
+	    {% for message in messages %}
+	        {% if message.tags == 'success' %}
+	            <div class="alert alert-success" role="alert">{{ message }}</div>
+	        {% elif message.tags == 'error' %}
+	            <div class="alert alert-danger" role="alert">{{ message }}</div>
+	        {% endif %}
+	    {% endfor %}
+	</div>
+{% endif %}
+
 <form class="white-row" action="/add/" method="POST">{% csrf_token %}
 
 	<input type="hidden" name="product" value="{{product.id}}">
