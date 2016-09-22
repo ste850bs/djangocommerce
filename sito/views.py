@@ -28,6 +28,8 @@ from django.core.mail import EmailMultiAlternatives
 
 from django.contrib import messages
 
+import datetime
+
 
 
 # Create your views here.
@@ -220,8 +222,53 @@ def orderDetail(request, post_id):
 
 
 
+
+
+
+
+#### static page ######
+def chisiamo(request):
+    return render_to_response('chi-siamo.html', context_instance=RequestContext(request))
+
+def terms(request):
+    return render_to_response('terms.html', context_instance=RequestContext(request))
+
+def privacy(request):
+    return render_to_response('privacy.html', context_instance=RequestContext(request))
+
+def servizio_clienti(request):
+    return render_to_response('servizio-clienti.html', context_instance=RequestContext(request))
+
+def contact(request):
+    if request.method == 'POST': # If the form has been submitted...
+        form = ContactForm(request.POST) # A form bound to the POST data
+        if form.is_valid(): # All validation rules pass
+            subject = 'MESSAGGIO DAL SITO shop.bergeitalia.com'
+            #message = form.cleaned_data['messaggio']
+            message = render_to_string('contact.txt', {'post': request.POST})
+            sender = form.cleaned_data['email']
+            cc_myself = False
+
+            recipients = ['stefano.solinas.bs@gmail.com']
+            if cc_myself:
+                recipients.append(sender)
+        
+            send_mail(subject, message, sender, recipients)
+            messages.success(request, 'Messaggio inviato ti ricontatteremo al piu presto')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    else:
+        messages.error(request, 'Messaggio non inviato')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+
+
+
 ###  GLOBALI ###
 def CategoryMenuView(request):
     category_list = Category.objects.all()
     context = {'category_list': category_list}
     return context
+
+def stagioni(request):
+    return season

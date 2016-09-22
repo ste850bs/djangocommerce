@@ -42,3 +42,19 @@ class Slider(models.Model):
     class Meta:
         verbose_name_plural = "Slider"
         ordering = ['id']
+
+
+
+class ContactForm(forms.Form):
+    nome = forms.CharField(label='Nome', max_length=100)
+    cognome = forms.CharField(label='Cognome', max_length=100)
+    telefono = forms.CharField(label='Telefono', max_length=100, required = False)
+    fax = forms.CharField(label='Fax', max_length=100, required = False)
+    email = forms.CharField(label='email', max_length=100)
+    web = forms.CharField(label='Web', max_length=100, required = False)
+    indirizzo = forms.CharField(label='Indirizzo', max_length=100, required = False)
+    civico = forms.CharField(label='Civico', max_length=100, required = False)
+    citta = forms.CharField(label='Citta', max_length=100, required = False)
+    cap = forms.CharField(label='CAP', max_length=100, required = False)
+    oggetto = forms.CharField(label='Oggetto', max_length=100, required = False)
+    messaggio = forms.CharField(label='Messaggio', widget=forms.Textarea, required = False)

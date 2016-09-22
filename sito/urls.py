@@ -25,5 +25,10 @@ urlpatterns = [
     url(r'^order/(?P<post_id>\d+)/$', views.orderDetail, name='order-detail'),
     #login
     url(r'^logout/$', views.logout_view, name='logout'),
-
+    ## pagine statiche
+    url(r'^chi-siamo/$', views.chisiamo, name='chi-siamo'),
+    url(r'^terms/$', views.terms, name='terms'),
+    url(r'^privacy/$', views.privacy, name='privacy'),
+    url(r'^servizio-clienti/$', views.servizio_clienti, name='servizio-clienti'),
+    url(r'^contact/$', views.contact, name='contact'),
    ]
