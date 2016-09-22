@@ -176,7 +176,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'pierangelo1982@gmail.com'
-EMAIL_HOST_PASSWORD = 'xxxxxxx'
+EMAIL_HOST_PASSWORD = 'savicevic94'
 DEFAULT_FROM_EMAIL = 'pierangelo1982@gmail.com'
 CONTACT_RECIPIENTS = False
 
@@ -209,10 +209,6 @@ SESSION_COOKIE_AGE = 60 * 60 * 24 * 7 * 2
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 # Whether the session cookie should be secure (https:// only). 
 SESSION_COOKIE_SECURE = False
-
-
-#carton
-CART_PRODUCT_MODEL = 'product.models.Product'
 
 
 

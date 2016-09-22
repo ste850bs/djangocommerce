@@ -176,7 +176,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'pierangelo1982@gmail.com'
-EMAIL_HOST_PASSWORD = 'xxxxxxx'
+EMAIL_HOST_PASSWORD = 'savicevic94'
 DEFAULT_FROM_EMAIL = 'pierangelo1982@gmail.com'
 CONTACT_RECIPIENTS = False
 

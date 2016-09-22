@@ -1,0 +1,5 @@
+Ordine {{post.user.username}}
+
+totale: {{post.tot_price}}
+
+

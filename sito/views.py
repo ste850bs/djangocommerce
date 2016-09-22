@@ -24,10 +24,7 @@ from django.db.models import Sum
 from decimal import *
 from decimal import Decimal
 
-
-
-
-
+           
 
 # Create your views here.
 
@@ -153,6 +150,21 @@ def add_to_order(request):
                 post_cart.price_reserved = cart.price_reserved
                 post_cart.save()
             #cart_list.delete() #cancello carrello dopo ordine
+
+            ### email
+            subject = 'Ordine da dal sito internet'
+            #message = form.cleaned_data['messaggio']
+            ord_list = Order.objects.get(pk=post.id) 
+            message = render_to_string('contact.txt', {'post': ord_list})
+            sender = [request.user.email]
+            cc_myself = False
+            recipients = ['pierangelo1982@gmail.com']
+            if cc_myself:
+                recipients.append(sender)
+            
+            send_mail(subject, message, sender, recipients)
+                #return HttpResponseRedirect('/success/') # Redirect after POST
+
             return redirect('/order', pk=post.pk)
     else:
         form = AddOrderForm()
