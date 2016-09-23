@@ -1,3 +1,4 @@
+# coding=utf-8
 from django.shortcuts import render
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponse
@@ -30,7 +31,7 @@ from django.contrib import messages
 
 import datetime
 
-
+from sito.helper import *
 
 # Create your views here.
 
@@ -42,11 +43,13 @@ def HomePage(request):
     promo_list = Product.objects.filter(promo=True).filter(slide = True).order_by('-pub_date')[:4]
     offerte_list = Product.objects.filter(promo=True).order_by('-id')[:4]
     product_list = Product.objects.all()[:4]
+    season = get_stagione(date(2017, 02, 01), date(2017, 8, 30)) #ottengo la stagione dalla funzione in helper.py
     context = {'slider_list':slider_list,
     			'last_list':last_list,
     			'promo_list':promo_list,
                 'product_list':product_list,
-                'offerte_list':offerte_list}
+                'offerte_list':offerte_list,
+               'season':season}
     return render_to_response('index.html', context, context_instance=RequestContext(request))
 
 
