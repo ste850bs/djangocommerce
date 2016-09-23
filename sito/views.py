@@ -189,7 +189,7 @@ def add_to_order(request):
             '''
             ord_list = Order.objects.get(pk=post.id) 
             ordine = "ordine id: ordine effettuato da: " + request.user.username
-            subject, from_email, to = ordine, request.user.email, 'stefano.solinas.bs@gmail.com'
+            subject, from_email, to = ordine, request.user.email, 'pierangelo1982@gmail.com'
             text_content = 'This is an important message.'
             html_content = render_to_string('order_email.html', {'post': ord_list})
             msg = EmailMultiAlternatives(subject, html_content, from_email, [to])

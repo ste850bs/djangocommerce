@@ -23,5 +23,30 @@ class CustomerAdmin(admin.ModelAdmin):
     extra = 1
     fk_name = 'user'
 
+class FatturazioneAdmin(admin.ModelAdmin):
+    list_display = (get_username, "denominazione", "piva", "codfisc", "telefono", "e_mail")
+    fields = (
+        ("user", "denominazione"),
+        ("piva", "codfisc"),
+        "indirizzo",
+        ("cap", "citta", "nazione"),
+        ("telefono", "fax"),
+        ("e_mail", "pec"),
+        "indirizzo_spedizione"
+    )
 
+class IndirizzoSpedizioneAdmin(admin.ModelAdmin):
+    list_display = (get_username, "denominazione",  "telefono", "e_mail")
+    fields = (
+        ("user", "denominazione"),
+        "indirizzo",
+        ("cap", "citta", "nazione"),
+        ("telefono", "fax"),
+        "e_mail"
+    )
+
+
+    
 admin.site.register(Customer, CustomerAdmin)
+admin.site.register(Fatturazione, FatturazioneAdmin)
+admin.site.register(IndirizzoSpedizione, IndirizzoSpedizioneAdmin)
