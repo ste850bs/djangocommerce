@@ -196,7 +196,6 @@ def add_to_order(request):
             msg.attach_alternative(html_content, "text/html")
             msg.send()
                 #return HttpResponseRedirect('/success/') # Redirect after POST
-
             return redirect('/order', pk=post.pk)
     else:
         form = AddOrderForm()
@@ -223,6 +222,84 @@ def orderDetail(request, post_id):
     return render_to_response('orderdetail.html', context, context_instance=RequestContext(request))
 
 
+
+# customer
+def customer_page(request):
+    order_list = Order.objects.filter(user_id=request.user.id).order_by('-id')
+    fatt = Fatturazione.objects.filter(user_id=request.user.id).first
+    ind = IndirizzoSpedizione.objects.filter(user_id=request.user.id).first
+    context = {
+                'order_list':order_list,
+                'fatt':fatt,
+                'ind':ind
+                }
+    return render_to_response('customer.html', context, context_instance=RequestContext(request))
+
+
+
+def add_customer_fatturazione(request):
+    if request.method == "POST":
+            form = AddFormFatturazione(request.POST)
+            if form.is_valid():
+                post = form.save(commit=False)
+                post.user = request.user
+                post.published_date = timezone.now()
+                post.save()
+                messages.success(request, 'Dati Fatturazione Inseriti')
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                #return redirect('/', pk=post.pk)
+            else:
+                messages.error(request, 'Dati Fatturazione non inseriti')
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    else:
+        messages.error(request, 'Dati Fatturazione non inseriti')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+
+def update_customer_fatturazione(request, pk=None):
+    obj = get_object_or_404(Fatturazione, pk=pk)
+    form = AddFormFatturazione(request.POST or None, instance=obj)
+    if request.method == 'POST':
+        if form.is_valid():
+           form.save()
+           messages.success(request, 'Dati Fatturazione Aggiornati')
+           return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    messages.error(request, 'Dati Fatturazione non aggiornati')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+
+def add_customer_indirizzo_spedizione(request):
+    if request.method == "POST":
+            form = AddFormIndirizzoSpredizione(request.POST)
+            if form.is_valid():
+                post = form.save(commit=False)
+                post.user = request.user
+                post.published_date = timezone.now()
+                post.save()
+                messages.success(request, 'Dati Spedizione Inseriti')
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                #return redirect('/', pk=post.pk)
+            else:
+                messages.error(request, 'Dati Spedizione non inseriti')
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    else:
+        messages.error(request, 'Dati Spedizione non inseriti')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+
+def update_customer_indirizzo_spedizione(request, pk=None):
+    obj = get_object_or_404(IndirizzoSpedizione, pk=pk)
+    form = AddFormIndirizzoSpredizione(request.POST or None, instance=obj)
+    if request.method == 'POST':
+        if form.is_valid():
+           form.save()
+           messages.success(request, 'Dati Indirizzo Spedizione Aggiornati')
+           return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    messages.error(request, 'Dati Indirizzo Spedizione non aggiornati')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 

@@ -23,6 +23,12 @@ urlpatterns = [
     url(r'^addorder/$', views.add_to_order, name='add-order'),
     url(r'^order/$', views.order, name='order'),
     url(r'^order/(?P<post_id>\d+)/$', views.orderDetail, name='order-detail'),
+    # customer
+    url(r'^customer/$', views.customer_page, name='customer'),
+    url(r'^add_fatturazionecustomer/$', views.add_customer_fatturazione, name='add-fatturazione'),
+    url(r'^add_indirizzo_spedizione/$', views.add_customer_indirizzo_spedizione, name='add-indirizzo-spedizione'),
+    url(r'^update_fatturazionecustomer/(?P<pk>\d+)/$', views.update_customer_fatturazione, name='update-fatturazione'),
+    url(r'^update_indirizzo_spedizione/(?P<pk>\d+)/$', views.update_customer_indirizzo_spedizione, name='update-indirizzo-spedizione'),
     #login
     url(r'^logout/$', views.logout_view, name='logout'),
     ## pagine statiche
