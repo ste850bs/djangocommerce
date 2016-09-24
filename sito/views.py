@@ -31,7 +31,10 @@ from django.contrib import messages
 
 import datetime
 
+from django.db.models import Q
+
 from sito.helper import *
+
 
 # Create your views here.
 
@@ -301,6 +304,18 @@ def update_customer_indirizzo_spedizione(request, pk=None):
     messages.error(request, 'Dati Indirizzo Spedizione non aggiornati')
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+
+
+# search
+def search(request):
+    try:
+        q = request.GET['q']
+        product_list = Product.objects.filter(Q(name__icontains=q) | Q(code=q) | Q(descrizione__icontains=q))
+        return render_to_response('price_list.html', {'product_list':product_list, 'q':q}, context_instance=RequestContext(request))
+    except KeyError:
+        messages.error(request, 'Nessuna Corrispondenza Trovata')
+        #return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        return render_to_response('price_list.html', context_instance=RequestContext(request))
 
 
 

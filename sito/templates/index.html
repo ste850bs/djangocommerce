@@ -6,6 +6,20 @@
 {% block content %}
 
 
+
+{% if messages %}
+	<div class="container">
+	    {% for message in messages %}
+	        {% if message.tags == 'success' %}
+	            <div class="alert alert-success" role="alert">{{ message }}</div>
+	        {% elif message.tags == 'error' %}
+	            <div class="alert alert-danger" role="alert">{{ message }}</div>
+	        {% endif %}
+	    {% endfor %}
+	</div>
+{% endif %}
+
+
 {% include 'components/slider.html' %}
 
 {% if user.is_authenticated %} {% endif %}
