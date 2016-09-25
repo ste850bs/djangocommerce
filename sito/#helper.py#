@@ -56,19 +56,18 @@ print stagione
 
 
 # controlla magazzino e scarica
-def check_magazzino(qt_richiesta, qt_magazzino, compi):
+def check_magazzino(qt_richiesta, qt_magazzino, composition):
     if qt_magazzino > 0 or qt_magazzino >= qt_richiesta:
         print "quantita richiesta ok"
         quantita = qt_magazzino - qt_richiesta
         if quantita >=0:
-            compi.quantity = quantita
-            compi.save()
-            return True
+            composition.quantity = quantita
+            id_composition.save()
+            return quantita
         else:
-            return False
+            return "NO"
     else:
-        #order.delete()
-        return False
+        print "quantita richesta troppo elevata"
         
 
 #print check_magazzino(3, 32)        

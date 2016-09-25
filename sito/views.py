@@ -110,6 +110,7 @@ def logout_view(request):
 
 
 ## cart
+## cart
 def add_to_cart(request):
     if request.method == "POST":
         form = AddForm(request.POST)
@@ -172,24 +173,15 @@ def add_to_order(request):
                 post_cart.total = cart.price_total
                 post_cart.price_discount = cart.price_discount
                 post_cart.price_reserved = cart.price_reserved
+                #order = Order.objects.get(id=post.id)
+                if cart.composition:
+                    composition = Composition.objects.get(id=cart.composition_id)
+                    check_magazzino(cart.quantity, cart.composition.quantity, composition)
                 post_cart.save()
 
             cart_list.delete() #cancello carrello dopo ordine
 
             ### email
-            '''
-            subject = 'Ordine da dal sito internet'
-            #message = form.cleaned_data['messaggio']
-            ord_list = Order.objects.get(pk=post.id) 
-            message = render_to_string('order_email.html', {'post': ord_list})
-            sender = [request.user.email]
-            cc_myself = False
-            recipients = ['pierangelo1982@gmail.com']
-            if cc_myself:
-                recipients.append(sender)
-            
-            send_mail(subject, message, sender, recipients)
-            '''
             ord_list = Order.objects.get(pk=post.id) 
             ordine = "ordine id: ordine effettuato da: " + request.user.username
             subject, from_email, to = ordine, request.user.email, 'pierangelo1982@gmail.com'
@@ -199,7 +191,10 @@ def add_to_order(request):
             msg.attach_alternative(html_content, "text/html")
             msg.send()
                 #return HttpResponseRedirect('/success/') # Redirect after POST
+            #return redirect('/order', pk=post.pk)
+            #return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
             return redirect('/order', pk=post.pk)
+
     else:
         form = AddOrderForm()
     return render(request, 'order-form.html', {'form': form})

@@ -3,6 +3,20 @@
 
 {% block content %}
 <div class="container" style="background-color: #ffffff">
+
+  {% if messages %}
+  <div class="container">
+      {% for message in messages %}
+          {% if message.tags == 'success' %}
+              <div class="alert alert-success" role="alert">{{ message }}</div>
+          {% elif message.tags == 'error' %}
+              <div class="alert alert-danger" role="alert">{{ message }}</div>
+          {% endif %}
+      {% endfor %}
+  </div>
+{% endif %}
+
+
 <h1>Ciao {{request.user.username }}, questo è la lista dei tuoi ordini:</h1>
 
 <table class="table table-striped">
