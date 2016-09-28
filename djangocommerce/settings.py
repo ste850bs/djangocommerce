@@ -16,6 +16,8 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
@@ -78,6 +80,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'sito.views.CategoryMenuView',
+
             ],
         },
     },
@@ -86,6 +89,21 @@ TEMPLATES = [
 WSGI_APPLICATION = 'djangocommerce.wsgi.application'
 
 GRAPPELLI_ADMIN_TITLE = "Berge Urban Couture"
+
+
+
+'''
+STATICFILES_DIRS = [
+    'djangobower.finders.BowerFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
+'''
+
+BOWER_INSTALLED_APPS = (
+    'jquery#1.9',
+    'underscore',
+)
+
 
 
 # Database

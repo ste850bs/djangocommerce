@@ -25,6 +25,9 @@ from django.db.models import Sum
 from decimal import *
 from decimal import Decimal
 
+from django.db.models import Count
+
+
 from django.core.mail import EmailMultiAlternatives
 
 from django.contrib import messages
@@ -314,6 +317,26 @@ def search(request):
 
 
 
+
+#### CHARTS ###########
+def charts(request):
+    order_list =Order.objects.all()[:6]
+    a = []
+    b = []
+
+    for order in order_list:
+        a += [order.user.username]
+        b += [order.tot_price]
+
+    order_product = OrderItem.objects.values('product_id').annotate(total=Count('product_id')).order_by('-total')[:6]
+    order_user = Order.objects.values('user').annotate(total=Count('user')).order_by('-user')[:6]
+
+    context = {'order_list':order_list,
+                'order_product':order_product,
+                'order_user':order_user,
+                'a':a,
+                'b':b}
+    return render_to_response('chart.html', context, context_instance=RequestContext(request))
 
 
 #### static page ######

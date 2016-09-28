@@ -91,9 +91,9 @@ WSGI_APPLICATION = 'djangocommerce.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'berge',
+        'NAME': 'bergeshop',
         'USER': 'root',
-        'PASSWORD': 'alnitek82',
+        'PASSWORD': 'Bs19850221',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -141,13 +141,13 @@ GRAPPELLI_ADMIN_TITLE = "Berge Urban Couture"
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = '/var/www/djangocommercebox/djangocommerce'
+STATIC_ROOT = '/var/www/bergebox/djangocommerce'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-MEDIA_ROOT = '/var/www/djangocommercebox/djangocommerce/media/'
+MEDIA_ROOT = '/var/www/bergebox/djangocommerce/media/'
 
-MEDIA_URL = "http://berge.solinas.me/media/"
+MEDIA_URL = "http://shop.bergeitalia.com/media/"
 
 
 
