@@ -147,6 +147,7 @@ def add_to_cart(request):
             post = form.save(commit=False)
             post.user = request.user
             post.published_date = timezone.now()
+            # controllo se è composizione, poi controllo se composizione già presente, e nel caso aggiorno, sempre che nuova quantità non superi magazzino
             if post.composition:
                 if CartItem.objects.filter(user_id=request.user.id).filter(composition_id = post.composition):
                     existing_cart = CartItem.objects.filter(user_id=request.user.id).get(composition_id = post.composition)
@@ -168,13 +169,24 @@ def add_to_cart(request):
                         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
                         #return redirect('/', pk=post.pk)
             else:
-                post.save()
-                messages.success(request, 'Prodotto Aggiunto al carrello')
-                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-                #return redirect('/', pk=post.pk)
+                ## cpntrollare se è doppio e poi salvare... controolare che non ci sian composizioni
+                if CartItem.objects.filter(user_id = request.user.id).filter(composition_id=None).filter(product_id=post.product):
+                    ex_cart = CartItem.objects.filter(user_id = request.user.id).filter(composition_id=None).get(product_id=post.product)
+                    ex_cart.quantity += post.quantity
+                    ex_cart.save()
+                    messages.success(request, 'Prodotto già presente, abbiamo aggiornato la quantità')
+                    return HttpResponseRedirect(request.META.get('HTTP_REFERER')) 
+                else:
+                    post.save()
+                    messages.success(request, 'Prodotto Aggiunto al carrello')
+                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                    #return redirect('/', pk=post.pk)
     else:
         form = AddForm()
     return render(request, 'cart-form.html', {'form': form})
+
+
+
 
 
 def show_cart(request):
