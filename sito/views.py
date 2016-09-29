@@ -148,14 +148,25 @@ def add_to_cart(request):
             post.user = request.user
             post.published_date = timezone.now()
             if post.composition:
-                if post.quantity > post.composition.quantity:
-                    messages.error(request, 'Quantita superiore al magazzino disponibile')
-                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                if CartItem.objects.filter(user_id=request.user.id).filter(composition_id = post.composition):
+                    existing_cart = CartItem.objects.filter(user_id=request.user.id).get(composition_id = post.composition)
+                    if post.composition.quantity < (existing_cart.quantity + post.quantity):
+                        messages.error(request, 'Prodotto già presente nel carrello, aggiungendo questa quantità si supera la disponibilità in magazzino')
+                        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                    else:
+                        existing_cart.quantity += post.quantity
+                        existing_cart.save() 
+                        messages.success(request, 'Prodotto già presente, abbiamo aggiornato la quantità')
+                        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
                 else:
-                    post.save()
-                    messages.success(request, 'Prodotto Aggiunto al carrello')
-                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-                    #return redirect('/', pk=post.pk)
+                    if post.quantity > post.composition.quantity:
+                        messages.error(request, 'Quantita superiore al magazzino disponibile')
+                        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                    else:
+                        post.save()
+                        messages.success(request, 'Prodotto Aggiunto al carrello')
+                        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                        #return redirect('/', pk=post.pk)
             else:
                 post.save()
                 messages.success(request, 'Prodotto Aggiunto al carrello')
