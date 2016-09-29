@@ -5,8 +5,29 @@
 			{% else %}
 			<h3 class="box-marca" style="background-color: #122a4b"><span style="font-size:12px; color:#ffffff;">ART{{pro.code}}</span>;</h3>
 			{% endif %}
-			<h3 class="box-titolo" style="margin-top:15px;">{{pro.name}}</h3>
-			<h4 class="box-tipologia">{{pro.category.all.first}}</h4>
+			<h3 class="box-titolo" style="margin-top:15px;">
+				{% if session_language = 'eng' %}
+                	{{pro.name_uk}}
+
+              {% elif session_language = 'fra' %}
+                {{pro.name_fr}}
+
+              {% else %}
+                {{pro.name}}
+              {% endif %}
+			</h3>
+			<h4 class="box-tipologia">
+				{% for category in pro.category.all %}
+					{% if session_language = 'eng' %}
+	                	{{category.title_uk}}
+	              	{% elif session_language = 'fra' %}
+	                	{{category.title_fr}}
+	              	{% else %}
+	                	{{category.title}}
+	              	{% endif %}
+              	{% endfor %}
+			</h4>
+
 			{% load cropping %}
 			<a href="{% url 'detail' pro.id %}">
 				<img src="{% cropped_thumbnail pro "thumb" %}" class="img-responsive">

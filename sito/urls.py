@@ -40,4 +40,5 @@ urlpatterns = [
     url(r'^servizio-clienti/$', views.servizio_clienti, name='servizio-clienti'),
     url(r'^contact/$', views.contact, name='contact'),
     url(r'^chart/$', views.charts, name='chart'),
+    url(r'^language/(?P<language>[a-z\-]+)/$', views.language),
    ]

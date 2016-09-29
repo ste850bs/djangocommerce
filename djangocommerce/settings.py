@@ -80,6 +80,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'sito.views.CategoryMenuView',
+                'sito.languages.translation_processor',
 
             ],
         },
@@ -99,10 +100,7 @@ STATICFILES_DIRS = [
 ]
 '''
 
-BOWER_INSTALLED_APPS = (
-    'jquery#1.9',
-    'underscore',
-)
+
 
 
 

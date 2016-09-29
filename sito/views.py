@@ -385,3 +385,11 @@ def CategoryMenuView(request):
 
 def stagioni(request):
     return season
+
+
+### setting language session
+def language(request, language='it'):
+    response = HttpResponse("setting language to %s" % language)
+    response.set_cookie('lang', language)
+    request.session['lang'] = language
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

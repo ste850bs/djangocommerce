@@ -6,13 +6,39 @@
     {% for offerta in promo_list %}
     <li>
       <div id="scritta-slider" class="col-xs-12 col-sm-3">
-    		<h2 style="font-family: 'Montserrat', sans-serif;">{{offerta.name}}<br></h2>
-    		<h4 style="font-family: 'Montserrat', sans-serif;"><span style="font-size: 24px;"></span><br>
-            {{offerta.category.all.first}}<br>
+    		<h2 style="font-family: 'Montserrat', sans-serif;">
+          {% if session_language = 'eng' %}
+                    {{offerta.name_uk}}
+          {% elif session_language = 'fra' %}
+                    {{offerta.name_fr}}
+          {% else %}
+                    {{offerta.name}}
+                  {% endif %}
+          <br></h2>
+    		<h4 style="font-family: 'Montserrat', sans-serif;"><span style="font-size: 24px;"></span>
+          <br>
+            {% for category in offerta.category.all %}
+                {% if session_language = 'eng' %}
+                    {{category.title_uk}}
+                {% elif session_language = 'fra' %}
+                    {{category.title_fr}}
+                {% else %}
+                    {{category.title}}
+                {% endif %}
+            {% endfor %}
+          <br>
         </h4>
     		<h3 style="font-family: 'Montserrat', sans-serif;">€{{offerta.price}}<br></h3>
     		<a class="btn btn-default" href="#" role="button">
-    			<h5 style="font-family: 'Montserrat', sans-serif;">SCONTO</h5>
+    			<h5 style="font-family: 'Montserrat', sans-serif;">
+              {% if session_language = 'eng' %}
+                    DISCOUNT
+                  {% elif session_language = 'fra' %}
+                    REDUCTION
+                  {% else %}
+                    SCONTO
+              {% endif %}
+          </h5>
     			<h1 style="font-family: 'Montserrat', sans-serif;">{{offerta.discount}}%</h1>
     		</a>
     		<br>

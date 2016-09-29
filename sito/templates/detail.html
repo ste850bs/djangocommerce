@@ -4,7 +4,7 @@
 
 {% block personaljs %}
 	
-	{% load staticfiles %}
+{% load staticfiles %}
 	<script type='text/javascript' src="{% static 'unitegallery/js/jquery-11.0.min.js' %}"></script>
     <!-- multizoom -->
     <script type="text/javascript" src="{% static 'js/multizoom.js' %}"></script>
@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="/resources/demos/style.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
   <script>
   $( function() {
     $( "#tabs" ).tabs();
@@ -70,21 +71,67 @@
 				{% if product.promo == True %}
 				<h3 class="sconto">-{{product.discount}}%</h3>
 				{% endif %}
-				<h2 class="titolo">ART.{{product.code}} | {{product.name}}</h2>
-				<h3 class="sottotitolo">{{product.category.all.first}}</h3>
+				<h2 class="titolo">
+					{% if session_language = 'eng' %}
+		                ART.{{product.code}} | {{product.name_uk}}
+		            {% elif session_language = 'fra' %}
+		                ART.{{product.code}} | {{product.name_fr}}
+		            {% else %}
+		                ART.{{product.code}} | {{product.name}}
+		            {% endif %}
+				</h2>
+				<h3 class="sottotitolo">
+					{% for category in product.category.all %}
+						{% if session_language = 'eng' %}
+		                	{{category.title_uk}}
+		              	{% elif session_language = 'fra' %}
+		                	{{category.title_fr}}
+		              	{% else %}
+		                	{{category.title}}
+		              	{% endif %}
+              		{% endfor %}
+				</h3>
 				
 				<h5>
-					{% if product.descrizione %}<br>{{product.descrizione|safe}}<br><br>{% endif %}
-					{% if product.size %}<strong>Dimensioni:</strong> {{product.size}} mm.{% endif %}
-					{% if product.width %}<strong>Larghezza:</strong> {{product.width}} mm.<br>{% endif %}
-					{% if product.lenght %}<strong>Lunghezza:</strong> {{product.lenght}} mm<br>{% endif %}
-					{% if product.depth %}<strong>Profondità:</strong> {{product.depth}} mm.<br>{% endif %}
-					{% if product.height %}<strong>Altezza:</strong> {{product.height}} mm.<br>{% endif %}
-					{% if product.volume %}<strong>Volume:</strong> {{product.volume}} m3<br>{% endif %}
+					{% if session_language = 'eng' %}
+		                {% if product.descrizione %}<br>{{product.descrizione|safe}}<br><br>{% endif %}
+						{% if product.size %}<strong>Size:</strong> {{product.size}} mm.{% endif %}
+						{% if product.width %}<strong>Width:</strong> {{product.width}} mm.<br>{% endif %}
+						{% if product.lenght %}<strong>Length:</strong> {{product.lenght}} mm<br>{% endif %}
+						{% if product.depth %}<strong>Deep:</strong> {{product.depth}} mm.<br>{% endif %}
+						{% if product.height %}<strong>Height:</strong> {{product.height}} mm.<br>{% endif %}
+						{% if product.volume %}<strong>Volume:</strong> {{product.volume}} m3<br>{% endif %}
+		            
+		            {% elif session_language = 'fra' %}
+			            {% if product.descrizione %}<br>{{product.descrizione|safe}}<br><br>{% endif %}
+						{% if product.size %}<strong>Dimensions:</strong> {{product.size}} mm.{% endif %}
+						{% if product.width %}<strong>Largeur:</strong> {{product.width}} mm.<br>{% endif %}
+						{% if product.lenght %}<strong>Longueur:</strong> {{product.lenght}} mm<br>{% endif %}
+						{% if product.depth %}<strong>Profondeur:</strong> {{product.depth}} mm.<br>{% endif %}
+						{% if product.height %}<strong>Hauteur:</strong> {{product.height}} mm.<br>{% endif %}
+						{% if product.volume %}<strong>Volume:</strong> {{product.volume}} m3<br>{% endif %}
+		            
+		            {% else %}
+			            {% if product.descrizione %}<br>{{product.descrizione|safe}}<br><br>{% endif %}
+						{% if product.size %}<strong>Dimensioni:</strong> {{product.size}} mm.{% endif %}
+						{% if product.width %}<strong>Larghezza:</strong> {{product.width}} mm.<br>{% endif %}
+						{% if product.lenght %}<strong>Lunghezza:</strong> {{product.lenght}} mm<br>{% endif %}
+						{% if product.depth %}<strong>Profondità:</strong> {{product.depth}} mm.<br>{% endif %}
+						{% if product.height %}<strong>Altezza:</strong> {{product.height}} mm.<br>{% endif %}
+						{% if product.volume %}<strong>Volume:</strong> {{product.volume}} m3<br>{% endif %}
+		            {% endif %}
 				</h5>
 
 				<h3 class="prezzi">
-					<span class="prezzo-originale">prezzo originale:</span>
+					<span class="prezzo-originale">
+						{% if session_language = 'eng' %}
+		                	list price
+		              	{% elif session_language = 'fra' %}
+		                	liste de prix
+		              	{% else %}
+		                	prezzo originale:
+		              	{% endif %}
+					</span>
 					{% if product.promo %}
 					<span class="prezzo-barrato">€{{product.price}}</span>
 					<span class="prezzo-scontato">€{{product.price_offer}}</span>
@@ -105,7 +152,16 @@
 			</div>
 
 			<div class="col-xs-12">
-				<input id="contact_submit" type="submit" value="AGGIUNGI AL CARRELLO" class="btn btn-primary btn-md" data-loading-text="Loading...">
+
+				<input id="contact_submit" type="submit" value="
+					{% if session_language = 'eng' %}
+		                	ADD TO CART
+		        	{% elif session_language = 'fra' %}
+		                	AJOUTER AU PANIER
+		            {% else %}
+		                	AGGIUNGI AL CARRELLO
+		            {% endif %}
+				" class="btn btn-primary btn-md" data-loading-text="Loading...">
 				<br>
 				<br>
 			</div>
@@ -127,7 +183,6 @@
 
 
 
-	</script>
 
 	<script type="text/javascript">
 
