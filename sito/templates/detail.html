@@ -73,11 +73,11 @@
 				{% endif %}
 				<h2 class="titolo">
 					{% if session_language = 'eng' %}
-		                ART.{{product.code}} | {{product.name_uk}}
+		                ART. {{product.code}} {{product.name_uk}}
 		            {% elif session_language = 'fra' %}
-		                ART.{{product.code}} | {{product.name_fr}}
+		                ART. {{product.code}} {{product.name_fr}}
 		            {% else %}
-		                ART.{{product.code}} | {{product.name}}
+		                ART. {{product.code}} {{product.name}}
 		            {% endif %}
 				</h2>
 				<h3 class="sottotitolo">
@@ -95,30 +95,30 @@
 				<h5>
 					{% if session_language = 'eng' %}
 		                {% if product.descrizione %}<br>{{product.descrizione|safe}}<br><br>{% endif %}
-						{% if product.size %}<strong>Size:</strong> {{product.size}} mm.{% endif %}
-						{% if product.width %}<strong>Width:</strong> {{product.width}} mm.<br>{% endif %}
-						{% if product.lenght %}<strong>Length:</strong> {{product.lenght}} mm<br>{% endif %}
-						{% if product.depth %}<strong>Deep:</strong> {{product.depth}} mm.<br>{% endif %}
-						{% if product.height %}<strong>Height:</strong> {{product.height}} mm.<br>{% endif %}
-						{% if product.volume %}<strong>Volume:</strong> {{product.volume}} m3<br>{% endif %}
+						{% if product.size %}<strong>Size:</strong> {{product.size}} cm{% endif %}
+						{% if product.width %}<strong>Width:</strong> {{product.width}} cm<br>{% endif %}
+						{% if product.lenght %}<strong>Length:</strong> {{product.lenght}} cm<br>{% endif %}
+						{% if product.depth %}<strong>Deep:</strong> {{product.depth}} cm<br>{% endif %}
+						{% if product.height %}<strong>Height:</strong> {{product.height}} cm<br>{% endif %}
+						{% if product.volume %}<strong>Volume:</strong> {{product.volume}} c3<br>{% endif %}
 		            
 		            {% elif session_language = 'fra' %}
 			            {% if product.descrizione %}<br>{{product.descrizione|safe}}<br><br>{% endif %}
-						{% if product.size %}<strong>Dimensions:</strong> {{product.size}} mm.{% endif %}
-						{% if product.width %}<strong>Largeur:</strong> {{product.width}} mm.<br>{% endif %}
-						{% if product.lenght %}<strong>Longueur:</strong> {{product.lenght}} mm<br>{% endif %}
-						{% if product.depth %}<strong>Profondeur:</strong> {{product.depth}} mm.<br>{% endif %}
-						{% if product.height %}<strong>Hauteur:</strong> {{product.height}} mm.<br>{% endif %}
-						{% if product.volume %}<strong>Volume:</strong> {{product.volume}} m3<br>{% endif %}
+						{% if product.size %}<strong>Dimensions:</strong> {{product.size}} cm{% endif %}
+						{% if product.width %}<strong>Largeur:</strong> {{product.width}} cm<br>{% endif %}
+						{% if product.lenght %}<strong>Longueur:</strong> {{product.lenght}} cm<br>{% endif %}
+						{% if product.depth %}<strong>Profondeur:</strong> {{product.depth}} cm<br>{% endif %}
+						{% if product.height %}<strong>Hauteur:</strong> {{product.height}} cm<br>{% endif %}
+						{% if product.volume %}<strong>Volume:</strong> {{product.volume}} c3<br>{% endif %}
 		            
 		            {% else %}
 			            {% if product.descrizione %}<br>{{product.descrizione|safe}}<br><br>{% endif %}
-						{% if product.size %}<strong>Dimensioni:</strong> {{product.size}} mm.{% endif %}
-						{% if product.width %}<strong>Larghezza:</strong> {{product.width}} mm.<br>{% endif %}
-						{% if product.lenght %}<strong>Lunghezza:</strong> {{product.lenght}} mm<br>{% endif %}
-						{% if product.depth %}<strong>Profondità:</strong> {{product.depth}} mm.<br>{% endif %}
-						{% if product.height %}<strong>Altezza:</strong> {{product.height}} mm.<br>{% endif %}
-						{% if product.volume %}<strong>Volume:</strong> {{product.volume}} m3<br>{% endif %}
+						{% if product.size %}<strong>Dimensioni:</strong> {{product.size}} cm{% endif %}
+						{% if product.width %}<strong>Larghezza:</strong> {{product.width}} cm<br>{% endif %}
+						{% if product.lenght %}<strong>Lunghezza:</strong> {{product.lenght}} cm<br>{% endif %}
+						{% if product.depth %}<strong>Profondità:</strong> {{product.depth}} cm<br>{% endif %}
+						{% if product.height %}<strong>Altezza:</strong> {{product.height}} cm<br>{% endif %}
+						{% if product.volume %}<strong>Volume:</strong> {{product.volume}} c3<br>{% endif %}
 		            {% endif %}
 				</h5>
 

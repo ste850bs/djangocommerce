@@ -174,11 +174,11 @@ IMAGE_CROPPING_SIZE_WARNING = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.bergeitalia.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'pierangelo1982@gmail.com'
-EMAIL_HOST_PASSWORD = 'savicevic94'
-DEFAULT_FROM_EMAIL = 'pierangelo1982@gmail.com'
+EMAIL_HOST_USER = 'shop@bergeitalia.com'
+EMAIL_HOST_PASSWORD = 'palazzolesi52'
+DEFAULT_FROM_EMAIL = 'shop@bergeitalia.com'
 CONTACT_RECIPIENTS = False
 
 

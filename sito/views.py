@@ -45,9 +45,9 @@ from sito.helper import *
 @login_required(login_url="/login/")
 def HomePage(request):
     slider_list = Slider.objects.filter(active=True).order_by('id')
-    last_list = Product.objects.all().order_by('-pub_date')[:4]
-    promo_list = Product.objects.filter(promo=True).filter(slide = True).order_by('-pub_date')[:4]
-    offerte_list = Product.objects.filter(promo=True).order_by('-id')[:4]
+    last_list = Product.objects.filter(active=True).order_by('-pub_date')[:4]
+    promo_list = Product.objects.filter(promo=True).filter(slide = True).filter(active=True).order_by('-pub_date')[:4]
+    offerte_list = Product.objects.filter(active=True).filter(promo=True).order_by('-id')[:4]
     product_list = Product.objects.all()[:4]
     season = get_stagione(date(2017, 02, 01), date(2017, 8, 30)) #ottengo la stagione dalla funzione in helper.py
     context = {'slider_list':slider_list,
@@ -62,14 +62,39 @@ def HomePage(request):
 
 @login_required(login_url="/login/")
 def ProductFilterCategory(request, post_id):
-    product_list = Product.objects.filter(category__in=post_id)
+    product_list = Product.objects.filter(active=True).filter(category__in=post_id)
     context = {'product_list': product_list}
     return render_to_response('price_list.html', context, context_instance=RequestContext(request))
 
 
+
+@login_required(login_url="/login/")
+def ProductQuaranta(request):
+    product_list = Product.objects.filter(active=True).filter(delivery=True)
+    context = {'product_list': product_list}
+    return render_to_response('price_list.html', context, context_instance=RequestContext(request))
+
+
+
+@login_required(login_url="/login/")
+def ProductPronta(request):
+    product_list = Product.objects.filter(active=True).filter(prompt_delivery=True)
+    context = {'product_list': product_list}
+    return render_to_response('price_list.html', context, context_instance=RequestContext(request))
+
+
+
+@login_required(login_url="/login/")
+def ProductEstate(request):
+    product_list = Product.objects.filter(active=True).filter(summer=True).filter(prompt_delivery=False)
+    context = {'product_list': product_list}
+    return render_to_response('price_list.html', context, context_instance=RequestContext(request))
+
+
+
 @login_required(login_url="/login/")
 def ProductFilterTag(request, post_id):
-    product_list = Product.objects.filter(tags__in=post_id)
+    product_list = Product.objects.filter(active=True).filter(tags__in=post_id)
     context = {'product_list': product_list}
     return render_to_response('category_list.html', context, context_instance=RequestContext(request))
 
@@ -78,6 +103,7 @@ def ProductFilterTag(request, post_id):
 def product_list(request):
     product_list = ProductFilter(request.GET, queryset=Product.objects.all())
     return render(request, 'price_list.html', {'product_list': product_list})
+
 
 
 
@@ -187,7 +213,7 @@ def add_to_order(request):
             ### email
             ord_list = Order.objects.get(pk=post.id) 
             ordine = "ordine id: ordine effettuato da: " + request.user.username
-            subject, from_email, to = ordine, request.user.email, 'pierangelo1982@gmail.com'
+            subject, from_email, to = ordine, request.user.email, 'info@bergeitalia.com'
             text_content = 'This is an important message.'
             html_content = render_to_string('order_email.html', {'post': ord_list})
             msg = EmailMultiAlternatives(subject, html_content, from_email, [to])
@@ -362,7 +388,7 @@ def contact(request):
             sender = form.cleaned_data['email']
             cc_myself = False
 
-            recipients = ['stefano.solinas.bs@gmail.com']
+            recipients = ['info@bergeitalia.com']
             if cc_myself:
                 recipients.append(sender)
         

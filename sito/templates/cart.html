@@ -2,7 +2,7 @@
 
 
 {% block content %}
-<div class="container" style="background-color: #ffffff">
+<div id="mio-carrello" class="container" style="background-color: #ffffff">
 
 
   {% if messages %}
@@ -19,15 +19,15 @@
 
 <h1>Ciao {{request.user.username }}, questo è il tuo carrello:</h1>
 
-<table class="table table-striped">
+<table class="hidden-xs table table-striped">
   <tr>
   	  <th>img</th>
   	  <th>Cod.</th>
-      <th>Prodotto</th>
+      <th class="hidden-sm">Prodotto</th>
       <th>Colore</th>
       <th>Misure:</th>
       <th>Quantità</th>
-      <th>Prezzo Unitario</th>
+      <th class="hidden-sm">Prezzo Unitario</th>
       <th>Prezzo Totale</th>
       <th><i class="fa fa-trash" aria-hidden="true"></i></th>
   </tr>
@@ -39,7 +39,7 @@
   		<img src="{% cropped_thumbnail cart.product "thumbdue" %}" style="width:200px;">
   	</td>
   	<td>{{cart.product.code}}</td>
-  	<td>
+  	<td class="hidden-sm">
         {% if cart.composition %}
             <span class="badge" style="background-color: #00a19c">{{cart.composition.name}}</span>
         {% else%}
@@ -72,7 +72,7 @@
     </td>
 
   	<td>{{cart.quantity}}</t>
-  	<td>{{cart.price}} €.</td>
+  	<td class="hidden-sm">{{cart.price}} €.</td>
     <td>
       Totale: {{cart.price_total}} €.<br>
       Scontato: {{cart.price_discount}} €.<br>
@@ -85,6 +85,60 @@
 
 
 </table>
+
+
+
+
+
+<div class="col-xs-12 hidden-sm hidden-md hidden-lg">
+
+  {% for cart in cart_list %}
+    <div class="col-xs-12 cart-mobile">
+        <p>
+          {% if cart.composition %}
+              <span class="badge" style="background-color: #00a19c">{{cart.composition.name}}</span>
+          {% else%}
+            <span class="badge" style="background-color: #122a4b">{{cart.product.name}}</span>
+          {% endif %}
+        </p>
+        {% load cropping %}
+        <img src="{% cropped_thumbnail cart.product "thumbdue" %}" class="img-responsive">
+        <br>
+        {% if cart.color.image %}
+          <img src="/media/{{cart.color.image}}" class="img-responsive color-thumb-circle"><br>
+        {% endif %}
+        {% if cart.composition.color %}
+          <img src="/media/{{cart.composition.color.image}}" class="img-responsive color-thumb-circle">
+        {% endif %}
+        <p>
+            {% if cart.cintureLunghezza %}
+                Lunghezza Cintura: {{cart.cintureLunghezza.name}}<br>
+            {% endif %}
+            {% if cart.scarpemisura %}
+                Misura Scarpe: {{cart.scarpemisura.name}}<br>
+            {% endif %}
+            {% if cart.composition.cintureLunghezza %}
+                Lunghezza Cintura: {{cart.composition.cintureLunghezza.name}}<br>
+            {% endif %}
+            {% if cart.composition.scarpemisura %}
+                Misura Scarpe: {{cart.composition.scarpemisura.name}}<br>
+            {% endif %}
+        </p>
+        <p>
+          {{cart.quantity}}<br>
+          {{cart.price}} €.<br>
+          <br>
+          <br>
+           Totale: {{cart.price_total}} €.<br>
+           Scontato: {{cart.price_discount}} €.<br>
+            Prezzo a Voi Riservato: {{cart.price_reserved}} €.<br>
+        </p>
+    </div>
+  {% endfor %}
+
+</div>
+
+
 
 
 

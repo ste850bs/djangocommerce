@@ -1,6 +1,14 @@
 <!-- colori -->
 <br>
-<label>Colori Disponibili:</label><br>
+<label>
+	{% if session_language = 'eng' %}
+		Colors Available:
+	{% elif session_language = 'fra' %}
+		Couleurs disponibles:
+	{% else %}
+		Colori Disponibili::
+	{% endif %}
+</label><br>
 
 	<div class="row">
 		{% for col in product.color.all %}
@@ -11,7 +19,7 @@
 				{% else %}
 					<i class="fa fa-circle" aria-hidden="true" style="color: #{{col.css_color}}"></i>
 				{% endif %}
-				<input type="radio" name="color" value="{{col.id}}" required> {{col.name}}{% if col.name|length <= 15 %}</br>&nbsp;{% endif %}
+				<input type="radio" name="color" value="{{col.id}}" required> {{col.name}}{% if col.name|length <= 20 %}</br>&nbsp;{% endif %}
 			</div>
 		{% endfor %}
 	</div><!-- row -->
@@ -23,7 +31,15 @@
 {% for cat in product.category.all %}
 	{% if cat.id == 2 %}
 		<!-- Cintura Lunghezza -->
-		<label>Lunghezza Cinture:</label>
+		<label>
+					{% if session_language = 'eng' %}
+		                Length Belts:
+		            {% elif session_language = 'fra' %}
+		                Ceintures De Longueur:
+		            {% else %}
+		                Lunghezza Cinture:
+		            {% endif %}
+		</label>
 		<select name="cintureLunghezza" class="form-control">
 			{% for sc in lunghezzacinture_list %}
 				<option value="{{sc.id}}">{{sc.name}}</option>
@@ -33,7 +49,15 @@
 	
 	<!-- Misura Scarpe -->
 	{% if cat.id == 5 %}
-	<label>Misure Scarpe:</label>
+	<label>
+					{% if session_language = 'eng' %}
+		                Measures Shoes:
+		            {% elif session_language = 'fra' %}
+		                Mesures Chaussures:
+		            {% else %}
+		                Misure Scarpe:
+		            {% endif %}
+	</label>
 	<select name="scarpemisura" class="form-control">
 		{% for sc in tagliascarpe_list %}
 			<option value="{{sc.id}}">{{sc.name}}</option>
@@ -46,6 +70,14 @@
 
 <div class="col-xs-12 col-sm-4">
 	<!-- quantità -->
-				<label>Quantità:</label>
+				<label>
+					{% if session_language = 'eng' %}
+		                Quantity:
+		            {% elif session_language = 'fra' %}
+		                Quantité:
+		            {% else %}
+		                Quantità:
+		            {% endif %}
+				</label>
 				<input name="quantity" type="number" min="1" step="1" value="0" class="form-control"/>	
 </div>

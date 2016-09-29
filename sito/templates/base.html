@@ -76,7 +76,13 @@
     <div id="link-sotto" class="col-xs-12 col-sm-3">
         <h3 class="text-center">
             <a href="{% url 'chi-siamo' %}">
-                CHI SIAMO
+                {% if session_language = 'eng' %}
+                    ABOUT US
+                {% elif session_language = 'fra' %}
+                    PROFIL
+                {% else %}
+                    CHI SIAMO
+                {% endif %}
             </a>
         </h3>
         <hr class="text-center" style="width: 50%">
@@ -103,7 +109,13 @@
     <div id="link-sotto" class="col-xs-12 col-sm-3">
         <h3 class="text-center">
             <a href="{% url 'servizio-clienti' %}">
-                SERVIZIO CLIENTI
+                {% if session_language = 'eng' %}
+                    CUSTOMER CARE
+                {% elif session_language = 'fra' %}
+                    SERVICE CLIENTS
+                {% else %}
+                    SERVIZIO CLIENTI
+                {% endif %}
             </a>
         </h3>
         <hr class="text-center" style="width: 50%">
