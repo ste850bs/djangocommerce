@@ -23,21 +23,66 @@
 
   <div class="row">
     <div id="indirizzi" class="col-xs-12 col-sm-5">
-      <h4>Dati Fatturazione:</h4>
-      <p>
-        <strong>Denominazione:</strong> {{fatt.denominazione}}<br>
-        <strong>Piva: <strong> {{fatt.piva}}<br>
-        <strong>Cod.Fisc: <strong> {{fatt.codfisc}}<br>
-        <strong>Indirizzo: <strong>{{fatt.indirizzo}} - {{fatt.cap}} - {{fatt.citta}}<br>
-        <strong>Tel: </strong>{{fatt.telefono}}<br>
-        <strong>Fax: </strong>{{fatt.fax}}<br>
-        <strong>Email: </strong>{{fatt.e_mail}}<br>
-        <strong>Pec: </strong>{{fatt.pec}}<br>
-        <br>
+      {% if session_language = 'eng' %}
+          <h4>Billing Data:</h4>
+          <p>
+            <strong>Company:</strong> {{fatt.denominazione}}<br>
+            <strong>Vat: <strong> {{fatt.piva}}<br>
+            <strong>Cod.Fisc: <strong> {{fatt.codfisc}}<br>
+            <strong>Address: <strong>{{fatt.indirizzo}} - {{fatt.cap}} - {{fatt.citta}}<br>
+            <strong>Tel: </strong>{{fatt.telefono}}<br>
+            <strong>Fax: </strong>{{fatt.fax}}<br>
+            <strong>Email: </strong>{{fatt.e_mail}}<br>
+            <strong>Pec: </strong>{{fatt.pec}}<br>
+            <br>
+
+      {% elif session_language = 'fra' %}
+          <h4>Data Facturation:</h4>
+          <p>
+            <strong>Company:</strong> {{fatt.denominazione}}<br>
+            <strong>Vat: <strong> {{fatt.piva}}<br>
+            <strong>Cod.Fisc: <strong> {{fatt.codfisc}}<br>
+            <strong>Address: <strong>{{fatt.indirizzo}} - {{fatt.cap}} - {{fatt.citta}}<br>
+            <strong>Tel: </strong>{{fatt.telefono}}<br>
+            <strong>Fax: </strong>{{fatt.fax}}<br>
+            <strong>Email: </strong>{{fatt.e_mail}}<br>
+            <strong>Pec: </strong>{{fatt.pec}}<br>
+            <br>
+
+      {% else %}
+          <h4>Dati Fatturazione:</h4>
+          <p>
+            <strong>Denominazione:</strong> {{fatt.denominazione}}<br>
+            <strong>Piva: <strong> {{fatt.piva}}<br>
+            <strong>Cod.Fisc: <strong> {{fatt.codfisc}}<br>
+            <strong>Indirizzo: <strong>{{fatt.indirizzo}} - {{fatt.cap}} - {{fatt.citta}}<br>
+            <strong>Tel: </strong>{{fatt.telefono}}<br>
+            <strong>Fax: </strong>{{fatt.fax}}<br>
+            <strong>Email: </strong>{{fatt.e_mail}}<br>
+            <strong>Pec: </strong>{{fatt.pec}}<br>
+            <br>
+      {% endif %}
+        
         {% if fatt %}
-        <a href="" data-toggle="modal" data-target=".update_fatturazione">MODIFICA DATI FATTURAZIONE</a>
+        <a href="" data-toggle="modal" data-target=".update_fatturazione">
+            {% if session_language = 'eng' %}
+                EDIT BILLING DATA
+            {% elif session_language = 'fra' %}
+                DATA EDIT FACTURATION
+            {% else %}
+                MODIFICA DATI FATTURAZIONE
+            {% endif %}
+        </a>
         {% else %}
-        <a href="" data-toggle="modal" data-target=".add_fatturazione">AGGIUNGI DATI FATTURAZIONE</a>
+        <a href="" data-toggle="modal" data-target=".add_fatturazione">
+            {% if session_language = 'eng' %}
+                ADD BILLING DATA
+            {% elif session_language = 'fra' %}
+                AJOUTER DES DONNÉES DE FACTURATION
+            {% else %}
+                AGGIUNGI DATI FATTURAZIONE
+            {% endif %}
+        </a>
         {% endif %}
       </p>
     </div>
@@ -45,21 +90,62 @@
     <div class="col-xs-12 col-sm-2"></div>
 
     <div id="indirizzi" class="col-xs-12 col-sm-5">
-      <h4>Indirizzo Spedizione:</h4>
+      <h4>
+          {% if session_language = 'eng' %}
+              Delivery Address
+          {% elif session_language = 'fra' %}
+            Adresse d'expédition:
+          {% else %}
+              Indirizzo Spedizione:
+          {% endif %}
+      </h4>
       <p>
-        <strong>Denominazione:</strong> {{ind.denominazione}}<br>
-        <strong>Indirizzo: <strong>{{ind.indirizzo}} - {{ind.cap}} - {{ind.citta}}<br>
-        <strong>Tel: </strong>{{ind.telefono}}<br>
-        <strong>Fax: </strong>{{ind.fax}}<br>
-        <strong>Email: </strong>{{ind.e_mail}}<br>
+        {% if session_language = 'eng' %}
+              <strong>Company:</strong> {{ind.denominazione}}<br>
+              <strong>Address: <strong>{{ind.indirizzo}} - {{ind.cap}} - {{ind.citta}}<br>
+              <strong>Tel: </strong>{{ind.telefono}}<br>
+              <strong>Fax: </strong>{{ind.fax}}<br>
+              <strong>Email: </strong>{{ind.e_mail}}<br>
+
+          {% elif session_language = 'fra' %}
+              <strong>Denominazione:</strong> {{ind.denominazione}}<br>
+              <strong>Indirizzo: <strong>{{ind.indirizzo}} - {{ind.cap}} - {{ind.citta}}<br>
+              <strong>Tel: </strong>{{ind.telefono}}<br>
+              <strong>Fax: </strong>{{ind.fax}}<br>
+              <strong>Email: </strong>{{ind.e_mail}}<br>
+
+          {% else %}
+              <strong>Denominazione:</strong> {{ind.denominazione}}<br>
+              <strong>Indirizzo: <strong>{{ind.indirizzo}} - {{ind.cap}} - {{ind.citta}}<br>
+              <strong>Tel: </strong>{{ind.telefono}}<br>
+              <strong>Fax: </strong>{{ind.fax}}<br>
+              <strong>Email: </strong>{{ind.e_mail}}<br>
+          {% endif %}
         <br>
         <br>
         <br>
         <br>
+        
         {% if ind %}
-        <a href="" data-toggle="modal" data-target=".update_indirizzo">MODIFICA INDIRIZZO SPEDIZIONE</a>
+        <a href="" data-toggle="modal" data-target=".update_indirizzo">
+            {% if session_language = 'eng' %}
+                    EDIT SHIPPING ADDRESS
+            {% elif session_language = 'fra' %}
+                    ADRESSE DE LIVRAISON EDIT
+            {% else %}
+                    MODIFICA INDIRIZZO SPEDIZIONE
+            {% endif %}
+        </a>
         {% else %}
-        <a href="" data-toggle="modal" data-target=".add_indirizzo">AGGIUNGI INDIRIZZO SPEDIZIONE</a>
+        <a href="" data-toggle="modal" data-target=".add_indirizzo">
+            {% if session_language = 'eng' %}
+                    ADD SHIPPING ADDRESS
+            {% elif session_language = 'fra' %}
+                    AJOUTER ADRESSE DE LIVRAISON
+            {% else %}
+                    AGGIUNGI INDIRIZZO SPEDIZIONE
+            {% endif %}
+        </a>
         {% endif %}
         <br>
       </p>
@@ -71,7 +157,15 @@
 
 
 <div class="container" style="background-color: #ffffff">
-  <h4>STORICO DEI TUOI ORDINI</h4>
+  <h4>
+    {% if session_language = 'eng' %}
+            YOUR ORDERS
+    {% elif session_language = 'fra' %}
+            VOS COMMANDES
+    {% else %}
+            STORICO DEI TUOI ORDINI
+    {% endif %}
+  </h4>
   <br>
   {% include 'components/customer-order-list.html' %}
 
@@ -90,12 +184,12 @@
                 <div class="form-group">
 
                   <div class="col-sm-12 col-md-12">
-                    <label>Denominazione:</label>
+                    <label>Denominazione/Company:</label>
                     <input type="text" value="" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="denominazione" id="contact_phone">
                   </div>
 
                   <div class="col-sm-12 col-md-6">
-                    <label>Piva:</label>
+                    <label>Piva/Vat:</label>
                     <input type="text" value="" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="piva" id="contact_phone">
                   </div>
 
@@ -105,7 +199,7 @@
                   </div>
                   
                   <div class="col-sm-12 col-md-4">
-                    <label>Indirizzo:</label>
+                    <label>Indirizzo/Address:</label>
                     <input type="text" value="" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="indirizzo" id="contact_phone">
                   </div>
 
@@ -116,12 +210,12 @@
                   </div>
 
                   <div class="col-sm-8 col-md-8">
-                    <label>Città:</label>
+                    <label>Città/City:</label>
                     <input type="text" value="" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="citta" id="contact_phone">
                   </div>
                   
                   <div class="col-sm-6 col-md-6">
-                    <label>Telefono:</label>
+                    <label>Telefono/Telephone:</label>
                     <input type="text" value="" data-msg-required="Please enter your name." maxlength="100" class="form-control" name="telefono" id="contact_name">
                   </div>
                   
@@ -174,12 +268,12 @@
                 <div class="form-group">
 
                   <div class="col-sm-12 col-md-12">
-                    <label>Denominazione:</label>
+                    <label>Denominazione/Company:</label>
                     <input type="text" value="{{fatt.denominazione}}" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="denominazione" id="contact_phone">
                   </div>
 
                   <div class="col-sm-12 col-md-6">
-                    <label>Piva:</label>
+                    <label>Piva/Vat:</label>
                     <input type="text" value="{{fatt.piva}}" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="piva" id="contact_phone">
                   </div>
 
@@ -189,7 +283,7 @@
                   </div>
                   
                   <div class="col-sm-12 col-md-4">
-                    <label>Indirizzo:</label>
+                    <label>Indirizzo/Address:</label>
                     <input type="text" value="{{fatt.indirizzo}}" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="indirizzo" id="contact_phone">
                   </div>
 
@@ -200,12 +294,12 @@
                   </div>
 
                   <div class="col-sm-8 col-md-8">
-                    <label>Città:</label>
+                    <label>Città/City:</label>
                     <input type="text" value="{{fatt.citta}}" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="citta" id="contact_phone">
                   </div>
                   
                   <div class="col-sm-6 col-md-6">
-                    <label>Telefono:</label>
+                    <label>Telefono/Telephone:</label>
                     <input type="text" value="{{fatt.telefono}}" data-msg-required="Please enter your name." maxlength="100" class="form-control" name="telefono" id="contact_name">
                   </div>
                   
@@ -259,13 +353,13 @@
                 <div class="form-group">
 
                   <div class="col-sm-12 col-md-12">
-                    <label>Denominazione:</label>
+                    <label>Denominazione/Company:</label>
                     <input type="text" value="" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="denominazione" id="contact_phone">
                   </div>
 
                   
                   <div class="col-sm-12 col-md-4">
-                    <label>Indirizzo:</label>
+                    <label>Indirizzo/Address:</label>
                     <input type="text" value="" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="indirizzo" id="contact_phone">
                   </div>
 
@@ -276,12 +370,12 @@
                   </div>
 
                   <div class="col-sm-8 col-md-4">
-                    <label>Città:</label>
+                    <label>Città/City:</label>
                     <input type="text" value="" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="citta" id="contact_phone">
                   </div>
                   
                   <div class="col-sm-4 col-md-4">
-                    <label>Telefono:</label>
+                    <label>Telefono/Telephone:</label>
                     <input type="text" value="" data-msg-required="Please enter your name." maxlength="100" class="form-control" name="telefono" id="contact_name">
                   </div>
 
@@ -329,13 +423,13 @@
                 <div class="form-group">
 
                   <div class="col-sm-12 col-md-12">
-                    <label>Denominazione:</label>
+                    <label>Denominazione/Company:</label>
                     <input type="text" value="{{ind.denominazione}}" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="denominazione" id="contact_phone">
                   </div>
 
                   
                   <div class="col-sm-12 col-md-4">
-                    <label>Indirizzo:</label>
+                    <label>Indirizzo/Address:</label>
                     <input type="text" value="{{ind.indirizzo}}" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="indirizzo" id="contact_phone">
                   </div>
 
@@ -346,12 +440,12 @@
                   </div>
 
                   <div class="col-sm-8 col-md-4">
-                    <label>Città:</label>
+                    <label>Città/City:</label>
                     <input type="text" value="{{ind.citta}}" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="citta" id="contact_phone">
                   </div>
                   
                   <div class="col-sm-4 col-md-4">
-                    <label>Telefono:</label>
+                    <label>Telefono/Telephone:</label>
                     <input type="text" value="{{ind.telefono}}" data-msg-required="Please enter your name." maxlength="100" class="form-control" name="telefono" id="contact_name">
                   </div>
 

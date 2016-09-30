@@ -17,18 +17,48 @@
 {% endif %}
 
 
-<h1>Ciao {{request.user.username }}, questo è la lista dei tuoi ordini:</h1>
+<h1>
+    {% if session_language = 'eng' %}
+          Hi {{request.user.username }}, this is your order list:
+    {% elif session_language = 'fra' %}
+          Bonjour {{request.user.username }}, ceci est votre liste d'ordre:
+    {% else %}
+          Ciao {{request.user.username }}, questo è la lista dei tuoi ordini:
+    {% endif %}
+</h1>
 
 <table class="table table-striped">
   <tr>
-      <th>Cod.</th>
-      <th>Data:</th>
-      <th>Prezzo Totale</th>
-      <th>inlavorazione</th>
-      <th>spedito</th>
-      <th>pagato</th>
-      <th>chiuso</th>
-      <th>Vedi Ordine</th>
+    {% if session_language = 'eng' %}
+                <th>Cod.</th>
+                <th>Data:</th>
+                <th>Total Price</th>
+                <th>work in progress</th>
+                <th>delivery</th>
+                <th>pay</th>
+                <th>close</th>
+                <th>Order Detail</th>
+
+    {% elif session_language = 'fra' %}
+              <th>Cod.</th>
+              <th>Data:</th>
+              <th>Prix Total</th>
+              <th>dans le traitement</th>
+              <th>expédié</th>
+              <th>payé</th>
+              <th>Fermer</th>
+              <th>Détails</th>
+
+    {% else %}
+              <th>Cod.</th>
+              <th>Data:</th>
+              <th>Prezzo Totale</th>
+              <th>inlavorazione</th>
+              <th>spedito</th>
+              <th>pagato</th>
+              <th>chiuso</th>
+              <th>Vedi Ordine</th>
+    {% endif %}
   </tr>
 
   {% for order in order_list %}
@@ -70,7 +100,15 @@
     </td>
 
     <td>
-      <a href="{% url 'order-detail' order.id %}">Vedi Dettaglio Ordine</a>
+      <a href="{% url 'order-detail' order.id %}">
+        {% if session_language = 'eng' %}
+            Detail
+        {% elif session_language = 'fra' %}
+            Détails
+        {% else %}
+            Vedi Dettaglio
+        {% endif %}
+      </a>
     </td>
   </tr>
   {% endfor %}
