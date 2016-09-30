@@ -170,8 +170,8 @@ def add_to_cart(request):
                         #return redirect('/', pk=post.pk)
             else:
                 ## cpntrollare se è doppio e poi salvare... controolare che non ci sian composizioni
-                if CartItem.objects.filter(user_id = request.user.id).filter(composition_id=None).filter(product_id=post.product):
-                    ex_cart = CartItem.objects.filter(user_id = request.user.id).filter(composition_id=None).get(product_id=post.product)
+                if CartItem.objects.filter(user_id = request.user.id).filter(composition_id=None).filter(product_id=post.product).filter(color_id=post.color):
+                    ex_cart = CartItem.objects.filter(user_id = request.user.id).filter(composition_id=None).filter(color_id=post.color).get(product_id=post.product)
                     ex_cart.quantity += post.quantity
                     ex_cart.save()
                     messages.success(request, 'Prodotto già presente, abbiamo aggiornato la quantità')
