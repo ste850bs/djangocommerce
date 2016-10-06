@@ -359,7 +359,7 @@ def update_customer_indirizzo_spedizione(request, pk=None):
 def search(request):
     try:
         q = request.GET['q']
-        product_list = Product.objects.filter(Q(name__icontains=q) | Q(code=q) | Q(descrizione__icontains=q))
+        product_list = Product.objects.filter(Q(name__icontains=q) | Q(code=q) | Q(descrizione__icontains=q) | Q(color__name__icontains=q) | Q(tags__name__in=q))
         return render_to_response('price_list.html', {'product_list':product_list, 'q':q}, context_instance=RequestContext(request))
     except KeyError:
         messages.error(request, 'Nessuna Corrispondenza Trovata')
