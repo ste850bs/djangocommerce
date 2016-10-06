@@ -95,7 +95,7 @@
 				
 				<h5>
 					{% if session_language = 'eng' %}
-		                {% if product.descrizione %}<br>{{product.descrizione|safe}}<br><br>{% endif %}
+		                {% if product.descrizione %}<br>{{product.descrizione_uk|safe}}<br><br>{% endif %}
 						{% if product.size %}<strong>Size:</strong> {{product.size}} cm{% endif %}
 						{% if product.width %}<strong>Width:</strong> {{product.width}} cm<br>{% endif %}
 						{% if product.lenght %}<strong>Length:</strong> {{product.lenght}} cm<br>{% endif %}
@@ -104,7 +104,7 @@
 						{% if product.volume %}<strong>Volume:</strong> {{product.volume}} c3<br>{% endif %}
 		            
 		            {% elif session_language = 'fra' %}
-			            {% if product.descrizione %}<br>{{product.descrizione|safe}}<br><br>{% endif %}
+			            {% if product.descrizione %}<br>{{product.descrizione_fr|safe}}<br><br>{% endif %}
 						{% if product.size %}<strong>Dimensions:</strong> {{product.size}} cm{% endif %}
 						{% if product.width %}<strong>Largeur:</strong> {{product.width}} cm<br>{% endif %}
 						{% if product.lenght %}<strong>Longueur:</strong> {{product.lenght}} cm<br>{% endif %}

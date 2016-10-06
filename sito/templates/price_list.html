@@ -30,11 +30,11 @@
 			{% endif %}
 			<h3 class="box-titolo" style="margin-top:15px;">
 				{% if session_language = 'eng' %}
-                	{{pro.name_uk}}{% if pro.name_uk|length <= 22 %}</br>&nbsp;{% endif %}
+                	{{pro.name_uk|truncatechars:37}}{% if pro.name_uk|length <= 22 %}</br>&nbsp;{% endif %}
               	{% elif session_language = 'fra' %}
-                	{{pro.name_fr}}{% if pro.name_fr|length <= 22 %}</br>&nbsp;{% endif %}
+                	{{pro.name_fr|truncatechars:37}}{% if pro.name_fr|length <= 22 %}</br>&nbsp;{% endif %}
               	{% else %}
-                	{{pro.name}}{% if pro.name|length <= 22 %}</br>&nbsp;{% endif %}
+                	{{pro.name|truncatechars:37}}{% if pro.name|length <= 22 %}</br>&nbsp;{% endif %}
               	{% endif %}
 			</h3>
 			<h4 class="box-tipologia">

@@ -113,10 +113,8 @@ def product_list(request):
 def ProductFilterView(request, post_id):
     product = Product.objects.get(pk=post_id)
     composition_list = Composition.objects.filter(product_id=product.id)
-    a = []
-    for co in composition_list:
-        a += [co.color_id]
-    color_list = Color.objects.filter(id__in=a)
+    comp = Composition.objects.filter(product_id=product.id).values('color_id')
+    color_list = Color.objects.filter(id__in=comp)
     filer_list = Image.objects.filter(folder_id = product.album)
     lunghezzacinture_list = CintureLunghezza.objects.all()
     tagliascarpe_list = TagliaScarpe.objects.all()
@@ -127,6 +125,7 @@ def ProductFilterView(request, post_id):
     			'filer_list':filer_list,
                 'lunghezzacinture_list':lunghezzacinture_list,
                 'tagliascarpe_list':tagliascarpe_list,
+                'comp':comp,
                 'form':form}
     return render_to_response('detail.html', context, context_instance=RequestContext(request))
 

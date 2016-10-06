@@ -47,6 +47,7 @@ class Color(models.Model):
 
     class Meta:
         verbose_name_plural = "Colori"
+        ordering = ['name']
 
 
 
