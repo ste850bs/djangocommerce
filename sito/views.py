@@ -172,17 +172,43 @@ def add_to_cart(request):
                         #return redirect('/', pk=post.pk)
             else:
                 ## cpntrollare se è doppio e poi salvare... controolare che non ci sian composizioni
-                if CartItem.objects.filter(user_id = request.user.id).filter(composition_id=None).filter(product_id=post.product).filter(color_id=post.color):
-                    ex_cart = CartItem.objects.filter(user_id = request.user.id).filter(composition_id=None).filter(color_id=post.color).get(product_id=post.product)
-                    ex_cart.quantity += post.quantity
-                    ex_cart.save()
-                    messages.success(request, 'Prodotto già presente, abbiamo aggiornato la quantità')
-                    return HttpResponseRedirect(request.META.get('HTTP_REFERER')) 
+                ## if cinture
+                if post.cintureLunghezza:
+                    if CartItem.objects.filter(user_id = request.user.id).filter(composition_id=None).filter(product_id=post.product).filter(color_id=post.color).filter(cintureLunghezza_id=post.cintureLunghezza):
+                        ex_cart = CartItem.objects.filter(user_id = request.user.id).filter(composition_id=None).filter(color_id=post.color).filter(cintureLunghezza_id=post.cintureLunghezza).get(product_id=post.product)
+                        ex_cart.quantity += post.quantity
+                        ex_cart.save()
+                        messages.success(request, 'cintura/colore/lunghezza già presente, abbiamo aggiornato la quantità')
+                        return HttpResponseRedirect(request.META.get('HTTP_REFERER')) 
+                    else:
+                        post.save()
+                        messages.success(request, 'Prodotto Aggiunto al carrello')
+                        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                ## elif scarpe
+                elif post.scarpemisura:
+                    if CartItem.objects.filter(user_id = request.user.id).filter(composition_id=None).filter(product_id=post.product).filter(color_id=post.color).filter(scarpemisura_id=post.scarpemisura):
+                        ex_cart = CartItem.objects.filter(user_id = request.user.id).filter(composition_id=None).filter(color_id=post.color).filter(scarpemisura_id=post.scarpemisura).get(product_id=post.product)
+                        ex_cart.quantity += post.quantity
+                        ex_cart.save()
+                        messages.success(request, 'scarpa/colore/misura già presente, abbiamo aggiornato la quantità')
+                        return HttpResponseRedirect(request.META.get('HTTP_REFERER')) 
+                    else:
+                        post.save()
+                        messages.success(request, 'Prodotto Aggiunto al carrello')
+                        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                ## altrimenti borse bracciali foulard
                 else:
-                    post.save()
-                    messages.success(request, 'Prodotto Aggiunto al carrello')
-                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-                    #return redirect('/', pk=post.pk)
+                    if CartItem.objects.filter(user_id = request.user.id).filter(composition_id=None).filter(product_id=post.product).filter(color_id=post.color):
+                        ex_cart = CartItem.objects.filter(user_id = request.user.id).filter(composition_id=None).filter(color_id=post.color).get(product_id=post.product)
+                        ex_cart.quantity += post.quantity
+                        ex_cart.save()
+                        messages.success(request, 'Prodotto già presente, abbiamo aggiornato la quantità')
+                        return HttpResponseRedirect(request.META.get('HTTP_REFERER')) 
+                    else:
+                        post.save()
+                        messages.success(request, 'Prodotto Aggiunto al carrello')
+                        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                        #return redirect('/', pk=post.pk)
     else:
         form = AddForm()
     return render(request, 'cart-form.html', {'form': form})
