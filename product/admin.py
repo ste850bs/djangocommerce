@@ -87,8 +87,8 @@ class ProductAdmin(ImageCroppingMixin, admin.ModelAdmin):
 
     model = Product
     inlines = [CompositionAssociactionAdmin]
-    list_display = ("image_img", "code", "name", "price", "discount", "price_offer", "prompt_delivery", "delivery", "promo", "summer", "winter", "active")
-    list_editable = ('summer', 'winter', 'active',)
+    list_display = ("image_img", "code", "name", "price", "discount", "price_offer", "prompt_delivery", "delivery", "promo", "summer", "winter", "top_seller","active")
+    list_editable = ('summer', 'winter', 'promo', 'top_seller','active',)
     fields = (
                 "code",
                 ("name", "name_uk", "name_fr"),
@@ -106,7 +106,7 @@ class ProductAdmin(ImageCroppingMixin, admin.ModelAdmin):
                 "image", "slider", "thumb", "thumbdue", "croplibero",
                 ("prompt_delivery", "delivery"),
                 ("summer", "winter", "start_season", "end_season"),
-                ("slide", "promo"),
+                ("slide", "promo", "top_seller"),
                 "tags", "active"
             )
 

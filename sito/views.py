@@ -46,8 +46,9 @@ from sito.helper import *
 def HomePage(request):
     slider_list = Slider.objects.filter(active=True).order_by('id')
     last_list = Product.objects.filter(active=True).order_by('-pub_date')[:4]
-    promo_list = Product.objects.filter(promo=True).filter(slide = True).filter(active=True).order_by('-pub_date')[:4]
-    offerte_list = Product.objects.filter(active=True).filter(promo=True).order_by('-id')[:4]
+    promo_list = Product.objects.filter(promo=True).filter(slide = True).filter(active=True).order_by('?')[:4]
+    offerte_list = Product.objects.filter(active=True).filter(promo=True).order_by('?')[:4]
+    top_seller = Product.objects.filter(top_seller=True).order_by('?')[:4]
     product_list = Product.objects.all()[:4]
     season = get_stagione(date(2017, 02, 01), date(2017, 8, 30)) #ottengo la stagione dalla funzione in helper.py
     context = {'slider_list':slider_list,
@@ -55,6 +56,7 @@ def HomePage(request):
     			'promo_list':promo_list,
                 'product_list':product_list,
                 'offerte_list':offerte_list,
+                'top_seller':top_seller,
                'season':season}
     return render_to_response('index.html', context, context_instance=RequestContext(request))
 

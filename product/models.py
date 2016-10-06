@@ -227,6 +227,7 @@ class Product(models.Model):
     active = models.BooleanField('attiva', default=False)
     slide = models.BooleanField('Mostra in Slide', default=False)
     promo = models.BooleanField('Mostra in Promo', default=False)
+    top_seller = models.BooleanField('Mostra in Piu Venduti', default=False)
 
     def save(self, *args, **kwargs):
         self.price_offer = self.price - (self.price * self.discount/100)
