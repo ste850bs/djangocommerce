@@ -37,6 +37,8 @@ class Category(models.Model):
 class Color(models.Model):
     category = models.ForeignKey(Category, null=True, blank=True, verbose_name="Seleziona Categoria")
     name = models.CharField('nome colore', max_length=100)
+    name_uk = models.CharField('nome colore Inglese', max_length=250, null=True, blank=True)
+    name_fr = models.CharField('nome colore Francese', max_length=250, null=True, blank=True)
     code = models.CharField('codice colore', max_length=250, null=True, blank=True)
     css_color = models.CharField('css colore', max_length=250, null=True, blank=True)
     image = models.ImageField('immagine colore', blank=True, null=True, upload_to='color')

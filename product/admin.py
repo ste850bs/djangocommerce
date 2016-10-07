@@ -37,7 +37,7 @@ class CompositionAdmin(ImageCroppingMixin, admin.ModelAdmin):
 
 
 class ColorAdmin(ImageCroppingMixin, admin.ModelAdmin):
-	list_display = ("category", "name")
+	list_display = ("category", "name", "name_uk", "name_fr")
 
 
 '''
