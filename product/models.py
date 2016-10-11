@@ -258,6 +258,8 @@ class Product(models.Model):
 class Composition(models.Model):
     product = models.ForeignKey(Product, null=True, blank=True, verbose_name="Prodotto")
     name = models.CharField(max_length=100, verbose_name="Titolo:", null=True, editable=False)
+    name_uk = models.CharField(max_length=100, verbose_name="Titolo Inglese:", null=True, editable=False)
+    name_fr = models.CharField(max_length=100, verbose_name="Titolo Francese:", null=True, editable=False)
     code = models.CharField('Codice', max_length=250, null=True, blank=True, editable=False)
     price = models.DecimalField('Prezzo', max_digits=10, decimal_places=2, blank=True, null=True, default= 0,
                                 help_text = "maggiorazione di prezzo")
@@ -287,6 +289,8 @@ class Composition(models.Model):
 
     def save(self, *args, **kwargs):
         self.name = self.product.name + " - " + self.color.name
+        self.name_uk = self.product.name_uk + " - " + self.color.name_uk
+        self.name_fr = self.product.name_fr + " - " + self.color.name_fr
         self.code = self.product.id + self.color.id
         self.pub_date = datetime.now()
         super(Composition, self).save(*args, **kwargs) # Call the "real" save() method.
