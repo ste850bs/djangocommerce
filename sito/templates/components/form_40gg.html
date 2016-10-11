@@ -6,7 +6,7 @@
 	{% elif session_language = 'fra' %}
 		Couleurs disponibles:
 	{% else %}
-		Colori Disponibili::
+		Colori Disponibili:
 	{% endif %}
 </label><br>
 
@@ -19,7 +19,15 @@
 				{% else %}
 					<i class="fa fa-circle" aria-hidden="true" style="color: #{{col.css_color}}"></i>
 				{% endif %}
-				<input type="radio" name="color" value="{{col.id}}" required> {{col.name}}{% if col.name|length <= 20 %}</br>&nbsp;{% endif %}
+				<input type="radio" name="color" value="{{col.id}}" required> 
+					{% if session_language = 'eng' %}
+						{{col.name_uk}}{% if col.name_uk|length <= 20 %}</br>&nbsp;{% endif %}
+					{% elif session_language = 'fra' %}
+						{{col.name_fr}}{% if col.name_fr|length <= 20 %}</br>&nbsp;{% endif %}
+					{% else %}
+						{{col.name}}{% if col.name|length <= 20 %}</br>&nbsp;{% endif %}
+					{% endif %}
+					
 			</div>
 		{% endfor %}
 	</div><!-- row -->
