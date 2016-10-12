@@ -418,6 +418,14 @@ def charts(request):
     return render_to_response('chart.html', context, context_instance=RequestContext(request))
 
 
+
+#### MAPPA CLIENTI ###########
+def customer_map(request):
+    fatturazione_list = Fatturazione.objects.all()
+    context = {'fatturazione_list':fatturazione_list}
+    return render_to_response('map.html', context, context_instance=RequestContext(request))
+
+
 #### static page ######
 def chisiamo(request):
     return render_to_response('chi-siamo.html', context_instance=RequestContext(request))
