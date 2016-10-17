@@ -16,6 +16,7 @@
       <ul class="nav navbar-nav navbar-right">
         {% if request.user.is_superuser %}
         <li><a href="/admin">AREA ADMIN</a></li>
+        <li><a href="{% url 'customer-map' %}"><i class="fa fa-map-marker" aria-hidden="true"></i> Mappa Clienti</a>
         {% endif %}
         <li><a href="{% url 'customer' %}"><i class="fa fa-user"></i></a></li>
         <li><a href="{% url 'logout' %}"><i class="fa fa-lock"></i></a></li>

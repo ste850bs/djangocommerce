@@ -86,16 +86,18 @@
 
 
 <div id="lista-offerte" class="container">
-
-	<h2 class="titolo">
-		{% if session_language = 'eng' %}
-		    LAST PRODUCTS
-		{% elif session_language = 'fra' %}
-			DERNIERS PRODUITS
-		{% else %}
-		    ULTIMI ARRIVI
-		{% endif %}
-	</h2>
+	
+	<div class="col-xs-12 col-title-index">
+		<h2 class="titolo">
+			{% if session_language = 'eng' %}
+			    LAST PRODUCTS
+			{% elif session_language = 'fra' %}
+				DERNIERS PRODUITS
+			{% else %}
+			    ULTIMI ARRIVI
+			{% endif %}
+		</h2>
+	</div>
 	{% for pro in last_list %}
 		{% include 'components/product.html' %}
 	{% endfor %}
@@ -104,27 +106,27 @@
 		<hr>
 	</div>
 	
-	<h2 class="titolo">PROMO</h2>
-	{% for pro in offerte_list %}
-		{% include 'components/product.html' %}
-	{% endfor %}
+	<div class="col-xs-12 col-title-index">
+		<h2 class="titolo">PROMO</h2>
+	</div>
+	{% include 'components/scorrimento_promo.html' %}
 
 	<div class="col-xs-12">
 		<hr>
 	</div>
 	
-	<h2 class="titolo">
-		{% if session_language = 'eng' %}
-		    BEST SELLERS
-		{% elif session_language = 'fra' %}
-			PLUS VENDU
-		{% else %}
-		    I PIU' VENDUTI
-		{% endif %}
-	</h2>
-	{% for pro in top_seller %}
-		{% include 'components/product.html' %}
-	{% endfor %}
+	<div class="col-xs-12 col-title-index">
+		<h2 class="titolo">
+			{% if session_language = 'eng' %}
+			    BEST SELLERS
+			{% elif session_language = 'fra' %}
+				PLUS VENDU
+			{% else %}
+			    I PIU' VENDUTI
+			{% endif %}
+		</h2>
+	</div>
+	{% include 'components/scorrimento_seller.html' %}
 
 
 </div><!-- lista offerte -->
