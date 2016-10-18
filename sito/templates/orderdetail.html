@@ -36,9 +36,11 @@
     <td>
       {% if cart.color.image %}
         <img src="/media/{{cart.color.image}}" class="color-thumb-circle">
+         <p>{{cart.color.name}}</p>
       {% endif %}
       {% if cart.composition.color %}
         <img src="/media/{{cart.composition.color.image}}" class="color-thumb-circle">
+         <p>{{cart.composition.color.name}}</p>
       {% endif %}
     </td>
     

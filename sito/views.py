@@ -59,7 +59,7 @@ def HomePage(request):
                 'offerte_list':offerte_list,
                 'top_seller':top_seller,
                 'test_list':test_list,
-               'season':season}
+                'season':season}
     return render_to_response('index.html', context, context_instance=RequestContext(request))
 
 
@@ -249,6 +249,9 @@ def add_to_order(request):
                 post_cart.order = post
                 post_cart.product = cart.product
                 post_cart.composition = cart.composition
+                post_cart.color = cart.color
+                post_cart.cintureLunghezza = cart.cintureLunghezza
+                post_cart.scarpemisura = cart.scarpemisura
                 post_cart.price = cart.price
                 post_cart.quantity = cart.quantity
                 post_cart.total = cart.price_total
@@ -266,6 +269,23 @@ def add_to_order(request):
             ord_list = Order.objects.get(pk=post.id) 
             ordine = "ordine id: ordine effettuato da: " + request.user.username
             subject, from_email, to = ordine, request.user.email, 'info@bergeitalia.com'
+            #subject, from_email, to = ordine, request.user.email, 'andrea.solinas1951@gmail.com'
+            text_content = 'This is an important message.'
+            html_content = render_to_string('order_email.html', {'post': ord_list})
+            msg = EmailMultiAlternatives(subject, html_content, from_email, [to])
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
+            ### email ordinante
+            ordine = "ordine id: ordine effettuato da: " + request.user.username
+            subject, from_email, to = ordine, 'info@bergeitalia.com', request.user.email
+            text_content = 'This is an important message.'
+            html_content = render_to_string('order_email.html', {'post': ord_list})
+            msg = EmailMultiAlternatives(subject, html_content, from_email, [to])
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
+            # email controllo
+            ordine = "ordine id: ordine effettuato da: " + request.user.username
+            subject, from_email, to = ordine, request.user.email, 'stefano.solinas.bs@gmail.com'
             text_content = 'This is an important message.'
             html_content = render_to_string('order_email.html', {'post': ord_list})
             msg = EmailMultiAlternatives(subject, html_content, from_email, [to])

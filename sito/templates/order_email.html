@@ -42,7 +42,7 @@
   <tr>
     <td>
       {% load cropping %}
-      <img src="http://shop.bergeitalia.com/media/{{cart.product.image}}" style="width:200px;">
+      <img src="http://shop.bergeitalia.com/media/{{cart.product.image}}" style="width:200" width="200">
     </td>
     <td>{{cart.product.code}}</td>
     <td>
@@ -55,18 +55,20 @@
     
     <td>
       {% if cart.color.image %}
-        <img src="http://shop.bergeitalia.com/media/{{cart.color.image}}" class="color-thumb-circle" style="width:30px; height:30px;">
+        <img src="http://shop.bergeitalia.com/media/{{cart.color.image}}" class="color-thumb-circle" style="width:30px; height:30px;" width="30">
+        <p>{{cart.color.name}}</p>
       {% endif %}
       {% if cart.composition.color %}
-        <img src="http://shop.bergeitalia.com/media/{{cart.composition.color.image}}" class="color-thumb-circle" style="width:30px; height:30px;">
+        <img src="http://shop.bergeitalia.com/media/{{cart.composition.color.image}}" class="color-thumb-circle" style="width:30px; height:30px;" width="30">
+         <p>{{cart.composition.color.name}}</p>
       {% endif %}
     </td>
     
     <td>
-      {% if cart.cintureLunghezza %}
+      {% if cart.product.cintureLunghezza %}
         Lunghezza Cintura: {{cart.cintureLunghezza.name}}<br>
       {% endif %}
-      {% if cart.scarpemisura %}
+      {% if cart.product.scarpemisura %}
         Misura Scarpe: {{cart.scarpemisura.name}}<br>
       {% endif %}
       {% if cart.composition.cintureLunghezza %}
