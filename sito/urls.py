@@ -17,7 +17,9 @@ urlpatterns = [
     url(r'^tags/(?P<post_id>\d+)/$', views.ProductFilterTag, name='tag-filter'),
     url(r'^product-list$', views.product_list, name='product-list'),
     url(r'^pronta-consegna/$', views.ProductPronta, name='pronta-consegna'),
+    url(r'^category/(?P<post_id>\d+)/pronta-consegna/$', views.ProductProntaCategory, name='categoria-pronta-consegna'),
     url(r'^consegna-40-gg/$', views.ProductQuaranta, name='consegna-40gg'),
+    url(r'^category/(?P<post_id>\d+)/consegna-40gg/$', views.ProductQuarantaCategory, name='categoria-40gg'),
     url(r'^estate/$', views.ProductEstate, name='estate'),
     #cart
     url(r'^add/$', views.add_to_cart, name='add'),

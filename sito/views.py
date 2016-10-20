@@ -79,12 +79,30 @@ def ProductQuaranta(request):
     context = {'product_list': product_list}
     return render_to_response('price_list.html', context, context_instance=RequestContext(request))
 
+@login_required(login_url="/login/")
+def ProductQuarantaCategory(request, post_id):
+    categoria = Category.objects.get(pk=post_id)
+    product_list = Product.objects.filter(active=True).filter(delivery=True).filter(category__in=post_id)
+    context = {
+            'product_list': product_list, 
+            'categoria':categoria}
+    return render_to_response('price_list.html', context, context_instance=RequestContext(request))
+
 
 
 @login_required(login_url="/login/")
 def ProductPronta(request):
     product_list = Product.objects.filter(active=True).filter(prompt_delivery=True)
     context = {'product_list': product_list}
+    return render_to_response('price_list.html', context, context_instance=RequestContext(request))
+
+@login_required(login_url="/login/")
+def ProductProntaCategory(request, post_id):
+    categoria = Category.objects.get(pk=post_id)
+    product_list = Product.objects.filter(active=True).filter(prompt_delivery=True).filter(category__in=post_id)
+    context = {
+            'product_list': product_list,
+            'categoria':categoria}
     return render_to_response('price_list.html', context, context_instance=RequestContext(request))
 
 
