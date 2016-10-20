@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^$', HomePage, name='home'),
     url(r'^product/(?P<post_id>\d+)/$', views.ProductFilterView, name='detail'),
     url(r'^category/(?P<post_id>\d+)/$', views.ProductFilterCategory, name='categoria'),
+    url(r'^category/(?P<post_id>\d+)/prezzo/$', views.product_category_list, name='categoria-prezzo'),
     url(r'^tags/(?P<post_id>\d+)/$', views.ProductFilterTag, name='tag-filter'),
     url(r'^product-list$', views.product_list, name='product-list'),
     url(r'^pronta-consegna/$', views.ProductPronta, name='pronta-consegna'),
