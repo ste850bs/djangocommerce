@@ -45,7 +45,7 @@ from sito.helper import *
 @login_required(login_url="/login/")
 def HomePage(request):
     slider_list = Slider.objects.filter(active=True).order_by('id')
-    last_list = Product.objects.filter(active=True).order_by('-pub_date')[:4]
+    last_list = Product.objects.filter(active=True).order_by('-pub_date')[:30]
     promo_list = Product.objects.filter(promo=True).filter(slide = True).filter(active=True).order_by('?')
     offerte_list = Product.objects.filter(active=True).filter(promo=True).order_by('?')
     top_seller = Product.objects.filter(top_seller=True).order_by('?')
