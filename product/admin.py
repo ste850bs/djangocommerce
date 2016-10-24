@@ -2,9 +2,10 @@ from django.contrib import admin
 from product.models import *
 from image_cropping import ImageCroppingMixin
 from django.forms import CheckboxSelectMultiple
-
+from django.contrib.admin import FieldListFilter
 #import nested_admin
 from nested_inline.admin import NestedStackedInline, NestedModelAdmin
+
 
 
 
@@ -109,6 +110,10 @@ class ProductAdmin(ImageCroppingMixin, admin.ModelAdmin):
                 ("slide", "promo", "top_seller"),
                 "tags", "active"
             )
+    
+    list_filter = ('code', 'name')
+    search_fields = ('code', 'name')
+
 
     actions = ['duplicate_event']
 
