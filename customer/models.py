@@ -40,7 +40,7 @@ class Fatturazione(models.Model):
     nazione = models.CharField('nazione', max_length=250, null=True, blank=True)
     telefono = models.CharField('Telefono', max_length=250, null=True, blank=True)
     fax = models.CharField('Fax', max_length=250, null=True, blank=True)
-    e_mail = models.CharField('email', max_length=250, null=True, blank=True)
+    myemail = models.CharField('email', max_length=250, null=True, blank=True)
     pec = models.CharField('pec', max_length=250, null=True, blank=True)
     indirizzo_spedizione = models.BooleanField('è anche indirizzo di spedizione', default=False)
     pub_date = models.DateTimeField('date published', null=True, blank=True, editable=False)
@@ -61,7 +61,7 @@ class AddFormFatturazione(ModelForm):
     class Meta:
         model = Fatturazione
         fields = ['user', 'denominazione', 'piva', 'codfisc', 'indirizzo', 'cap', 'citta', 'nazione',
-                'telefono', 'fax', 'e_mail', 'pec', 'indirizzo_spedizione']
+                'telefono', 'fax', 'myemail', 'pec', 'indirizzo_spedizione']
 
         
 

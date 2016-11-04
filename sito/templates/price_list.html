@@ -6,12 +6,21 @@
 	<h1></h1>
 	
 	<div class="col-xs-12 col-sm-2" style="padding:0px;">
-		<div class="col-xs-12">
+		{% if categoria %}
+		<div id="filtra-sx" class="col-xs-12 col-sm-12">
+			<h4 class="filtra-titolo">DISPONIBILITA'</h4>
+			{% include 'components/filtro-color-categorie.html' %}
+		</div>
+		{% endif %}
 
 		{% if categoria %}
-			{% include 'components/filtro-color-categorie.html' %}
-		{% endif %}
+		<div id="filtra-sx" class="col-xs-12 col-sm-12">
+			<h4 class="filtra-titolo">ORDINA</h4>
+			<a href="{% url 'categoria-a-z' categoria.id %}">DALLA A-Z</a><br>
+			<a href="{% url 'categoria-z-a' categoria.id %}">DALLA Z-A</a>
 		</div>
+		{% endif %}
+
 		<div id="filtra-sx" class="col-xs-12 col-sm-12">		
 			{% if categoria %}
 			<h4 class="filtra-titolo">FILTRA PER PREZZO</h4>

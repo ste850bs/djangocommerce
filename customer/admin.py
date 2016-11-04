@@ -26,14 +26,14 @@ class CustomerAdmin(admin.ModelAdmin):
     fk_name = 'user'
 
 class FatturazioneAdmin(admin.ModelAdmin):
-    list_display = (get_username, "denominazione", "piva", "codfisc", "telefono", "e_mail")
+    list_display = (get_username, "denominazione", "piva", "codfisc", "telefono", "myemail")
     fields = (
         ("user", "denominazione"),
         ("piva", "codfisc"),
         "indirizzo",
         ("cap", "citta", "nazione"),
         ("telefono", "fax"),
-        ("e_mail", "pec"),
+        ("myemail", "pec"),
         "indirizzo_spedizione"
     )
 

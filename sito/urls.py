@@ -20,6 +20,8 @@ urlpatterns = [
     url(r'^category/(?P<post_id>\d+)/pronta-consegna/$', views.ProductProntaCategory, name='categoria-pronta-consegna'),
     url(r'^consegna-40-gg/$', views.ProductQuaranta, name='consegna-40gg'),
     url(r'^category/(?P<post_id>\d+)/consegna-40gg/$', views.ProductQuarantaCategory, name='categoria-40gg'),
+    url(r'^category/(?P<post_id>\d+)/cdalla-A-alla-Z/$', views.ProductCategoryAtoZ, name='categoria-a-z'),
+    url(r'^category/(?P<post_id>\d+)/cdalla-Z-alla-A/$', views.ProductCategoryZtoA, name='categoria-z-a'),
     url(r'^estate/$', views.ProductEstate, name='estate'),
     #cart
     url(r'^add/$', views.add_to_cart, name='add'),
@@ -37,6 +39,7 @@ urlpatterns = [
     url(r'^update_indirizzo_spedizione/(?P<pk>\d+)/$', views.update_customer_indirizzo_spedizione, name='update-indirizzo-spedizione'),
     ## cerca
     url(r'^results/$', views.search, name="risultati"),
+    url(r'^codice/$', views.search_for_code, name="risultati-codice"),
     #login
     url(r'^logout/$', views.logout_view, name='logout'),
     ## pagine statiche

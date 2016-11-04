@@ -1,0 +1,19 @@
+<div class="container code-cerca">
+
+<div id="search-code" class="col-xs-12">
+	<form class="col-xs-12" role="search" action="{% url 'risultati-codice' %}" action="" method="get">
+        <div class="input-group">{% csrf_token %}
+        	<div class="input-group-addon">
+            	<button type="submit" class="button-cerca">RICERCA PER CODICE</button>
+            </div>
+  	    	<input id="id_q" name="q" type="text" class="form-control form-codice" id="exampleInputAmount">
+  	    	<div class="input-group-addon">
+            	<button type="submit" class="button-cerca"><i class="fa fa-search" aria-hidden="true"></i></button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+</div>

@@ -11,6 +11,7 @@ from product.forms import *
 from sito.models import *
 from cart.models import *
 from order.models import *
+from customer.models import *
 from django.core.mail import send_mail
 from filer.models import *
 #
@@ -37,6 +38,9 @@ import datetime
 from django.db.models import Q
 
 from sito.helper import *
+
+from django.contrib.auth.models import User
+
 
 
 # Create your views here.
@@ -107,6 +111,27 @@ def ProductProntaCategory(request, post_id):
 
 
 
+
+@login_required(login_url="/login/")
+def ProductCategoryAtoZ(request, post_id):
+    categoria = Category.objects.get(pk=post_id)
+    product_list = Product.objects.filter(active=True).filter(category__in=post_id).order_by('code')
+    context = {
+            'product_list': product_list, 
+            'categoria':categoria}
+    return render_to_response('price_list.html', context, context_instance=RequestContext(request))
+
+@login_required(login_url="/login/")
+def ProductCategoryZtoA(request, post_id):
+    categoria = Category.objects.get(pk=post_id)
+    product_list = Product.objects.filter(active=True).filter(category__in=post_id).order_by('-code')
+    context = {
+            'product_list': product_list, 
+            'categoria':categoria}
+    return render_to_response('price_list.html', context, context_instance=RequestContext(request))
+
+
+
 @login_required(login_url="/login/")
 def ProductEstate(request):
     product_list = Product.objects.filter(active=True).filter(summer=True).filter(prompt_delivery=False)
@@ -170,6 +195,7 @@ def logout_view(request):
 
 ## cart
 ## cart
+@login_required(login_url="/login/")
 def add_to_cart(request):
     if request.method == "POST":
         form = AddForm(request.POST)
@@ -254,7 +280,13 @@ def show_cart(request):
 
 
 ## ORDER
+@login_required(login_url="/login/")
 def add_to_order(request):
+    fatt = Fatturazione.objects.filter(user_id=request.user)
+    myemail = "info@bergeitalia.com"
+    for f in fatt:
+        myemail = f.myemail
+
     if request.method == "POST":
         form = AddOrderForm(request.POST)
         if form.is_valid():
@@ -290,21 +322,19 @@ def add_to_order(request):
                     check_magazzino(cart.quantity, cart.composition.quantity, composition)
                 post_cart.save()
 
-            cart_list.delete() #cancello carrello dopo ordine
-
-            ### email
             ord_list = Order.objects.get(pk=post.id) 
             ordine = "ordine id: ordine effettuato da: " + request.user.username
-            subject, from_email, to = ordine, request.user.email, 'info@bergeitalia.com'
+            subject, from_email, to = ordine, myemail, 'info@bergeitalia.com'
             #subject, from_email, to = ordine, request.user.email, 'andrea.solinas1951@gmail.com'
             text_content = 'This is an important message.'
             html_content = render_to_string('order_email.html', {'post': ord_list})
             msg = EmailMultiAlternatives(subject, html_content, from_email, [to])
             msg.attach_alternative(html_content, "text/html")
             msg.send()
+
             ### email ordinante
             ordine = "ordine id: ordine effettuato da: " + request.user.username
-            subject, from_email, to = ordine, 'info@bergeitalia.com', request.user.email
+            subject, from_email, to = ordine, 'info@bergeitalia.com', myemail
             text_content = 'This is an important message.'
             html_content = render_to_string('order_email.html', {'post': ord_list})
             msg = EmailMultiAlternatives(subject, html_content, from_email, [to])
@@ -312,12 +342,14 @@ def add_to_order(request):
             msg.send()
             # email controllo
             ordine = "ordine id: ordine effettuato da: " + request.user.username
-            subject, from_email, to = ordine, request.user.email, 'stefano.solinas.bs@gmail.com'
+            subject, from_email, to = ordine, myemail, 'stefano.solinas.bs@gmail.com'
             text_content = 'This is an important message.'
             html_content = render_to_string('order_email.html', {'post': ord_list})
             msg = EmailMultiAlternatives(subject, html_content, from_email, [to])
             msg.attach_alternative(html_content, "text/html")
             msg.send()
+
+            cart_list.delete() #cancello carrello dopo ordine
                 #return HttpResponseRedirect('/success/') # Redirect after POST
             #return redirect('/order', pk=post.pk)
             #return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -433,10 +465,23 @@ def update_customer_indirizzo_spedizione(request, pk=None):
 def search(request):
     try:
         q = request.GET['q']
-        product_list = Product.objects.filter(Q(name__icontains=q) | Q(name_uk__icontains=q) | Q(name_fr__icontains=q) | Q(code=q) 
+        product_list = Product.objects.filter(Q(code__icontains=q) | Q(name__icontains=q) | Q(name_uk__icontains=q) | Q(name_fr__icontains=q)
             | Q(descrizione__icontains=q) | Q(descrizione_uk__icontains=q) | Q(descrizione_fr__icontains=q) 
             | Q(color__name__icontains=q) | Q(color__name_uk__icontains=q) | Q(color__name_fr__icontains=q) 
             | Q(tags__name__in=q)).annotate(Count('id')) #unifico doppi risultati con annotate
+        return render_to_response('price_list.html', {'product_list':product_list, 'q':q}, context_instance=RequestContext(request))
+    except KeyError:
+        messages.error(request, 'Nessuna Corrispondenza Trovata')
+        #return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        return render_to_response('price_list.html', context_instance=RequestContext(request))
+
+
+
+# search
+def search_for_code(request):
+    try:
+        q = request.GET['q']
+        product_list = Product.objects.filter(Q(code__icontains=q)).annotate(Count('id')) #unifico doppi risultati con annotate
         return render_to_response('price_list.html', {'product_list':product_list, 'q':q}, context_instance=RequestContext(request))
     except KeyError:
         messages.error(request, 'Nessuna Corrispondenza Trovata')
@@ -458,10 +503,11 @@ def charts(request):
 
     order_product = OrderItem.objects.values('product_id').annotate(total=Count('product_id')).order_by('-total')[:6]
     order_user = Order.objects.values('user').annotate(total=Count('user')).order_by('-user')[:6]
-
+    utente_list = User.objects.all().order_by('-last_login')
     context = {'order_list':order_list,
                 'order_product':order_product,
                 'order_user':order_user,
+                'utente_list':utente_list,
                 'a':a,
                 'b':b}
     return render_to_response('chart.html', context, context_instance=RequestContext(request))

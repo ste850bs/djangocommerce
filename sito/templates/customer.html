@@ -32,7 +32,7 @@
             <strong>Address: <strong>{{fatt.indirizzo}} - {{fatt.cap}} - {{fatt.citta}}<br>
             <strong>Tel: </strong>{{fatt.telefono}}<br>
             <strong>Fax: </strong>{{fatt.fax}}<br>
-            <strong>Email: </strong>{{fatt.e_mail}}<br>
+            <strong>Email: </strong>{{fatt.myemail}}<br>
             <strong>Pec: </strong>{{fatt.pec}}<br>
             <br>
 
@@ -45,7 +45,7 @@
             <strong>Address: <strong>{{fatt.indirizzo}} - {{fatt.cap}} - {{fatt.citta}}<br>
             <strong>Tel: </strong>{{fatt.telefono}}<br>
             <strong>Fax: </strong>{{fatt.fax}}<br>
-            <strong>Email: </strong>{{fatt.e_mail}}<br>
+            <strong>Email: </strong>{{fatt.myemail}}<br>
             <strong>Pec: </strong>{{fatt.pec}}<br>
             <br>
 
@@ -58,7 +58,7 @@
             <strong>Indirizzo: <strong>{{fatt.indirizzo}} - {{fatt.cap}} - {{fatt.citta}}<br>
             <strong>Tel: </strong>{{fatt.telefono}}<br>
             <strong>Fax: </strong>{{fatt.fax}}<br>
-            <strong>Email: </strong>{{fatt.e_mail}}<br>
+            <strong>Email: </strong>{{fatt.myemail}}<br>
             <strong>Pec: </strong>{{fatt.pec}}<br>
             <br>
       {% endif %}
@@ -221,7 +221,7 @@
                   
                   <div class="col-sm-6 col-md-6">
                     <label>E-mail *</label>
-                    <input type="email" value="" data-msg-required="Please enter your email address." data-msg-email="Please enter a valid email address." maxlength="100" class="form-control" name="e_mail" id="contact_email" required>
+                    <input type="email" value="" data-msg-required="Please enter your email address." data-msg-email="Please enter a valid email address." maxlength="100" class="form-control" name="myemail" id="contact_email" required>
                   </div>
 
                   <div class="col-sm-6 col-md-6">
@@ -305,7 +305,7 @@
                   
                   <div class="col-sm-6 col-md-6">
                     <label>E-mail *</label>
-                    <input type="email" value="{{fatt.e_mail}}" data-msg-required="Please enter your email address." data-msg-email="Please enter a valid email address." maxlength="100" class="form-control" name="e_mail" id="contact_email" required>
+                    <input type="email" value="{{fatt.myemail}}" data-msg-required="Please enter your email address." data-msg-email="Please enter a valid email address." maxlength="100" class="form-control" name="myemail" id="contact_email" required>
                   </div>
 
                   <div class="col-sm-6 col-md-6">
