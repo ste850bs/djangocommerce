@@ -27,6 +27,7 @@ from decimal import *
 from decimal import Decimal
 
 from django.db.models import Count
+from django.db.models import F, FloatField, Sum
 
 
 from django.core.mail import EmailMultiAlternatives
@@ -493,23 +494,21 @@ def search_for_code(request):
 
 #### CHARTS ###########
 def charts(request):
-    order_list =Order.objects.all()[:6]
-    a = []
-    b = []
-
-    for order in order_list:
-        a += [order.user.username]
-        b += [order.tot_price]
-
-    order_product = OrderItem.objects.values('product_id').annotate(total=Count('product_id')).order_by('-total')[:6]
-    order_user = Order.objects.values('user').annotate(total=Count('user')).order_by('-user')[:6]
+    order_list =Order.objects.all().order_by('-tot_price_reserved')
+    order_product = OrderItem.objects.values('product').annotate(total=Count('product')).order_by('-total')[:10]
+    product_top = Product.objects.all()
+    order_user = Order.objects.values('user').annotate(total=Count('user')).order_by('-user')
     utente_list = User.objects.all().order_by('-last_login')
+    category_list = Category.objects.all()
+    user_totorder = Order.objects.values('user_id').annotate(total=Sum('tot_price_reserved')).order_by('-total')
     context = {'order_list':order_list,
                 'order_product':order_product,
                 'order_user':order_user,
                 'utente_list':utente_list,
-                'a':a,
-                'b':b}
+                'product_top':product_top,
+                'category_list':category_list,
+                'user_totorder':user_totorder
+                }
     return render_to_response('chart.html', context, context_instance=RequestContext(request))
 
 
