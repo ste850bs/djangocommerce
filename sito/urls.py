@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^category/(?P<post_id>\d+)/cdalla-A-alla-Z/$', views.ProductCategoryAtoZ, name='categoria-a-z'),
     url(r'^category/(?P<post_id>\d+)/cdalla-Z-alla-A/$', views.ProductCategoryZtoA, name='categoria-z-a'),
     url(r'^estate/$', views.ProductEstate, name='estate'),
+    url(r'^promo/$', views.PromoProduct, name='promo'),
     #cart
     url(r'^add/$', views.add_to_cart, name='add'),
     url(r'^cart/$', views.show_cart, name='show-cart'),

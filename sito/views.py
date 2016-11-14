@@ -162,6 +162,13 @@ def product_category_list(request, post_id):
     return render(request, 'price_list.html', {'product_list': product_list, 'categoria':categoria})
 
 
+@login_required(login_url="/login/")
+def PromoProduct(request):
+    product_list = Product.objects.filter(active=True).filter(promo=True)
+    context = {'product_list': product_list}
+    return render_to_response('price_list.html', context, context_instance=RequestContext(request))
+
+
 
 
 @login_required(login_url="/login/")
@@ -271,7 +278,7 @@ def add_to_cart(request):
 
 
 
-
+@login_required(login_url="/login/")
 def show_cart(request):
     cart_list = CartItem.objects.filter(user_id=request.user.id)
     context = {'cart_list':cart_list}
@@ -361,7 +368,7 @@ def add_to_order(request):
     return render(request, 'order-form.html', {'form': form})
 
 
-
+@login_required(login_url="/login/")
 def delete_cart_item(request, post_id):
     cart = CartItem.objects.get(pk=post_id).delete()
     messages.success(request, 'Prodotto eliminato dal carrello')
@@ -369,12 +376,13 @@ def delete_cart_item(request, post_id):
 
 
 ########   ORDER    #########
+@login_required(login_url="/login/")
 def order(request):
     order_list = Order.objects.filter(user_id=request.user.id).order_by('-id')
     context = {'order_list':order_list}
     return render_to_response('order.html', context, context_instance=RequestContext(request))
 
-
+@login_required(login_url="/login/")
 def orderDetail(request, post_id):
     order = Order.objects.get(pk=post_id)
     context = {'order':order}
@@ -383,6 +391,7 @@ def orderDetail(request, post_id):
 
 
 # customer
+@login_required(login_url="/login/")
 def customer_page(request):
     order_list = Order.objects.filter(user_id=request.user.id).order_by('-id')
     fatt = Fatturazione.objects.filter(user_id=request.user.id).first
@@ -395,7 +404,7 @@ def customer_page(request):
     return render_to_response('customer.html', context, context_instance=RequestContext(request))
 
 
-
+@login_required(login_url="/login/")
 def add_customer_fatturazione(request):
     if request.method == "POST":
             form = AddFormFatturazione(request.POST)
@@ -415,7 +424,7 @@ def add_customer_fatturazione(request):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-
+@login_required(login_url="/login/")
 def update_customer_fatturazione(request, pk=None):
     obj = get_object_or_404(Fatturazione, pk=pk)
     form = AddFormFatturazione(request.POST or None, instance=obj)
@@ -428,7 +437,7 @@ def update_customer_fatturazione(request, pk=None):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-
+@login_required(login_url="/login/")
 def add_customer_indirizzo_spedizione(request):
     if request.method == "POST":
             form = AddFormIndirizzoSpredizione(request.POST)
@@ -448,7 +457,7 @@ def add_customer_indirizzo_spedizione(request):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-
+@login_required(login_url="/login/")
 def update_customer_indirizzo_spedizione(request, pk=None):
     obj = get_object_or_404(IndirizzoSpedizione, pk=pk)
     form = AddFormIndirizzoSpredizione(request.POST or None, instance=obj)
@@ -463,6 +472,7 @@ def update_customer_indirizzo_spedizione(request, pk=None):
 
 
 # search
+@login_required(login_url="/login/")
 def search(request):
     try:
         q = request.GET['q']
@@ -479,6 +489,7 @@ def search(request):
 
 
 # search
+@login_required(login_url="/login/")
 def search_for_code(request):
     try:
         q = request.GET['q']
@@ -493,6 +504,7 @@ def search_for_code(request):
 
 
 #### CHARTS ###########
+@login_required(login_url="/login/")
 def charts(request):
     order_list =Order.objects.all().order_by('-tot_price_reserved')
     order_product = OrderItem.objects.values('product').annotate(total=Count('product')).order_by('-total')[:10]
@@ -514,6 +526,7 @@ def charts(request):
 
 
 #### MAPPA CLIENTI ###########
+@login_required(login_url="/login/")
 def customer_map(request):
     fatturazione_list = Fatturazione.objects.all()
     context = {'fatturazione_list':fatturazione_list}

@@ -109,7 +109,12 @@
 	</div>
 	
 	<div class="col-xs-12 col-title-index">
-		<h2 class="titolo">PROMO</h2>
+		<h2 class="titolo">
+			PROMO 
+			<span style="float:right; font-size: 14px;"><i class="fa fa-arrow-circle-right" aria-hidden="true"><a href="{% url 'promo' %}"></i>
+				{% if session_language = 'eng' %} all{% elif session_language = 'fra' %} voir tout{% else %}Vedi{% endif %}
+			</a></span>
+		</h2>
 	</div>
 	<div class="col-xs-12" style="padding:0px;">
 		{% include 'components/scorrimento_promo.html' %}
