@@ -40,9 +40,17 @@
         map.setMapTypeId('usroadatlas');
       } // end function init map
       
+
+      
+
       function geocodeAddress(geocoder, resultsMap) {
+        
+        var contentString = [];
+        var infowindow = []
+        
+        // creo gli array che mi servono per infowindow
         {% for fat in fatturazione_list %}
-        var contentString = '<div id="content">'+
+        var contenuto = '<div id="content">'+
             '<div id="siteNotice">'+
             '</div>'+
             '<h1 id="firstHeading" class="firstHeading">{{fat.denominazione}}</h1>'+
@@ -54,27 +62,58 @@
             '<p><b><a href="{{fat.e_mail}}">{{fat.e_mail}}</a></b></p>'+
             '</div>'+
             '</div>';
-        var infowindow{{fat.id}} = new google.maps.InfoWindow({
-          content: contentString
-        });
-        
-        var address = "{{fat.indirizzo}} - {{fat.cap}} {{fat.citta}}";
-        geocoder.geocode({'address': address}, function(results, status) {
-          if (status === 'OK') {
-            resultsMap.setCenter(results[0].geometry.location);
-            var marker = new google.maps.Marker({
-              map: resultsMap,
-              position: results[0].geometry.location
+            contentString.push(contenuto);
+
+          // creo valore da inserire nell'array che crea la infowindow
+          var info = new google.maps.InfoWindow({
+            content: contenuto
             });
-          marker.addListener('click', function() {
-            infowindow{{fat.id}}.open(map, marker);
-          }); //marker
-          } else {
-            alert('Geocode was not successful for the following reason: ' + status);
-          }
-        });
-        
+
+          // prendo nell'array la funzione infowindow
+          infowindow.push(info);
+
         {% endfor %}
+
+        ///Creo l'array con gli indirizzi
+        var address = [];
+        
+        {% for fat in fatturazione_list %}
+        var indirizzo = "{{fat.indirizzo}} - {{fat.cap}} {{fat.citta}}";
+        address.push(indirizzo);
+        //console.log("indirizzo:", indirizzo);
+        {% endfor %}
+
+
+        // creo la funzione timeout con all'interno la funzione di creazione mappa
+        function doSetTimeout(i, indi, infowindow) 
+        {
+          setTimeout(function() {
+            console.log('vediamo', indi, infowindow);
+            geocoder.geocode({'address': indi}, function(results, status) {
+              if (status === 'OK') {
+                resultsMap.setCenter(results[0].geometry.location);
+                var marker = new google.maps.Marker({
+                  map: resultsMap,
+                  position: results[0].geometry.location
+                });
+              marker.addListener('click', function() {
+                infowindow.open(map, marker);
+              }); 
+              } else {
+                  //alert('Geocode was not successful for the following reason: ' + status);
+                  console.log('Geocode was not successful for the following reason: ', status);
+              }
+            });
+          }, 1000 * i);
+        };
+
+
+        ///richiamo la funzione timeout e creazione mappa intervallata e gli passo variabili degli array
+        for (var i = 0; i < address.length; i++) { 
+            doSetTimeout(i, address[i], infowindow[i]); 
+          }
+        
+
       } // endfunction geocodeAddredd
     </script>
     

@@ -39,36 +39,11 @@ class CompositionAdmin(ImageCroppingMixin, admin.ModelAdmin):
 
 class ColorAdmin(ImageCroppingMixin, admin.ModelAdmin):
 	list_display = ("category", "name", "name_uk", "name_fr")
+    list_filter = ('name', 'name_uk', 'name_fr')
+    search_fields = ('name', 'name_uk', 'name_fr')
 
 
-'''
-class AuthorInline(admin.TabularInline):
-    model = Product.composition.through
-    verbose_name = u"Composition"
-    verbose_name_plural = u"Composition"
 
-
-class BookAdmin(admin.ModelAdmin):
-
-    exclude = ("composition", )
-    inlines = (
-       AuthorInline,
-    )'''
-
-
-'''
-class LevelOneInline(NestedStackedInline):
-    model = Color
-    extra = 1
-    fk_name = 'category'
-
-class TopLevelAdmin(NestedModelAdmin):
-    model = Category
-    inlines = [LevelOneInline]
-'''
-
-
-                   
 class CompositionAssociactionAdmin(NestedStackedInline):
     model = Composition
     extra = 10

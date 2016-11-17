@@ -19,11 +19,13 @@ def get_username(self):
 class UserAdmin(admin.ModelAdmin):
 	pass
 
+
 class CustomerAdmin(admin.ModelAdmin):
     list_display = (get_username, "discount", "active")
     model = User
     extra = 1
     fk_name = 'user'
+
 
 class FatturazioneAdmin(admin.ModelAdmin):
     list_display = (get_username, "denominazione", "piva", "codfisc", "telefono", "myemail")
@@ -36,6 +38,7 @@ class FatturazioneAdmin(admin.ModelAdmin):
         ("myemail", "pec"),
         "indirizzo_spedizione"
     )
+
 
 class IndirizzoSpedizioneAdmin(admin.ModelAdmin):
     list_display = (get_username, "denominazione",  "telefono", "e_mail")

@@ -82,7 +82,7 @@ class IndirizzoSpedizione(models.Model):
         super(IndirizzoSpedizione, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        self.user.username
+        return unicode(self.user.username) or u''
 
     class Meta:
         verbose_name_plural = "Indirizzo di Spedizione"
