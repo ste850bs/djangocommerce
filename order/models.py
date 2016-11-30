@@ -76,7 +76,8 @@ class OrderItem(models.Model):
 		super(OrderItem, self).save(*args, **kwargs) # Call the "real" save() method.
 
 	def __unicode__(self):
-		return self.pub_date.strftime('%Y-%m-%d')
+		#return self.pub_date.strftime('%Y-%m-%d')
+		return self.product.code
 
 	class Meta:
 		verbose_name_plural = "Prodotti in Ordine"

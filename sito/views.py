@@ -144,8 +144,7 @@ def ProductEstate(request):
 def ProductEstateCategory(request, post_id):
     product_list = Product.objects.filter(active=True).filter(category__in=post_id).filter(summer=True).filter(prompt_delivery=False)
     #estate = Category.objects.get(pk=post_id)
-    context = {'product_list': product_list,
-                'estate':estate}
+    context = {'product_list': product_list}
     return render_to_response('price_list.html', context, context_instance=RequestContext(request))
 
 @login_required(login_url="/login/")
@@ -502,7 +501,7 @@ def search(request):
         product_list = Product.objects.filter(Q(code__icontains=q) | Q(name__icontains=q) | Q(name_uk__icontains=q) | Q(name_fr__icontains=q)
             | Q(descrizione__icontains=q) | Q(descrizione_uk__icontains=q) | Q(descrizione_fr__icontains=q) 
             | Q(color__name__icontains=q) | Q(color__name_uk__icontains=q) | Q(color__name_fr__icontains=q) 
-            | Q(tags__name__in=q)).annotate(Count('id')) #unifico doppi risultati con annotate
+            | Q(tags__name__in=q)).annotate(Count('id')).filter(active=True) #unifico doppi risultati con annotate
         return render_to_response('price_list.html', {'product_list':product_list, 'q':q}, context_instance=RequestContext(request))
     except KeyError:
         messages.error(request, 'Nessuna Corrispondenza Trovata')
