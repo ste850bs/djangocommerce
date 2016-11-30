@@ -22,7 +22,11 @@ urlpatterns = [
     url(r'^category/(?P<post_id>\d+)/consegna-40gg/$', views.ProductQuarantaCategory, name='categoria-40gg'),
     url(r'^category/(?P<post_id>\d+)/cdalla-A-alla-Z/$', views.ProductCategoryAtoZ, name='categoria-a-z'),
     url(r'^category/(?P<post_id>\d+)/cdalla-Z-alla-A/$', views.ProductCategoryZtoA, name='categoria-z-a'),
+    #estate
+    url(r'^category-estate/(?P<post_id>\d+)/$', views.ProductEstateCategory, name='categoria-estate'),
     url(r'^estate/$', views.ProductEstate, name='estate'),
+    url(r'^category-estate/(?P<post_id>\d+)/prezzo/$', views.product_estate_price, name='categoria-estate-prezzo'),
+
     url(r'^promo/$', views.PromoProduct, name='promo'),
     #cart
     url(r'^add/$', views.add_to_cart, name='add'),

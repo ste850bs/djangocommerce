@@ -10,7 +10,6 @@ from taggit.managers import TaggableManager
 from tinymce.models import HTMLField
 from django.utils import timezone
 #from product.forms import *
-
 from product.models import *
 from customer.models import *
 from cart.models import *

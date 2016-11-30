@@ -24,6 +24,20 @@
 				</h5>
 			</a>
 
+			{% if categoria %}
+			<a href="{% url 'categoria-estate' categoria.id %}">
+				<H5 class="estate-sx">
+					<i class="fa fa-square" aria-hidden="true"></i>
+					{% if session_language = 'eng' %}
+						    SUMMER
+						{% elif session_language = 'fra' %}
+							ÉTÉ
+						{% else %}
+						    ESTATE
+						{% endif %}
+				</h5>
+			</a>
+			{% else %}
 			<a href="{% url 'estate' %}">
 				<H5 class="estate-sx">
 					<i class="fa fa-square" aria-hidden="true"></i>
@@ -36,3 +50,4 @@
 						{% endif %}
 				</h5>
 			</a>
+			{% endif %}

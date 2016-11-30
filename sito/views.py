@@ -136,8 +136,23 @@ def ProductCategoryZtoA(request, post_id):
 @login_required(login_url="/login/")
 def ProductEstate(request):
     product_list = Product.objects.filter(active=True).filter(summer=True).filter(prompt_delivery=False)
-    context = {'product_list': product_list}
+    estate = True
+    context = {'product_list': product_list, 'estate':estate}
     return render_to_response('price_list.html', context, context_instance=RequestContext(request))
+
+@login_required(login_url="/login/")
+def ProductEstateCategory(request, post_id):
+    product_list = Product.objects.filter(active=True).filter(category__in=post_id).filter(summer=True).filter(prompt_delivery=False)
+    #estate = Category.objects.get(pk=post_id)
+    context = {'product_list': product_list,
+                'estate':estate}
+    return render_to_response('price_list.html', context, context_instance=RequestContext(request))
+
+@login_required(login_url="/login/")
+def product_estate_price(request, post_id):
+    estate = Category.objects.get(pk=post_id)
+    product_list = ProductFilter(request.GET, queryset=Product.objects.filter(category__in=post_id).filter(active=True).filter(summer=True).filter(prompt_delivery=False))
+    return render(request, 'price_list.html', {'product_list': product_list, 'estate':estate})
 
 
 
@@ -351,6 +366,14 @@ def add_to_order(request):
             # email controllo
             ordine = "ordine id: ordine effettuato da: " + request.user.username
             subject, from_email, to = ordine, myemail, 'stefano.solinas.bs@gmail.com'
+            text_content = 'This is an important message.'
+            html_content = render_to_string('order_email.html', {'post': ord_list})
+            msg = EmailMultiAlternatives(subject, html_content, from_email, [to])
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
+
+            ordine = "ordine id: ordine effettuato da: " + request.user.username
+            subject, from_email, to = ordine, myemail, 'produzione@bergeitalia.com'
             text_content = 'This is an important message.'
             html_content = render_to_string('order_email.html', {'post': ord_list})
             msg = EmailMultiAlternatives(subject, html_content, from_email, [to])
