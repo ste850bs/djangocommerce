@@ -136,15 +136,31 @@ def ProductCategoryZtoA(request, post_id):
 @login_required(login_url="/login/")
 def ProductEstate(request):
     product_list = Product.objects.filter(active=True).filter(summer=True).filter(prompt_delivery=False)
-    estate = True
-    context = {'product_list': product_list, 'estate':estate}
+    #estate = True
+    context = {'product_list': product_list
+                #'estate':estate
+                }
     return render_to_response('price_list.html', context, context_instance=RequestContext(request))
 
 @login_required(login_url="/login/")
 def ProductEstateCategory(request, post_id):
     product_list = Product.objects.filter(active=True).filter(category__in=post_id).filter(summer=True).filter(prompt_delivery=False)
-    #estate = Category.objects.get(pk=post_id)
-    context = {'product_list': product_list}
+    estate = Category.objects.get(pk=post_id)
+    context = {'product_list': product_list, 'estate':estate}
+    return render_to_response('price_list.html', context, context_instance=RequestContext(request))
+
+@login_required(login_url="/login/")
+def ProductEstateCategoryAtoZ(request, post_id):
+    product_list = Product.objects.filter(active=True).filter(category__in=post_id).filter(summer=True).filter(prompt_delivery=False).order_by('code')
+    estate = Category.objects.get(pk=post_id)
+    context = {'product_list': product_list, 'estate':estate}
+    return render_to_response('price_list.html', context, context_instance=RequestContext(request))
+
+@login_required(login_url="/login/")
+def ProductEstateCategoryZtoA(request, post_id):
+    product_list = Product.objects.filter(active=True).filter(category__in=post_id).filter(summer=True).filter(prompt_delivery=False).order_by('-code')
+    estate = Category.objects.get(pk=post_id)
+    context = {'product_list': product_list, 'estate':estate}
     return render_to_response('price_list.html', context, context_instance=RequestContext(request))
 
 @login_required(login_url="/login/")

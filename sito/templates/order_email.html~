@@ -1,6 +1,0 @@
-<h3>
-  Ordine ID: {{post.id}}
-
-<br><br>
-Totale:  {{post.tot_prcie}}
-</h3>

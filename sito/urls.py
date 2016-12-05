@@ -26,7 +26,9 @@ urlpatterns = [
     url(r'^category-estate/(?P<post_id>\d+)/$', views.ProductEstateCategory, name='categoria-estate'),
     url(r'^estate/$', views.ProductEstate, name='estate'),
     url(r'^category-estate/(?P<post_id>\d+)/prezzo/$', views.product_estate_price, name='categoria-estate-prezzo'),
-
+    url(r'^category-estate-A-to-Z/(?P<post_id>\d+)/$', views.ProductEstateCategoryAtoZ, name='categoria-estate-a-z'),
+    url(r'^category-estate-Z-to-A/(?P<post_id>\d+)/$', views.ProductEstateCategoryZtoA, name='categoria-estate-z-a'),
+    #promo
     url(r'^promo/$', views.PromoProduct, name='promo'),
     #cart
     url(r'^add/$', views.add_to_cart, name='add'),

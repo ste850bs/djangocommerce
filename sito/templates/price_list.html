@@ -21,6 +21,14 @@
 		</div>
 		{% endif %}
 
+		{% if estate %}
+		<div id="filtra-sx" class="col-xs-12 col-sm-12">
+			<h4 class="filtra-titolo">ORDINA</h4>
+			<a href="{% url 'categoria-estate-a-z' estate.id %}">DALLA A-Z</a><br>
+			<a href="{% url 'categoria-estate-z-a' estate.id %}">DALLA Z-A</a>
+		</div>
+		{% endif %}
+
 
 		<div id="filtra-sx" class="col-xs-12 col-sm-12">		
 			{% if categoria %}
