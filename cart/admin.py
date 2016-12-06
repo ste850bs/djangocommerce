@@ -33,7 +33,7 @@ def get_cintura(self):
 
 
 class CartAdmin(admin.ModelAdmin):
-	list_display = (get_kind, get_customer, get_product, get_composition, get_color, get_scarpe, get_cintura, 'quantity', 'price')
+	list_display = (get_kind, get_customer, get_product, get_composition, get_color, get_scarpe, get_cintura, 'quantity', 'price', 'pub_date')
 
 
 

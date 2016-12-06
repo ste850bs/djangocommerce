@@ -38,6 +38,8 @@ class FatturazioneAdmin(admin.ModelAdmin):
         ("myemail", "pec"),
         "indirizzo_spedizione"
     )
+    search_fields = ('denominazione', 'piva')
+
 
 
 class IndirizzoSpedizioneAdmin(admin.ModelAdmin):
@@ -49,6 +51,7 @@ class IndirizzoSpedizioneAdmin(admin.ModelAdmin):
         ("telefono", "fax"),
         "e_mail"
     )
+    search_fields = ('denominazione')
 
 
     
