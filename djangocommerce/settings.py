@@ -110,7 +110,7 @@ STATICFILES_DIRS = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'djangocommerce',
+        'NAME': 'bergeshop',
         'USER': 'root',
         'PASSWORD': 'alnitek',
         'HOST': 'localhost',

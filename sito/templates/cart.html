@@ -170,12 +170,15 @@
   </tr>
 {% endfor %}
 
-
-
 </table>
-
-
-
+<h4 class="text-right">
+  Quantità Totali: Nr. {{somma_quantita}}
+    <br>
+    <br>
+  Totale: {{tot_price}} €.<br>
+  Totale Prezzo Scontato: {{tot_discount}} €.<br>
+  Totale Prezzo Riservato: {{tot_reserved}} €.<br>
+</h4>
 
 
 <div class="col-xs-12 hidden-sm hidden-md hidden-lg">
@@ -267,6 +270,7 @@
   {% endfor %}
 
 </div>
+
 
 
 

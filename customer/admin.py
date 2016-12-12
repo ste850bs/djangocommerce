@@ -51,7 +51,7 @@ class IndirizzoSpedizioneAdmin(admin.ModelAdmin):
         ("telefono", "fax"),
         "e_mail"
     )
-    search_fields = ('denominazione')
+    search_field = 'denominazione'
 
 
     

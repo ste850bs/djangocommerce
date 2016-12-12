@@ -311,7 +311,19 @@ def add_to_cart(request):
 @login_required(login_url="/login/")
 def show_cart(request):
     cart_list = CartItem.objects.filter(user_id=request.user.id)
-    context = {'cart_list':cart_list}
+    tmp_tot_price = CartItem.objects.filter(user_id=request.user.id).aggregate(Sum('price_total'))
+    tot_price = tmp_tot_price['price_total__sum']
+    tmp_tot_discount = CartItem.objects.filter(user_id=request.user.id).aggregate(Sum('price_discount'))
+    tot_discount = tmp_tot_discount['price_discount__sum']
+    tmp_tot_reserved = CartItem.objects.filter(user_id=request.user.id).aggregate(Sum('price_reserved'))
+    tot_reserved = tmp_tot_reserved['price_reserved__sum']
+    tmp_somma_quantita = CartItem.objects.filter(user_id=request.user.id).aggregate(Sum('quantity'))
+    somma_quantita = tmp_somma_quantita['quantity__sum']
+    context = {'cart_list':cart_list,
+                'tot_price':tot_price,
+                'tot_discount':tot_discount,
+                'tot_reserved':tot_reserved,
+                'somma_quantita':somma_quantita}
     return render_to_response('cart.html', context, context_instance=RequestContext(request))
 
 
