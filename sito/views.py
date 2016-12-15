@@ -640,6 +640,20 @@ def language(request, language='it'):
 
 
 
+
+## ORDINI X AMMINISTRATORI
+def OrdineAdmin(request):
+    order_list = Order.objects.all()
+    context = {'order_list':order_list}
+    return render_to_response('ordini.html', context_instance=RequestContext(request))
+
+def OrdineDettaglioAdmin(request, post_id):
+    order = Order.objects.get(pk=post_id)
+    context = {'order':order}
+    return render_to_response('ordini-dettaglio.html', context_instance=RequestContext(request))
+
+
+
 ## error
 def handler404(request):
     response = render_to_response('404.html', {},
