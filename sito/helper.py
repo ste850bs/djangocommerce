@@ -69,3 +69,26 @@ def check_ifPresent(comp, lista):
         return False
 
 
+## dividi enu in base a pronta consegna o 20gg
+def session_status_delivery(request):
+    status = "tutti"
+    session_status = "null"
+    if 'status' in request.session:
+        session_status = request.session['status']
+
+    context = {'status':status,
+                'session_status':session_status}
+    return context
+
+
+
+def delivery_filter(session_status):
+    if session_status == "40gg":
+        mydict = {'prompt_delivery': False}
+    elif session_status == "prompt_delivery":
+        mydict = {'prompt_delivery': True}
+    else:
+        mydict = {}
+    return mydict
+
+

@@ -49,6 +49,7 @@ from django.contrib.auth.models import User
 
 @login_required(login_url="/login/")
 def HomePage(request):
+    request.session['status'] = ""
     slider_list = Slider.objects.filter(active=True).order_by('id')
     last_list = Product.objects.filter(active=True).order_by('-pub_date')[:30]
     promo_list = Product.objects.filter(promo=True).filter(slide = True).filter(active=True).order_by('?')
@@ -71,7 +72,8 @@ def HomePage(request):
 
 @login_required(login_url="/login/")
 def ProductFilterCategory(request, post_id):
-    product_list = Product.objects.filter(active=True).filter(category__in=post_id)
+    mydict = delivery_filter(request.session['status'])
+    product_list = Product.objects.filter(active=True).filter(category__in=post_id).filter(**mydict)
     categoria = Category.objects.get(pk=post_id)
     context = {'product_list': product_list, 'categoria':categoria}
     return render_to_response('price_list.html', context, context_instance=RequestContext(request))
@@ -80,6 +82,7 @@ def ProductFilterCategory(request, post_id):
 
 @login_required(login_url="/login/")
 def ProductQuaranta(request):
+    request.session['status'] = "40gg"
     product_list = Product.objects.filter(active=True).filter(delivery=True)
     context = {'product_list': product_list}
     return render_to_response('price_list.html', context, context_instance=RequestContext(request))
@@ -97,6 +100,7 @@ def ProductQuarantaCategory(request, post_id):
 
 @login_required(login_url="/login/")
 def ProductPronta(request):
+    request.session['status'] = "prompt_delivery"
     product_list = Product.objects.filter(active=True).filter(prompt_delivery=True)
     context = {'product_list': product_list}
     return render_to_response('price_list.html', context, context_instance=RequestContext(request))

@@ -7,8 +7,8 @@ from django.views.generic import ListView, DetailView
 from django.template.loader import render_to_string
 
 
-def spedizione(request):
-	status = "40gg"
+def switch_menu(request):
+	status = "tutti"
 	session_status = "null"
 	if 'status' in request.session:
 		session_status = request.session['status']
