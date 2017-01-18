@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
@@ -153,6 +152,8 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 MEDIA_ROOT = '/var/www/bergebox/djangocommerce/media/'
 
 MEDIA_URL = "http://shop.bergeitalia.com/media/"
+#MEDIA_URL = "http://berge.web-dev.info/media/"
+
 
 
 
@@ -174,8 +175,6 @@ IMAGE_CROPPING_THUMB_SIZE = (1425, 500)
 IMAGE_CROPPING_SIZE_WARNING = True
 
 
-
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.bergeitalia.com'
@@ -184,8 +183,6 @@ EMAIL_HOST_USER = 'shop@bergeitalia.com'
 EMAIL_HOST_PASSWORD = 'palazzolesi52'
 DEFAULT_FROM_EMAIL = 'shop@bergeitalia.com'
 CONTACT_RECIPIENTS = False
-
-
 
 
 #TINYMCE_JS_URL = os.path.join(MEDIA_ROOT, "/tiny_mce/tiny_mce.js")
