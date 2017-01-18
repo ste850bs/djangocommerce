@@ -16,6 +16,8 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
@@ -31,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,6 +47,11 @@ INSTALLED_APPS = [
     'mptt',
     'image_cropping',
     'product',
+    'cart',
+    'order',
+    'customer',
+    'django_filters',
+    'nested_inline',
     'sito',
 ]
 
@@ -63,7 +71,7 @@ ROOT_URLCONF = 'djangocommerce.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -72,12 +80,28 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'sito.views.CategoryMenuView',
+                'sito.languages.translation_processor',
+
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'djangocommerce.wsgi.application'
+
+GRAPPELLI_ADMIN_TITLE = "Berge Urban Couture"
+
+
+
+'''
+STATICFILES_DIRS = [
+    'djangobower.finders.BowerFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
+'''
+
+
+
 
 
 # Database
@@ -86,7 +110,7 @@ WSGI_APPLICATION = 'djangocommerce.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'djangocommerce',
+        'NAME': 'bergeshop',
         'USER': 'root',
         'PASSWORD': 'alnitek',
         'HOST': 'localhost',
@@ -165,11 +189,11 @@ IMAGE_CROPPING_SIZE_WARNING = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.bergeitalia.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'pierangelo1982@gmail.com'
-EMAIL_HOST_PASSWORD = 'xxxxxxx'
-DEFAULT_FROM_EMAIL = 'pierangelo1982@gmail.com'
+EMAIL_HOST_USER = 'shop@bergeitalia.com'
+EMAIL_HOST_PASSWORD = 'palazzolesi52'
+DEFAULT_FROM_EMAIL = 'shop@bergeitalia.com'
 CONTACT_RECIPIENTS = False
 
 
@@ -187,3 +211,20 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 #TINYMCE_SPELLCHECKER = True
 #TINYMCE_COMPRESSOR = True
+
+
+
+# SESSION
+# Cookie name. This can be whatever you want.
+SESSION_COOKIE_NAME = 'sessionid'
+# The module to store sessions data.
+SESSION_ENGINE = 'django.contrib.sessions.backends.db' 
+# Age of cookie, in seconds (default: 2 weeks). 
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 7 * 2
+# Whether a user's session cookie expires when the Web browser is closed 
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+# Whether the session cookie should be secure (https:// only). 
+SESSION_COOKIE_SECURE = False
+
+
+

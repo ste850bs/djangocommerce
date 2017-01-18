@@ -1,0 +1,89 @@
+
+
+<table class="table table-striped">
+  <tr>
+      {% if session_language = 'eng' %}
+                  <!--th>Cod.</th -->
+                  <th>Data:</th>
+                  <th>Total Price</th>
+                  <th>work in progress</th>
+                  <th>delivery</th>
+                  <th>pay</th>
+                  <th>close</th>
+                  <th>Order Detail</th>
+
+      {% elif session_language = 'fra' %}
+                <!--th>Cod.</th -->
+                <th>Data:</th>
+                <th>Prix Total</th>
+                <th>dans le traitement</th>
+                <th>expédié</th>
+                <th>payé</th>
+                <th>Fermer</th>
+                <th>Détails</th>
+
+      {% else %}
+                <!--th>Cod.</th -->
+                <th>Data:</th>
+                <th>Prezzo Totale</th>
+                <th>inlavorazione</th>
+                <th>spedito</th>
+                <th>pagato</th>
+                <th>chiuso</th>
+                <th>Vedi Ordine</th>
+      {% endif %}
+  </tr>
+
+  {% for order in order_list %}
+  <tr>
+    <!-- td>{{order.code}}</td -->
+    <td>{{order.pub_date}}</td>
+    <td>{{order.tot_price}}</td>
+    
+    <td>
+      {% if order.inlavorazione == True %}
+        <span style="color: green"><i class="fa fa-circle" aria-hidden="true"></i></span>
+      {% else %}
+        <span style="color: red"><i class="fa fa-circle" aria-hidden="true"></i></span>
+      {% endif%}
+    </td>
+
+    <td>
+      {% if order.pagato == True %}
+        <span style="color: green"><i class="fa fa-circle" aria-hidden="true"></i></span>
+      {% else %}
+        <span style="color: red"><i class="fa fa-circle" aria-hidden="true"></i></span>
+      {% endif%}
+    </td>
+
+    <td>
+      {% if order.spedito == True %}
+        <span style="color: green"><i class="fa fa-circle" aria-hidden="true"></i></span>
+      {% else %}
+        <span style="color: red"><i class="fa fa-circle" aria-hidden="true"></i></span>
+      {% endif%}
+    </td>
+
+    <td>
+      {% if order.chiuso == True %}
+        <span style="color: green"><i class="fa fa-circle" aria-hidden="true"></i></span>
+      {% else %}
+        <span style="color: red"><i class="fa fa-circle" aria-hidden="true"></i></span>
+      {% endif%}
+    </td>
+
+    <td>
+      <a href="{% url 'order-detail' order.id %}">
+          {% if session_language = 'eng' %}
+              Detail
+          {% elif session_language = 'fra' %}
+              Détails
+          {% else %}
+              Vedi Dettaglio
+          {% endif %}
+      </a>
+    </td>
+  </tr>
+  {% endfor %}
+
+</table>

@@ -14,9 +14,19 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><i class="fa fa-user"></i></a></li>
-        <li><a href="#"><i class="fa fa-lock"></i></a></li>
-        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+        {% if request.user.is_superuser %}
+        <li><a href="/admin">AREA ADMIN</a></li>
+        <li><a href="{% url 'customer-map' %}"><i class="fa fa-map-marker" aria-hidden="true"></i> Mappa Clienti</a>
+        <li><a href="/chart"><i class="fa fa-area-chart" aria-hidden="true"></i> Statistiche</a></li>
+        {% endif %}
+        <li><a href="{% url 'customer' %}"><i class="fa fa-user"></i></a></li>
+        <li><a href="{% url 'logout' %}"><i class="fa fa-lock"></i></a></li>
+        <li><a href="{% url 'show-cart' %}"><i class="fa fa-shopping-cart"></i></a></li>
+
+        <li class="flagli"><a href="/language/ita"><img src="{% static 'img/flag/ita.png' %}" class="flag"></a></li>
+        <li class="flagli"><a href="/language/eng"><img src="{% static 'img/flag/uk.png' %}" class="flag"></a></li>
+        <li class="flagli"><a href="/language/fra"><img src="{% static 'img/flag/fra.png' %}" class="flag"></a></li>
+
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
@@ -49,25 +59,35 @@
         <ul class="nav navbar-nav" data-hook>
           <li class="active"><a href="{% url 'home' %}">HOME</a></li>
           {% for cat in category_list %}
-          <li><a href="#">{{cat.title}}</a></li>
+          <li>
+            <a href="{% url 'categoria' cat.id %}">
+              {% if session_language = 'eng' %}
+                {{cat.title_uk}}
+              {% elif session_language = 'fra' %}
+                {{cat.title_fr}}
+              {% else %}
+                {{cat.title}}
+              {% endif %}
+            </a>
+        </li>
           {% endfor %}
         </ul>
         
-        <form class="navbar-form navbar-right" role="search">
+        <form class="navbar-form navbar-right" role="search" action="/results/" action="" method="get">
           <div class="form-group">
-              <div class="input-group">
-              <input type="text" class="form-control" id="exampleInputAmount" placeholder="Amount">
-              <div class="input-group-addon">
-                <i class="fa fa-search" aria-hidden="true"></i>
+            <div class="input-group">
+  	         <input id="id_q" name="q" type="text" class="form-control" id="exampleInputAmount">
+  	         <div class="input-group-addon">
+                <button type="submit" class="button-cerca"><i class="fa fa-search" aria-hidden="true"></i></button>
               </div>
+            </div>
           </div>
-          </div>
-          </form>
+        </form>{% csrf_token %}
           
         <ul id="social-menu" class="nav navbar-nav navbar-right">
-          <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-           <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-           <li><a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></li>
+          <li><a href="https://www.facebook.com/berge.italia" target="_Blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+           <li><a href="https://twitter.com/bergeitalia" target="_Blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+           <li><a href="https://www.instagram.com/berge_italia/?hl=it" target="_Blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

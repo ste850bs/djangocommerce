@@ -16,14 +16,27 @@ Including another URLconf
 from django.conf.urls import include, url, patterns
 from django.contrib import admin
 from sito import views
+from sito.views import *
 from django.conf import settings
 from django.conf.urls.static import static
+from sito.forms import LoginForm
+
+from django.contrib.auth import views
+from sito.forms import LoginForm
+
+
+
 
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^$', views.HomePage, name='home'),
-    url(r'^product/(?P<post_id>\d+)/$', views.ProductFilterView, name='detail'),
+    url(r'', include('sito.urls')),
+    #login
+    url(r'^login/$', views.login, {'template_name': 'login.html', 'authentication_form': LoginForm}, name='login'),
+    url(r'^logout/$', views.logout, {'next_page': '/login'}), 
+    #admin
+    url(r'^nested_admin/', include('nested_admin.urls')),
+    url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
+    url(r'^admin/', include(admin.site.urls)), # admin site
 ]
 
 if settings.DEBUG:  

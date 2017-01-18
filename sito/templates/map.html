@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+
+
+{% block personaljs %} 
+<style type="text/css">
+#map {
+  width: 100%;
+  height: 800px;
+}
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+
+<section id="customer-map">
+
+  <div id="map"></div>
+
+
+    <script>
+    
+      function initMap() {
+        var mystyle = new google.maps.StyledMapType([{"featureType":"all","elementType":"labels.text","stylers":[{"color":"#ffffff"},{"visibility":"simplified"}]},{"featureType":"administrative","elementType":"all","stylers":[{"hue":"#ff0000"},{"lightness":100},{"visibility":"off"}]},{"featureType":"landscape","elementType":"all","stylers":[{"saturation":-100},{"lightness":100},{"visibility":"on"},{"color":"#000000"}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"color":"#4d89b5"}]},{"featureType":"landscape","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"landscape.natural.terrain","elementType":"geometry","stylers":[{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"saturation":-100},{"lightness":100},{"visibility":"off"}]},{"featureType":"road","elementType":"geometry","stylers":[{"saturation":-100},{"lightness":-100},{"visibility":"simplified"},{"color":"#102029"}]},{"featureType":"road","elementType":"labels","stylers":[{"saturation":-100},{"lightness":100},{"visibility":"off"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"color":"#102029"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"color":"#102029"}]},{"featureType":"transit","elementType":"geometry","stylers":[{"hue":"#ff0000"},{"lightness":-100},{"visibility":"off"}]},{"featureType":"transit","elementType":"labels","stylers":[{"hue":"#ff0000"},{"lightness":100},{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"saturation":-100},{"lightness":100},{"visibility":"on"},{"color":"#467992"}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2b4b60"}]},{"featureType":"water","elementType":"labels.text","stylers":[{"visibility":"off"}]}], {name: 'PERSONALIZZATA'});
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 5,
+          center: {lat: 45.5964546, lng: 9.8721731},
+          mapTypeControlOptions: {
+            mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'usroadatlas']
+            }
+        });
+        var geocoder = new google.maps.Geocoder();
+        // creo la funzione geocodeadress (sotto)
+        $(document).ready(function() {
+            geocodeAddress(geocoder, map);
+        })
+        map.mapTypes.set('usroadatlas', mystyle);
+        map.setMapTypeId('usroadatlas');
+      } // end function init map
+      
+
+      
+
+      function geocodeAddress(geocoder, resultsMap) {
+        
+        var contentString = [];
+        var infowindow = []
+        
+        // creo gli array che mi servono per infowindow
+        {% for fat in fatturazione_list %}
+        var contenuto = '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h1 id="firstHeading" class="firstHeading">{{fat.denominazione}}</h1>'+
+            '<div id="bodyContent">'+
+            '<p><b>{{fat.indirizzo}}</b></p>'+
+            '<p><b>{{fat.cap}} {{fat.citta}}</b></p>'+
+            '<p><b>{{fat.nazione}}</b></p>'+
+            '<p><b>Tel:{{fat.telefono}}</b></p>'+
+            '<p><b><a href="{{fat.e_mail}}">{{fat.e_mail}}</a></b></p>'+
+            '</div>'+
+            '</div>';
+            contentString.push(contenuto);
+
+          // creo valore da inserire nell'array che crea la infowindow
+          var info = new google.maps.InfoWindow({
+            content: contenuto
+            });
+
+          // prendo nell'array la funzione infowindow
+          infowindow.push(info);
+
+        {% endfor %}
+
+        ///Creo l'array con gli indirizzi
+        var address = [];
+        
+        {% for fat in fatturazione_list %}
+        var indirizzo = "{{fat.indirizzo}} - {{fat.cap}} {{fat.citta}}";
+        address.push(indirizzo);
+        //console.log("indirizzo:", indirizzo);
+        {% endfor %}
+
+
+        // creo la funzione timeout con all'interno la funzione di creazione mappa
+        function doSetTimeout(i, indi, infowindow) 
+        {
+          setTimeout(function() {
+            console.log('vediamo', indi, infowindow);
+            geocoder.geocode({'address': indi}, function(results, status) {
+              if (status === 'OK') {
+                resultsMap.setCenter(results[0].geometry.location);
+                var marker = new google.maps.Marker({
+                  map: resultsMap,
+                  position: results[0].geometry.location
+                });
+              marker.addListener('click', function() {
+                infowindow.open(map, marker);
+              }); 
+              } else {
+                  //alert('Geocode was not successful for the following reason: ' + status);
+                  console.log('Geocode was not successful for the following reason: ', status);
+              }
+            });
+          }, 1000 * i);
+        };
+
+
+        ///richiamo la funzione timeout e creazione mappa intervallata e gli passo variabili degli array
+        for (var i = 0; i < address.length; i++) { 
+            doSetTimeout(i, address[i], infowindow[i]); 
+          }
+        
+
+      } // endfunction geocodeAddredd
+    </script>
+    
+
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvxv0uaw6G2O0Nbjdr8C9BrnoBp32Y_Tc&callback=initMap">
+    </script>
+
+
+</section>
+
+{% endblock %}

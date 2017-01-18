@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container" style="background-color: #ffffff">
+<h1>Ciao {{request.user.username }}, questo è il tuo ordine effettuato in data {{order.pub_date}} | id ordine: {{order.id}}:</h1>
+
+<table class="table table-striped">
+  <tr>
+      <th>img</th>
+      <th>Cod.</th>
+      <th>Prodotto</th>
+      <th>Colore</th>
+      <th>Misure:</th>
+      <th>Quantità</th>
+      <th>Prezzo Unitario</th>
+      <th>Prezzo Totale</th>
+      <th></th>
+  </tr>
+
+ {% for cart in order.orderitem_set.all %}
+  <tr>
+    <td>
+      {% load cropping %}
+      <img src="{% cropped_thumbnail cart.product "thumbdue" %}" style="width:200px;">
+    </td>
+    <td>{{cart.product.code}}</td>
+    <td>
+        {% if cart.composition %}
+            <span class="badge" style="background-color: #00a19c">{{cart.composition.name}}</span>
+        {% else%}
+          <span class="badge" style="background-color: #122a4b">{{cart.product.name}}</span>
+        {% endif %}
+    </td>
+    
+    <td>
+      {% if cart.color.image %}
+        <img src="/media/{{cart.color.image}}" class="color-thumb-circle">
+         <p>{{cart.color.name}}</p>
+      {% endif %}
+      {% if cart.composition.color %}
+        <img src="/media/{{cart.composition.color.image}}" class="color-thumb-circle">
+         <p>{{cart.composition.color.name}}</p>
+      {% endif %}
+    </td>
+    
+    <td>
+      {% if cart.cintureLunghezza %}
+        Lunghezza Cintura: {{cart.cintureLunghezza.name}}<br>
+      {% endif %}
+      {% if cart.scarpemisura %}
+        Misura Scarpe: {{cart.scarpemisura.name}}<br>
+      {% endif %}
+      {% if cart.composition.cintureLunghezza %}
+        Lunghezza Cintura: {{cart.composition.cintureLunghezza.name}}<br>
+      {% endif %}
+      {% if cart.composition.scarpemisura %}
+        Misura Scarpe: {{cart.composition.scarpemisura.name}}<br>
+      {% endif %}
+    </td>
+
+    <td>{{cart.quantity}}</t>
+    <td>{{cart.price}} €.</td>
+    <td>
+      Totale: {{cart.price_total}} €.<br>
+      Scontato: {{cart.price_discount}} €.<br>
+      Prezzo a Voi Riservato: {{cart.price_reserved}} €.<br>
+    </td>
+    <td></td>
+  </tr>
+{% endfor %}
+
+
+
+</table>
+
+<h3 class="text-right">
+  Totale Ordine: {{order.tot_price}}<br>
+  Totale Sconto: {{order.tot_discount}}<br>
+  Prezzo Riservato: {{order.tot_price_reserved}}
+</h3>
+
+
+</div>
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+

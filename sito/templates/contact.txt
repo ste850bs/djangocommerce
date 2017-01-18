@@ -1,0 +1,17 @@
+Messaggio inviato dal Sito Internet shop.bergeitalia.com
+
+Nome: {{post.nome}}
+Cognome: {{post.cognome}}
+Indirizzo: {{post.indirizzo}}
+Civico: {{post.civico}}
+Citta: {{post.citta}}
+Cap: {{post.cap}}
+Telefono: {{post.telefono}}
+Fax: {{post.fax}}
+Email: {{post.email}}
+web: {{post.web}}
+Oggetto: {{post.oggetto}}
+Messaggio:
+{{post.messaggio}}
+
+

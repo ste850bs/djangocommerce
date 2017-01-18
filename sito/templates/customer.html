@@ -1,0 +1,485 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+<div class="container">
+
+
+{% if messages %}
+  <div class="container">
+      {% for message in messages %}
+          {% if message.tags == 'success' %}
+              <div class="alert alert-success" role="alert">{{ message }}</div>
+          {% elif message.tags == 'error' %}
+              <div class="alert alert-danger" role="alert">{{ message }}</div>
+          {% endif %}
+      {% endfor %}
+  </div>
+{% endif %}
+
+
+
+  <div class="row">
+    <div id="indirizzi" class="col-xs-12 col-sm-5">
+      {% if session_language = 'eng' %}
+          <h4>Billing Data:</h4>
+          <p>
+            <strong>Company:</strong> {{fatt.denominazione}}<br>
+            <strong>Vat: <strong> {{fatt.piva}}<br>
+            <strong>Cod.Fisc: <strong> {{fatt.codfisc}}<br>
+            <strong>Address: <strong>{{fatt.indirizzo}} - {{fatt.cap}} - {{fatt.citta}}<br>
+            <strong>Tel: </strong>{{fatt.telefono}}<br>
+            <strong>Fax: </strong>{{fatt.fax}}<br>
+            <strong>Email: </strong>{{fatt.myemail}}<br>
+            <strong>Pec: </strong>{{fatt.pec}}<br>
+            <br>
+
+      {% elif session_language = 'fra' %}
+          <h4>Data Facturation:</h4>
+          <p>
+            <strong>Company:</strong> {{fatt.denominazione}}<br>
+            <strong>Vat: <strong> {{fatt.piva}}<br>
+            <strong>Cod.Fisc: <strong> {{fatt.codfisc}}<br>
+            <strong>Address: <strong>{{fatt.indirizzo}} - {{fatt.cap}} - {{fatt.citta}}<br>
+            <strong>Tel: </strong>{{fatt.telefono}}<br>
+            <strong>Fax: </strong>{{fatt.fax}}<br>
+            <strong>Email: </strong>{{fatt.myemail}}<br>
+            <strong>Pec: </strong>{{fatt.pec}}<br>
+            <br>
+
+      {% else %}
+          <h4>Dati Fatturazione:</h4>
+          <p>
+            <strong>Denominazione:</strong> {{fatt.denominazione}}<br>
+            <strong>Piva: <strong> {{fatt.piva}}<br>
+            <strong>Cod.Fisc: <strong> {{fatt.codfisc}}<br>
+            <strong>Indirizzo: <strong>{{fatt.indirizzo}} - {{fatt.cap}} - {{fatt.citta}}<br>
+            <strong>Tel: </strong>{{fatt.telefono}}<br>
+            <strong>Fax: </strong>{{fatt.fax}}<br>
+            <strong>Email: </strong>{{fatt.myemail}}<br>
+            <strong>Pec: </strong>{{fatt.pec}}<br>
+            <br>
+      {% endif %}
+        
+        {% if fatt %}
+        <a href="" data-toggle="modal" data-target=".update_fatturazione">
+            {% if session_language = 'eng' %}
+                EDIT BILLING DATA
+            {% elif session_language = 'fra' %}
+                DATA EDIT FACTURATION
+            {% else %}
+                MODIFICA DATI FATTURAZIONE
+            {% endif %}
+        </a>
+        {% else %}
+        <a href="" data-toggle="modal" data-target=".add_fatturazione">
+            {% if session_language = 'eng' %}
+                ADD BILLING DATA
+            {% elif session_language = 'fra' %}
+                AJOUTER DES DONNÉES DE FACTURATION
+            {% else %}
+                AGGIUNGI DATI FATTURAZIONE
+            {% endif %}
+        </a>
+        {% endif %}
+      </p>
+    </div>
+
+    <div class="col-xs-12 col-sm-2"></div>
+
+    <div id="indirizzi" class="col-xs-12 col-sm-5">
+      <h4>
+          {% if session_language = 'eng' %}
+              Delivery Address
+          {% elif session_language = 'fra' %}
+            Adresse d'expédition:
+          {% else %}
+              Indirizzo Spedizione:
+          {% endif %}
+      </h4>
+      <p>
+        {% if session_language = 'eng' %}
+              <strong>Company:</strong> {{ind.denominazione}}<br>
+              <strong>Address: <strong>{{ind.indirizzo}} - {{ind.cap}} - {{ind.citta}}<br>
+              <strong>Tel: </strong>{{ind.telefono}}<br>
+              <strong>Fax: </strong>{{ind.fax}}<br>
+              <strong>Email: </strong>{{ind.e_mail}}<br>
+
+          {% elif session_language = 'fra' %}
+              <strong>Denominazione:</strong> {{ind.denominazione}}<br>
+              <strong>Indirizzo: <strong>{{ind.indirizzo}} - {{ind.cap}} - {{ind.citta}}<br>
+              <strong>Tel: </strong>{{ind.telefono}}<br>
+              <strong>Fax: </strong>{{ind.fax}}<br>
+              <strong>Email: </strong>{{ind.e_mail}}<br>
+
+          {% else %}
+              <strong>Denominazione:</strong> {{ind.denominazione}}<br>
+              <strong>Indirizzo: <strong>{{ind.indirizzo}} - {{ind.cap}} - {{ind.citta}}<br>
+              <strong>Tel: </strong>{{ind.telefono}}<br>
+              <strong>Fax: </strong>{{ind.fax}}<br>
+              <strong>Email: </strong>{{ind.e_mail}}<br>
+          {% endif %}
+        <br>
+        <br>
+        <br>
+        <br>
+        
+        {% if ind %}
+        <a href="" data-toggle="modal" data-target=".update_indirizzo">
+            {% if session_language = 'eng' %}
+                    EDIT SHIPPING ADDRESS
+            {% elif session_language = 'fra' %}
+                    ADRESSE DE LIVRAISON EDIT
+            {% else %}
+                    MODIFICA INDIRIZZO SPEDIZIONE
+            {% endif %}
+        </a>
+        {% else %}
+        <a href="" data-toggle="modal" data-target=".add_indirizzo">
+            {% if session_language = 'eng' %}
+                    ADD SHIPPING ADDRESS
+            {% elif session_language = 'fra' %}
+                    AJOUTER ADRESSE DE LIVRAISON
+            {% else %}
+                    AGGIUNGI INDIRIZZO SPEDIZIONE
+            {% endif %}
+        </a>
+        {% endif %}
+        <br>
+      </p>
+    </div>
+    
+  </div><!-- row -->
+
+</div><!-- container -->
+
+
+<div class="container" style="background-color: #ffffff">
+  <h4>
+    {% if session_language = 'eng' %}
+            YOUR ORDERS
+    {% elif session_language = 'fra' %}
+            VOS COMMANDES
+    {% else %}
+            STORICO DEI TUOI ORDINI
+    {% endif %}
+  </h4>
+  <br>
+  {% include 'components/customer-order-list.html' %}
+
+</div>
+
+
+
+<!-- dati fatturazione -->
+<div class="modal fade bs-example-modal-lg add_fatturazione" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      
+      <form id="AddFormFatturazione" class="white-row" action="/add_fatturazionecustomer/" method="post" style="padding: 20px;">
+        {% csrf_token %}
+              <div class="row">
+                <div class="form-group">
+
+                  <div class="col-sm-12 col-md-12">
+                    <label>Denominazione/Company:</label>
+                    <input type="text" value="" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="denominazione" id="contact_phone">
+                  </div>
+
+                  <div class="col-sm-12 col-md-6">
+                    <label>Piva/Vat:</label>
+                    <input type="text" value="" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="piva" id="contact_phone">
+                  </div>
+
+                  <div class="col-sm-12 col-md-6">
+                    <label>CodFisc:</label>
+                    <input type="text" value="" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="codfisc" id="contact_phone">
+                  </div>
+                  
+                  <div class="col-sm-12 col-md-4">
+                    <label>Indirizzo/Address:</label>
+                    <input type="text" value="" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="indirizzo" id="contact_phone">
+                  </div>
+
+                  
+                  <div class="col-sm-4 col-md-4">
+                    <label>Cap:</label>
+                    <input type="text" value="" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="cap" id="contact_phone">
+                  </div>
+
+                  <div class="col-sm-8 col-md-8">
+                    <label>Città/City:</label>
+                    <input type="text" value="" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="citta" id="contact_phone">
+                  </div>
+                  
+                  <div class="col-sm-6 col-md-6">
+                    <label>Telefono/Telephone:</label>
+                    <input type="text" value="" data-msg-required="Please enter your name." maxlength="100" class="form-control" name="telefono" id="contact_name">
+                  </div>
+                  
+                  <div class="col-sm-6 col-md-6">
+                    <label>E-mail *</label>
+                    <input type="email" value="" data-msg-required="Please enter your email address." data-msg-email="Please enter a valid email address." maxlength="100" class="form-control" name="myemail" id="contact_email" required>
+                  </div>
+
+                  <div class="col-sm-6 col-md-6">
+                    <label>Pec </label>
+                    <input type="email" value="" data-msg-required="Please enter your email address." data-msg-email="Please enter a valid email address." maxlength="100" class="form-control" name="pec" id="contact_email">
+                  </div>
+                  
+
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="">
+                  <input type="checkbox" style="margin-left:15px" name="indirizzo_spedizione"> &nbsp;&nbsp;l'indirizzo è diverso dall'indirizzo di spedizione
+                </div>
+              </div>
+
+              <br>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <input id="contact_submit" type="submit" value="INVIA" class="btn btn-primary btn-md" data-loading-text="Loading...">
+                </div>
+              </div>
+
+          </form>
+
+    </div>
+  </div>
+</div>
+
+
+{% if fatt %}
+<!-- dati fatturazione aggiornamento -->
+<div class="modal fade bs-example-modal-lg update_fatturazione" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      
+      <form id="AddFormFatturazione" class="white-row" action="{% url 'update-fatturazione' pk=fatt.id %}" method="post" style="padding: 20px;">
+        {% csrf_token %}
+
+        <input type="hidden" name="user" value="{{request.user.id}}">
+              <div class="row">
+                <div class="form-group">
+
+                  <div class="col-sm-12 col-md-12">
+                    <label>Denominazione/Company:</label>
+                    <input type="text" value="{{fatt.denominazione}}" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="denominazione" id="contact_phone">
+                  </div>
+
+                  <div class="col-sm-12 col-md-6">
+                    <label>Piva/Vat:</label>
+                    <input type="text" value="{{fatt.piva}}" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="piva" id="contact_phone">
+                  </div>
+
+                  <div class="col-sm-12 col-md-6">
+                    <label>CodFisc:</label>
+                    <input type="text" value="{{fatt.codfisc}}" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="codfisc" id="contact_phone">
+                  </div>
+                  
+                  <div class="col-sm-12 col-md-4">
+                    <label>Indirizzo/Address:</label>
+                    <input type="text" value="{{fatt.indirizzo}}" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="indirizzo" id="contact_phone">
+                  </div>
+
+                  
+                  <div class="col-sm-4 col-md-4">
+                    <label>Cap:</label>
+                    <input type="text" value="{{fatt.cap}}" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="cap" id="contact_phone">
+                  </div>
+
+                  <div class="col-sm-8 col-md-8">
+                    <label>Città/City:</label>
+                    <input type="text" value="{{fatt.citta}}" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="citta" id="contact_phone">
+                  </div>
+                  
+                  <div class="col-sm-6 col-md-6">
+                    <label>Telefono/Telephone:</label>
+                    <input type="text" value="{{fatt.telefono}}" data-msg-required="Please enter your name." maxlength="100" class="form-control" name="telefono" id="contact_name">
+                  </div>
+                  
+                  <div class="col-sm-6 col-md-6">
+                    <label>E-mail *</label>
+                    <input type="email" value="{{fatt.myemail}}" data-msg-required="Please enter your email address." data-msg-email="Please enter a valid email address." maxlength="100" class="form-control" name="myemail" id="contact_email" required>
+                  </div>
+
+                  <div class="col-sm-6 col-md-6">
+                    <label>Pec </label>
+                    <input type="email" value="{{fatt.pec}}" data-msg-required="Please enter your email address." data-msg-email="Please enter a valid email address." maxlength="100" class="form-control" name="pec" id="contact_email">
+                  </div>
+                  
+
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="">
+                  <input type="checkbox" style="margin-left:15px" name="indirizzo_spedizione"> &nbsp;&nbsp;l'indirizzo è diverso dall'indirizzo di spedizione
+                </div>
+              </div>
+
+              <br>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <input id="contact_submit" type="submit" value="INVIA" class="btn btn-primary btn-md" data-loading-text="Loading...">
+                </div>
+              </div>
+
+          </form>
+
+    </div>
+  </div>
+</div>
+
+{% endif %}
+
+
+
+
+<!-- DATI Spedizione -->
+<div class="modal fade bs-example-modal-lg add_indirizzo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      
+      <form id="AddFormFatturazione" class="white-row" action="/add_indirizzo_spedizione/" method="post" style="padding: 20px;">
+        {% csrf_token %}
+              <div class="row">
+                <div class="form-group">
+
+                  <div class="col-sm-12 col-md-12">
+                    <label>Denominazione/Company:</label>
+                    <input type="text" value="" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="denominazione" id="contact_phone">
+                  </div>
+
+                  
+                  <div class="col-sm-12 col-md-4">
+                    <label>Indirizzo/Address:</label>
+                    <input type="text" value="" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="indirizzo" id="contact_phone">
+                  </div>
+
+                  
+                  <div class="col-sm-4 col-md-4">
+                    <label>Cap:</label>
+                    <input type="text" value="" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="cap" id="contact_phone">
+                  </div>
+
+                  <div class="col-sm-8 col-md-4">
+                    <label>Città/City:</label>
+                    <input type="text" value="" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="citta" id="contact_phone">
+                  </div>
+                  
+                  <div class="col-sm-4 col-md-4">
+                    <label>Telefono/Telephone:</label>
+                    <input type="text" value="" data-msg-required="Please enter your name." maxlength="100" class="form-control" name="telefono" id="contact_name">
+                  </div>
+
+                  <div class="col-sm-4 col-md-4">
+                    <label>Fax:</label>
+                    <input type="text" value="" data-msg-required="Please enter your name." maxlength="100" class="form-control" name="fax" id="contact_name">
+                  </div>
+                  
+                  <div class="col-sm-4 col-md-4">
+                    <label>E-mail *</label>
+                    <input type="email" value="" data-msg-required="Please enter your email address." data-msg-email="Please enter a valid email address." maxlength="100" class="form-control" name="e_mail" id="contact_email" required>
+                  </div>
+                  
+
+                </div>
+              </div>
+              
+              <br>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <input id="contact_submit" type="submit" value="INVIA" class="btn btn-primary btn-md" data-loading-text="Loading...">
+                </div>
+              </div>
+
+          </form>
+
+    </div>
+  </div>
+</div>
+
+
+
+{% if ind %}
+<!-- DATI Spedizione AGGIORNA -->
+<div class="modal fade bs-example-modal-lg update_indirizzo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      
+      <form id="AddFormFatturazione" class="white-row" action="{% url 'update-indirizzo-spedizione' pk=ind.id %}" method="post" style="padding: 20px;">
+        {% csrf_token %}
+
+              <input type="hidden" name="user" value="{{request.user.id}}">
+              <div class="row">
+                <div class="form-group">
+
+                  <div class="col-sm-12 col-md-12">
+                    <label>Denominazione/Company:</label>
+                    <input type="text" value="{{ind.denominazione}}" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="denominazione" id="contact_phone">
+                  </div>
+
+                  
+                  <div class="col-sm-12 col-md-4">
+                    <label>Indirizzo/Address:</label>
+                    <input type="text" value="{{ind.indirizzo}}" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="indirizzo" id="contact_phone">
+                  </div>
+
+                  
+                  <div class="col-sm-4 col-md-4">
+                    <label>Cap:</label>
+                    <input type="text" value="{{ind.cap}}" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="cap" id="contact_phone">
+                  </div>
+
+                  <div class="col-sm-8 col-md-4">
+                    <label>Città/City:</label>
+                    <input type="text" value="{{ind.citta}}" data-msg-required="Please enter your phone" data-msg-email="Please enter your phone" maxlength="100" class="form-control" name="citta" id="contact_phone">
+                  </div>
+                  
+                  <div class="col-sm-4 col-md-4">
+                    <label>Telefono/Telephone:</label>
+                    <input type="text" value="{{ind.telefono}}" data-msg-required="Please enter your name." maxlength="100" class="form-control" name="telefono" id="contact_name">
+                  </div>
+
+                  <div class="col-sm-4 col-md-4">
+                    <label>Fax:</label>
+                    <input type="text" value="{{ind.fax}}" data-msg-required="Please enter your name." maxlength="100" class="form-control" name="fax" id="contact_name">
+                  </div>
+                  
+                  <div class="col-sm-4 col-md-4">
+                    <label>E-mail *</label>
+                    <input type="email" value="{{ind.e_mail}}" data-msg-required="Please enter your email address." data-msg-email="Please enter a valid email address." maxlength="100" class="form-control" name="e_mail" id="contact_email" required>
+                  </div>
+                  
+
+                </div>
+              </div>
+              
+              <br>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <input id="contact_submit" type="submit" value="INVIA" class="btn btn-primary btn-md" data-loading-text="Loading...">
+                </div>
+              </div>
+
+          </form>
+
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}
+
+
+
+

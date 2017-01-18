@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+	<h1></h1>
+	
+	<div class="col-xs-12 col-sm-2" style="padding:0px;">
+		{% if categoria %}
+		<div id="filtra-sx" class="col-xs-12 col-sm-12">
+			<h4 class="filtra-titolo">DISPONIBILITA'</h4>
+			{% include 'components/filtro-color-categorie.html' %}
+		</div>
+		{% endif %}
+
+		{% if categoria %}
+		<div id="filtra-sx" class="col-xs-12 col-sm-12">
+			<h4 class="filtra-titolo">ORDINA</h4>
+			<a href="{% url 'categoria-a-z' categoria.id %}">DALLA A-Z</a><br>
+			<a href="{% url 'categoria-z-a' categoria.id %}">DALLA Z-A</a>
+		</div>
+		{% endif %}
+
+		{% if estate %}
+		<div id="filtra-sx" class="col-xs-12 col-sm-12">
+			<h4 class="filtra-titolo">ORDINA</h4>
+			<a href="{% url 'categoria-estate-a-z' estate.id %}">DALLA A-Z</a><br>
+			<a href="{% url 'categoria-estate-z-a' estate.id %}">DALLA Z-A</a>
+		</div>
+		{% endif %}
+
+
+		<div id="filtra-sx" class="col-xs-12 col-sm-12">		
+			{% if categoria %}
+			<h4 class="filtra-titolo">FILTRA PER PREZZO</h4>
+			<a href="/category/{{categoria.id}}/prezzo/?price=&pub_date=&price__gt=0&price__lt=20">€.0 a €.20</a><br>
+			<a href="/category/{{categoria.id}}/prezzo/?price=&pub_date=&price__gt=20&price__lt=40">€.20 a €.40</a><br>
+			<a href="/category/{{categoria.id}}/prezzo/?price=&pub_date=&price__gt=40&price__lt=60">€.40 a €.60</a><br>
+			<a href="/category/{{categoria.id}}/prezzo/?price=&pub_date=&price__gt=60&price__lt=80">€.60 a €.80</a><br>
+			<a href="/category/{{categoria.id}}/prezzo/?price=&pub_date=&price__gt=80&price__lt=100">€.20 a €.40</a><br>
+			<a href="/category/{{categoria.id}}/prezzo/?price=&pub_date=&price__gt=100&price__lt=150">€.100 a €.150</a><br>
+			<a href="/category/{{categoria.id}}/prezzo/?price=&pub_date=&price__gt=150&price__lt=5000">€.150 e oltre</a><br>
+			<br>
+			<br>
+			<br>
+			{% elif estate %}
+			<h4 class="filtra-titolo">FILTRA X PREZZO</h4>
+			<a href="/category-estate/{{estate.id}}/prezzo/?price=&pub_date=&price__gt=0&price__lt=20">€.0 a €.20</a><br>
+			<a href="/category-estate/{{estate.id}}/prezzo/?price=&pub_date=&price__gt=20&price__lt=40">€.20 a €.40</a><br>
+			<a href="/category-estate/{{estate.id}}/prezzo/?price=&pub_date=&price__gt=40&price__lt=60">€.40 a €.60</a><br>
+			<a href="/category-estate/{{estate.id}}/prezzo/?price=&pub_date=&price__gt=60&price__lt=80">€.60 a €.80</a><br>
+			<a href="/category-estate/{{estate.id}}/prezzo/?price=&pub_date=&price__gt=80&price__lt=100">€.20 a €.40</a><br>
+			<a href="/category-estate/{{estate.id}}/prezzo/?price=&pub_date=&price__gt=100&price__lt=150">€.100 a €.150</a><br>
+			<a href="/category-estate/{{estate.id}}/prezzo/?price=&pub_date=&price__gt=150&price__lt=5000">€.150 e oltre</a><br>
+			<br>
+			<br>
+			<br>
+			{% else %}
+			<h4 class="filtra-titolo">FILTRA PER PREZZO</h4>
+			<a href="/product-list?price=&pub_date=&price__gt=0&price__lt=20">€.0 a €.20</a><br>
+			<a href="/product-list?price=&pub_date=&price__gt=20&price__lt=40">€.20 a €.40</a><br>
+			<a href="/product-list?price=&pub_date=&price__gt=40&price__lt=60">€.40 a €.60</a><br>
+			<a href="/product-list?price=&pub_date=&price__gt=60&price__lt=80">€.60 a €.80</a><br>
+			<a href="/product-list?price=&pub_date=&price__gt=80&price__lt=100">€.20 a €.40</a><br>
+			<a href="/product-list?price=&pub_date=&price__gt=100&price__lt=150">€.100 a €.150</a><br>
+			<a href="/product-list?price=&pub_date=&price__gt=150&price__lt=5000">€.150 e oltre</a><br>
+			<br>
+			<br>
+			{% endif %}
+		</div> 
+	</div>   
+
+	<div class="col-xs-12 col-sm-10">
+
+	{% for pro in product_list %}
+	<div class="col-xs-12 col-sm-4">
+		<div class="col-xs-12 box-offerte">
+			{% if pro.prompt_delivery == True %}
+				<h3 class="box-marca" style="background-color: #00a19c">
+					<span class="span-box-marca" style="color:#ffffff;">
+						{% if session_language = 'eng' %}
+							PROMPT DELIVERY
+						{% elif session_language = 'fra' %}
+							LIVRAISON RAPID
+						{% else %}
+							PRONTA CONSEGNA
+						{% endif %}
+					</span>
+				</h3>
+				{% else %}
+				<h3 class="box-marca" style="background-color: #122a4b">
+					<span class="span-box-marca" style="color:#ffffff;">
+						{% if session_language = 'eng' %}
+							DELIVERY 20 days
+						{% elif session_language = 'fra' %}
+							LIVRAISON 20 jours
+						{% else %}
+							CONSEGNA 20 GIORNI
+						{% endif %}
+					</span>
+				</h3>
+			{% endif %}
+				<h3 class="box-codice" style="background-color: #343333">
+					<span class="span-box-marca" style="color:#ffffff;">ART {{pro.code}}</span>
+				</h3>
+			<h3 class="box-titolo" style="margin-top:15px;">
+				{% if session_language = 'eng' %}
+                	{{pro.name_uk|truncatechars:37}}{% if pro.name_uk|length <= 22 %}</br>&nbsp;{% endif %}
+              	{% elif session_language = 'fra' %}
+                	{{pro.name_fr|truncatechars:37}}{% if pro.name_fr|length <= 22 %}</br>&nbsp;{% endif %}
+              	{% else %}
+                	{{pro.name|truncatechars:37}}{% if pro.name|length <= 22 %}</br>&nbsp;{% endif %}
+              	{% endif %}
+			</h3>
+			<h4 class="box-tipologia">
+				{% for category in pro.category.all %}
+					{% if session_language = 'eng' %}
+	                	{{category.title_uk}}
+	              	{% elif session_language = 'fra' %}
+	                	{{category.title_fr}}
+	              	{% else %}
+	                	{{category.title}}
+	              	{% endif %}
+              	{% endfor %}
+			</h4>
+			{% load cropping %}
+			<a href="{% url 'detail' pro.id %}">
+				<img src="{% cropped_thumbnail pro "thumb" %}" class="img-responsive">
+			</a>
+			<h3>
+				{% if pro.promo == True %}
+				<span class="prezzo">€{{pro.price}}</span>
+				<span class="prezzo-scontato">€{{pro.price_offer}}</span>
+				{% else %}
+				<span class="prezzo-scontato" style="margin-left: 0px;">€{{pro.price}}</span>
+				{% endif %}
+				<a href="{% url 'detail' pro.id %}">
+					<span class="cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+				</a>
+			</h3>
+		</div>
+	</div>
+	{% endfor %}
+
+	</div>
+
+</div>
+
+{% endblock %}

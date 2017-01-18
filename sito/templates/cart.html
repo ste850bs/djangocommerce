@@ -1,0 +1,305 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div id="mio-carrello" class="container" style="background-color: #ffffff">
+
+
+  {% if messages %}
+    <div class="container">
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+                <div class="alert alert-success" role="alert">{{ message }}</div>
+            {% elif message.tags == 'error' %}
+                <div class="alert alert-danger" role="alert">{{ message }}</div>
+            {% endif %}
+        {% endfor %}
+    </div>
+  {% endif %}
+
+<h1>
+    {% if session_language = 'eng' %}
+        Hi {{request.user.username }}, this is your cart:
+    {% elif session_language = 'fra' %}
+        Bonjour {{request.user.username }}, ceci est votre panier:
+    {% else %}
+        Ciao {{request.user.username }}, questo è il tuo carrello:
+    {% endif %}
+</h1>
+
+<table class="hidden-xs table table-striped">
+  <tr id="cart-table">
+      {% if session_language = 'eng' %}
+                <th>img</th>
+                <th>Cod.</th>
+                <th class="hidden-sm">Product</th>
+                <th>Color</th>
+                <th>Size:</th>
+                <th>Quantity</th>
+                <th class="hidden-sm">Unit Price</th>
+                <th>Total Price</th>
+                <th><i class="fa fa-trash" aria-hidden="true"></i></th>
+
+      {% elif session_language = 'fra' %}
+              <th>img</th>
+              <th>Cod.</th>
+              <th class="hidden-sm">Produit</th>
+              <th>Couleur</th>
+              <th>Mesures:</th>
+              <th>Quantité</th>
+              <th class="hidden-sm">Prix Unitaire</th>
+              <th>Prix Total</th>
+              <th><i class="fa fa-trash" aria-hidden="true"></i></th>
+
+      {% else %}
+                <th>img</th>
+                <th>Cod.</th>
+                <th class="hidden-sm">Prodotto</th>
+                <th>Colore</th>
+                <th>Misure:</th>
+                <th>Quantità</th>
+                <th class="hidden-sm">Prezzo Unitario</th>
+                <th>Prezzo Totale</th>
+                <th><i class="fa fa-trash" aria-hidden="true"></i></th>
+      {% endif %}
+  </tr>
+
+ {% for cart in cart_list %}
+  <tr>
+  	<td>
+  		{% load cropping %}
+  		<img src="{% cropped_thumbnail cart.product "thumbdue" %}" style="width:200px;">
+  	</td>
+  	<td>{{cart.product.code}}</td>
+  	<td class="hidden-sm">
+        {% if session_language = 'eng' %}
+                  {% if cart.composition %}
+                    <span class="badge" style="background-color: #00a19c">{{cart.composition.name}}</span>
+                {% else%}
+                    <span class="badge" style="background-color: #122a4b">{{cart.product.name_uk}}</span>
+                {% endif %}
+        {% elif session_language = 'fra' %}
+                {% if cart.composition %}
+                    <span class="badge" style="background-color: #00a19c">{{cart.composition.name}}</span>
+                {% else%}
+                    <span class="badge" style="background-color: #122a4b">{{cart.product.name_fr}}</span>
+                {% endif %}
+        {% else %}
+                  {% if cart.composition %}
+                      <span class="badge" style="background-color: #00a19c">{{cart.composition.name}}</span>
+                  {% else%}
+                      <span class="badge" style="background-color: #122a4b">{{cart.product.name}}</span>
+                  {% endif %}
+        {% endif %}
+    </td>
+  	
+    <td>
+      {% if cart.color.image %}
+  		  <img src="/media/{{cart.color.image}}" class="color-thumb-circle">
+      {% endif %}
+      {% if cart.composition.color %}
+        <img src="/media/{{cart.composition.color.image}}" class="color-thumb-circle">
+      {% endif %}
+  	</td>
+    
+    <td>
+        {% if session_language = 'eng' %}
+                {% if cart.cintureLunghezza %}
+                  Belt Lenght: {{cart.cintureLunghezza.name}}<br>
+                {% endif %}
+                {% if cart.scarpemisura %}
+                  Shoes Fit: {{cart.scarpemisura.name}}<br>
+                {% endif %}
+                {% if cart.composition.cintureLunghezza %}
+                  Belt Lenght: {{cart.composition.cintureLunghezza.name}}<br>
+                {% endif %}
+                {% if cart.composition.scarpemisura %}
+                  Shoes Fit: {{cart.composition.scarpemisura.name}}<br>
+                {% endif %}
+
+        {% elif session_language = 'fra' %}
+                {% if cart.cintureLunghezza %}
+                  Longueur de Bande: {{cart.cintureLunghezza.name}}<br>
+                {% endif %}
+                {% if cart.scarpemisura %}
+                  Chaussures Adaptées: {{cart.scarpemisura.name}}<br>
+                {% endif %}
+                {% if cart.composition.cintureLunghezza %}
+                  Longueur de Bande: {{cart.composition.cintureLunghezza.name}}<br>
+                {% endif %}
+                {% if cart.composition.scarpemisura %}
+                  Chaussures Adaptées: {{cart.composition.scarpemisura.name}}<br>
+                {% endif %}
+
+        {% else %}
+                {% if cart.cintureLunghezza %}
+                  Lunghezza Cintura: {{cart.cintureLunghezza.name}}<br>
+                {% endif %}
+                {% if cart.scarpemisura %}
+                  Misura Scarpe: {{cart.scarpemisura.name}}<br>
+                {% endif %}
+                {% if cart.composition.cintureLunghezza %}
+                  Lunghezza Cintura: {{cart.composition.cintureLunghezza.name}}<br>
+                {% endif %}
+                {% if cart.composition.scarpemisura %}
+                  Misura Scarpe: {{cart.composition.scarpemisura.name}}<br>
+                {% endif %}
+        {% endif %}
+    </td>
+
+  	<td>{{cart.quantity}}</t>
+  	<td class="hidden-sm">{{cart.price}} €.</td>
+    <td>
+      {% if session_language = 'eng' %}
+                Total Price: {{cart.price_total}} €.<br>
+                Discount: {{cart.price_discount}} €.<br>
+                Reserved Price: {{cart.price_reserved}} €.<br>
+
+      {% elif session_language = 'fra' %}
+                Total: {{cart.price_total}} €.<br>
+                Réduction: {{cart.price_discount}} €.<br>
+                Réservé Prix: {{cart.price_reserved}} €.<br>
+
+      {% else %}
+                Totale: {{cart.price_total}} €.<br>
+                Scontato: {{cart.price_discount}} €.<br>
+                Prezzo a Voi Riservato: {{cart.price_reserved}} €.<br>
+      {% endif %}
+    </td>
+  	<td><a href="{% url 'cart-delete-item' cart.id%}"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></a></td>
+  </tr>
+{% endfor %}
+
+</table>
+<h4 class="text-right">
+  Quantità Totali: Nr. {{somma_quantita}}
+    <br>
+    <br>
+  Totale: {{tot_price}} €.<br>
+  Totale Prezzo Scontato: {{tot_discount}} €.<br>
+  Totale Prezzo Riservato: {{tot_reserved}} €.<br>
+</h4>
+
+
+<div class="col-xs-12 hidden-sm hidden-md hidden-lg">
+
+  {% for cart in cart_list %}
+    <div class="col-xs-12 cart-mobile">
+        <p>
+          {% if cart.composition %}
+              <span class="badge" style="background-color: #00a19c">{{cart.composition.name}}</span>
+          {% else%}
+            <span class="badge" style="background-color: #122a4b">{{cart.product.name}}</span>
+          {% endif %}
+        </p>
+        {% load cropping %}
+        <img src="{% cropped_thumbnail cart.product "thumbdue" %}" class="img-responsive">
+        <br>
+        {% if cart.color.image %}
+          <img src="/media/{{cart.color.image}}" class="img-responsive color-thumb-circle"><br>
+        {% endif %}
+        {% if cart.composition.color %}
+          <img src="/media/{{cart.composition.color.image}}" class="img-responsive color-thumb-circle">
+        {% endif %}
+        <p>
+          {% if session_language = 'eng' %}
+                  {% if cart.cintureLunghezza %}
+                    Belt Lenght: {{cart.cintureLunghezza.name}}<br>
+                  {% endif %}
+                  {% if cart.scarpemisura %}
+                    Shoes Fit: {{cart.scarpemisura.name}}<br>
+                  {% endif %}
+                  {% if cart.composition.cintureLunghezza %}
+                    Belt Lenght: {{cart.composition.cintureLunghezza.name}}<br>
+                  {% endif %}
+                  {% if cart.composition.scarpemisura %}
+                    Shoes Fit: {{cart.composition.scarpemisura.name}}<br>
+                  {% endif %}
+
+          {% elif session_language = 'fra' %}
+                  {% if cart.cintureLunghezza %}
+                    Longueur de Bande: {{cart.cintureLunghezza.name}}<br>
+                  {% endif %}
+                  {% if cart.scarpemisura %}
+                    Chaussures Adaptées: {{cart.scarpemisura.name}}<br>
+                  {% endif %}
+                  {% if cart.composition.cintureLunghezza %}
+                    Longueur de Bande: {{cart.composition.cintureLunghezza.name}}<br>
+                  {% endif %}
+                  {% if cart.composition.scarpemisura %}
+                    Chaussures Adaptées: {{cart.composition.scarpemisura.name}}<br>
+                  {% endif %}
+
+          {% else %}
+                  {% if cart.cintureLunghezza %}
+                    Lunghezza Cintura: {{cart.cintureLunghezza.name}}<br>
+                  {% endif %}
+                  {% if cart.scarpemisura %}
+                    Misura Scarpe: {{cart.scarpemisura.name}}<br>
+                  {% endif %}
+                  {% if cart.composition.cintureLunghezza %}
+                    Lunghezza Cintura: {{cart.composition.cintureLunghezza.name}}<br>
+                  {% endif %}
+                  {% if cart.composition.scarpemisura %}
+                    Misura Scarpe: {{cart.composition.scarpemisura.name}}<br>
+                  {% endif %}
+          {% endif %}
+        </p>
+        <p>
+          {{cart.quantity}}<br>
+          {{cart.price}} €.<br>
+          <br>
+          <br>
+            {% if session_language = 'eng' %}
+                      Total Price: {{cart.price_total}} €.<br>
+                      Discount: {{cart.price_discount}} €.<br>
+                      Reserved Price: {{cart.price_reserved}} €.<br>
+
+            {% elif session_language = 'fra' %}
+                      Total: {{cart.price_total}} €.<br>
+                      Réduction: {{cart.price_discount}} €.<br>
+                      Réservé Prix: {{cart.price_reserved}} €.<br>
+
+            {% else %}
+                      Totale: {{cart.price_total}} €.<br>
+                      Scontato: {{cart.price_discount}} €.<br>
+                      Prezzo a Voi Riservato: {{cart.price_reserved}} €.<br>
+            {% endif %}
+        </p>
+    </div>
+  {% endfor %}
+
+</div>
+
+
+
+
+
+
+<!-- test order -->
+<form class="white-row" action="/addorder/" method="POST">{% csrf_token %}
+  <div class="col-xs-12">
+          <input id="contact_submit" type="submit" value="
+            {% if session_language = 'eng' %}
+                ORDER
+            {% elif session_language = 'fra' %}
+                ORDRE
+            {% else %}
+                ORDINA
+            {% endif %}
+          " 
+          class="btn btn-primary btn-md" data-loading-text="Loading...">
+          <br>
+          <br>
+        </div>
+  </div>
+</form>
+<!-- fine order -->
+
+
+
+{% endblock %}
+
+
+
+

@@ -1,0 +1,59 @@
+			<a href="{% url 'categoria-pronta-consegna' categoria.id %}">
+				<h5 class="pronta-consegna-sx">
+					<i class="fa fa-square" aria-hidden="true"></i>
+						{% if session_language = 'eng' %}
+						    PROMPT DELIVERY
+						{% elif session_language = 'fra' %}
+							LIVRAISON RAPIDE
+						{% else %}
+						    PRONTA CONSEGNA
+						{% endif %}
+				</h4>
+			</a>
+
+			<span class="ggsx">
+			<a href="{% url 'categoria-40gg' categoria.id %}">
+				<H5 class="gg-sx">
+					<i class="fa fa-square" aria-hidden="true"></i>
+						{% if session_language = 'eng' %}
+						    DELIVERY 20 days
+						{% elif session_language = 'fra' %}
+							LIVRAISON 20 jours
+						{% else %}
+						    CONSEGNA 20gg
+						{% endif %}
+				</h5>
+			</a>
+			</span>
+
+			{% if categoria %}
+			<span class="est-sx">
+			<a href="{% url 'categoria-estate' categoria.id %}">
+				<H5 class="estate-sx">
+					<i class="fa fa-square" aria-hidden="true"></i>
+					{% if session_language = 'eng' %}
+						    SUMMER
+						{% elif session_language = 'fra' %}
+							ÉTÉ
+						{% else %}
+						    ESTATE
+						{% endif %}
+				</h5>
+			</a>
+			</span>
+			{% else %}
+			<span class="est-sx">
+			<a href="{% url 'estate' %}">
+				<H5 class="estate-sx">
+					<i class="fa fa-square" aria-hidden="true"></i>
+					{% if session_language = 'eng' %}
+						    SUMMER
+						{% elif session_language = 'fra' %}
+							ÉTÉ
+						{% else %}
+						    ESTATE
+						{% endif %}
+				</h5>
+			</a>
+			</span>
+			{% endif %}

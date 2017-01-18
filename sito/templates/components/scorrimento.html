@@ -1,0 +1,88 @@
+<div id="owl-demo" class="owl-carousel">
+	{% for pro in promo_list %}
+	  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding:5px;">
+			<div class="col-xs-12 box-offerte">
+				{% if pro.prompt_delivery == True %}
+				<h3 class="box-marca" style="background-color: #00a19c">
+					<span class="span-box-marca" style="color:#ffffff;">
+						{% if session_language = 'eng' %}
+							PROMPT DELIVERY
+						{% elif session_language = 'fra' %}
+							LIVRAISON RAPID
+						{% else %}
+							PRONTA CONSEGNA
+						{% endif %}
+					</span>
+				</h3>
+				{% else %}
+				<h3 class="box-marca" style="background-color: #122a4b">
+					<span class="span-box-marca" style="color:#ffffff;">
+						{% if session_language = 'eng' %}
+							DELIVERY 20 days
+						{% elif session_language = 'fra' %}
+							LIVRAISON 20 jours
+						{% else %}
+							CONSEGNA 20 GIORNI
+						{% endif %}
+					</span>
+				</h3>
+				{% endif %}
+				<h3 class="box-codice" style="background-color: #343333"><span class="span-box-marca" style="color:#ffffff;">ART {{pro.code}}</span>;</h3>
+				<h3 class="box-titolo" style="margin-top:15px;">
+				  {% if session_language = 'eng' %}
+	                	{{pro.name_uk|truncatechars:37}}{% if pro.name_uk|length <= 22 %}</br>&nbsp;{% endif %}
+	              {% elif session_language = 'fra' %}
+	                	{{pro.name_fr|truncatechars:37}}{% if pro.name_fr|length <= 22 %}</br>&nbsp;{% endif %}
+	              {% else %}
+	                	{{pro.name|truncatechars:37}}{% if pro.name|length <= 22 %}</br>&nbsp;{% endif %}
+	              {% endif %}
+				</h3>
+				<h4 class="box-tipologia">
+					{% for category in pro.category.all %}
+						{% if session_language = 'eng' %}
+		                	{{category.title_uk}}
+		              	{% elif session_language = 'fra' %}
+		                	{{category.title_fr}}
+		              	{% else %}
+		                	{{category.title}}
+		              	{% endif %}
+	              	{% endfor %}
+				</h4>
+
+				{% load cropping %}
+				<a href="{% url 'detail' pro.id %}">
+					<img src="{% cropped_thumbnail pro "thumb" %}" class="img-responsive">
+				</a>
+				<h3>
+					{% if pro.promo == True %}
+					<span class="prezzo">€{{pro.price}}</span>
+					<span class="prezzo-scontato">€{{pro.price_offer}}</span>
+					{% else %}
+					<span class="prezzo-scontato" style="margin-left: 0px;">€{{pro.price}}</span>
+					{% endif %}
+					<a href="{% url 'detail' pro.id %}">
+						<span class="cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+					</a>
+				</h3>
+			</div>
+		</div>
+	{% endfor %}
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+ 
+  $("#owl-demo").owlCarousel({
+ 
+      autoPlay: 3000, //Set AutoPlay to 3 seconds
+      items : 4,
+      itemsDesktop : [1199,3],
+      itemsDesktopSmall : [979,3]
+ 
+  });
+ 
+});
+</script>
+
+
+
