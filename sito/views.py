@@ -49,7 +49,7 @@ from django.contrib.auth.models import User
 
 @login_required(login_url="/login/")
 def HomePage(request):
-    request.session['status'] = ""
+    request.session['status'] = "" ## resetto session filtro consegna
     slider_list = Slider.objects.filter(active=True).order_by('id')
     last_list = Product.objects.filter(active=True).order_by('-pub_date')[:30]
     promo_list = Product.objects.filter(promo=True).filter(slide = True).filter(active=True).order_by('?')
@@ -82,7 +82,7 @@ def ProductFilterCategory(request, post_id):
 
 @login_required(login_url="/login/")
 def ProductQuaranta(request):
-    request.session['status'] = "40gg"
+    request.session['status'] = "40gg" #creo sessione filtro consegna 40gg
     product_list = Product.objects.filter(active=True).filter(delivery=True)
     context = {'product_list': product_list}
     return render_to_response('price_list.html', context, context_instance=RequestContext(request))
@@ -100,7 +100,7 @@ def ProductQuarantaCategory(request, post_id):
 
 @login_required(login_url="/login/")
 def ProductPronta(request):
-    request.session['status'] = "prompt_delivery"
+    request.session['status'] = "prompt_delivery" # creo sessione filtro consegna pronta consegna
     product_list = Product.objects.filter(active=True).filter(prompt_delivery=True)
     context = {'product_list': product_list}
     return render_to_response('price_list.html', context, context_instance=RequestContext(request))
