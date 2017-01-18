@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- SLIDER REVOLUTION -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="rs-plugin/css/style.css" media="screen" />
+    <script type="text/javascript" src="rs-plugin/js/jquery.themepunch.plugins.min.js"></script>
+    <script type="text/javascript" src="rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="rs-plugin/css/settings.css" media="screen" />
+
+
+    <!-- font -->
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Michroma' rel='stylesheet' type='text/css'>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="custom.css" rel="stylesheet">
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="col-xs-12 col-sm-4"><img src="img/light.png" class="light center-block"></div>
+    <div class="col-xs-12 col-sm-4"><img src="img/logo.png" class="logo center-block"></div>
+    <div class="col-xs-12 col-sm-4"><img src="img/light.png" class="light center-block"></div>
+  </div>
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">AZIENDA</a></li>
+        <li><a href="#">SERVIZI</a></li>
+        <li><a href="#">PRODOTTI</a></li>
+        <li><a href="#">MARCHI</a></li>
+        <li><a href="#">REALIZZAZIONI</a></li>
+        <li><a href="#">OFFERTE</a></li>
+        <li><a href="#">NEWS</a></li>
+        <li><a href="#">CONTATTI</a></li>
+      </ul>
+      <ul id="social-menu" class="nav navbar-nav navbar-right">
+        <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+         <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+         <li><a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+
+      <div class="tp-banner-container">
+          <div class="tp-banner" >
+            <ul>
+              <!-- SLIDE  -->
+              <li data-transition="fade" data-slotamount="5" data-masterspeed="700" >
+                <!-- MAIN IMAGE -->
+                <img src="img/slider/modoluce-atollino_sospensione_01-TAG.jpg" alt="slider"  data-bgfit="cover" data-bgposition="center center" data-bgrepeat="no-repeat">
+                <!-- Layer 1 -->
+              </li>
+              <!-- SLIDE  -->
+              <li data-transition="fade" data-slotamount="5" data-masterspeed="700" >
+                <!-- MAIN IMAGE -->
+                <img src="img/slider/modoluce-atollo_sospensione_01-TAG.jpg" alt="slider"  data-bgfit="cover" data-bgposition="center center" data-bgrepeat="no-repeat">
+                <!-- Layer 1 -->
+              </li>
+              <!-- SLIDE  -->
+              <li data-transition="fade" data-slotamount="5" data-masterspeed="700" >
+                <!-- MAIN IMAGE -->
+                <img src="img/slider/modoluce-budinoball_sospensione_01-TAG.jpg" alt="slider"  data-bgfit="cover" data-bgposition="center center" data-bgrepeat="no-repeat">
+                <!-- Layer 1 -->
+              </li>
+              <li data-transition="fade" data-slotamount="5" data-masterspeed="700" >
+                <!-- MAIN IMAGE -->
+                <img src="img/slider/modoluce-futura_sospensione_lettera_01-TAG.jpg" alt="slider"  data-bgfit="cover" data-bgposition="center center" data-bgrepeat="no-repeat">
+                <!-- Layer 1 -->
+              </li>
+
+            </ul>
+
+          </div>
+      </div>
+
+      <script type="text/javascript">
+        var revapi;
+        jQuery(document).ready(function() {
+
+             revapi = jQuery('.tp-banner').revolution(
+            {
+              delay:4000,
+              startwidth:1170,
+              startheight:600,
+              hideThumbs:10,
+              fullWidth:"on",
+              fullScreen:"off",
+              navigationStyle:"bullet",
+              fullScreenOffsetContainer: ""
+
+            });
+
+        }); //ready
+
+      </script>
+      <!-- END .header -->
+      
+
+
+
+		<script  type='text/javascript'>
+			$(document).ready(function(){
+			    $(".img-sales").hover(
+			        function() {$(this).attr("src","img/box/sales-box-homepage-testo.jpg");},
+			        function() {$(this).attr("src","img/box/sales-box-homepage.jpg");
+			    });
+			    $(".img-personal").hover(
+			        function() {$(this).attr("src","img/box/personal-box-homepage-testo.jpg");},
+			        function() {$(this).attr("src","img/box/personal-box-homepage.jpg");
+			    });
+			    $(".img-lighting").hover(
+			        function() {$(this).attr("src","img/box/lighting-box-homepage-testo.jpg");},
+			        function() {$(this).attr("src","img/box/lighting-box-homepage.jpg");
+			    });
+			    $(".img-listanozze").hover(
+			        function() {$(this).attr("src","img/box/listanozze-box-homepage-testo.jpg");},
+			        function() {$(this).attr("src","img/box/listanozze-box-homepage.jpg");
+			    });
+			});
+		</script>
+      <div class="container">
+        <div class="spazio4">
+          <img src="img/box/sales-box-homepage.jpg" class="img-responsive img-spazio img-sales">
+        </div>
+
+        <div class="spazio4">
+          <img src="img/box/personal-box-homepage.jpg" class="img-responsive img-spazio img-personal">
+        </div>
+
+        <div class="spazio4">
+          <img src="img/box/lighting-box-homepage.jpg" class="img-responsive img-spazio img-lighting">
+        </div>
+
+        <div class="spazio4">
+          <img src="img/box/listanozze-box-homepage.jpg" class="img-responsive img-spazio img-listanozze">
+        </div>
+      </div>
+
+
+
+    <div class="col-xs-12 banda">
+      <h1 class="text-center">I nostri brand</h2>
+    </div>
+    
+    <div id="loghi" class="container">
+    	
+    	<div class="spazio5">
+          <img src="img/marchi/artemide-logo.jpg" class="img-responsive">
+        </div>
+        <div class="spazio5">
+          <img src="img/marchi/biffi-logo.jpg" class="img-responsive">
+        </div>
+        <div class="spazio5">
+          <img src="img/marchi/catellani&smith-logo.jpg" class="img-responsive">
+        </div>
+        <div class="spazio5">
+          <img src="img/marchi/cini&nils-logo.jpg" class="img-responsive">
+        </div>
+        <div class="spazio5">
+          <img src="img/marchi/egoluce-logo.jpg" class="img-responsive">
+        </div>
+        
+        <div class="spazio5">
+          <img src="img/marchi/evi-style-logo.jpg" class="img-responsive">
+        </div>
+        <div class="spazio5">
+          <img src="img/marchi/flos-logo.jpg" class="img-responsive">
+        </div>
+        <div class="spazio5">
+          <img src="img/marchi/fontana-arte-logo.jpg" class="img-responsive">
+        </div>
+        <div class="spazio5">
+          <img src="img/marchi/foscarini-logo.jpg" class="img-responsive">
+        </div>
+        <div class="spazio5">
+          <img src="img/marchi/ingo-maurer-logo.jpg" class="img-responsive">
+        </div>
+        
+        <div class="spazio5">
+          <img src="img/marchi/kundalini-logo.jpg" class="img-responsive">
+        </div>
+        <div class="spazio5">
+          <img src="img/marchi/leucos-logo.jpg" class="img-responsive">
+        </div>
+        <div class="spazio5">
+          <img src="img/marchi/linealight-logo.jpg" class="img-responsive">
+        </div>
+        <div class="spazio5">
+          <img src="img/marchi/luceplan-logo.jpg" class="img-responsive">
+        </div>
+        <div class="spazio5">
+          <img src="img/marchi/lumen-logo.jpg" class="img-responsive">
+        </div>
+        
+        <div class="spazio5">
+          <img src="img/marchi/masiero-logo.jpg" class="img-responsive">
+        </div>
+        <div class="spazio5">
+          <img src="img/marchi/modoluce-logo.jpg" class="img-responsive">
+        </div>
+        <div class="spazio5">
+          <img src="img/marchi/moltoluce-logo.jpg" class="img-responsive">
+        </div>
+        <div class="spazio5">
+          <img src="img/marchi/nemo-logo.jpg" class="img-responsive">
+        </div>
+        <div class="spazio5">
+          <img src="img/marchi/occhio-logo.jpg" class="img-responsive">
+        </div>
+        
+        <div class="spazio5">
+          <img src="img/marchi/oluce-logo.jpg" class="img-responsive">
+        </div>
+        <div class="spazio5">
+          <img src="img/marchi/panzeri-logo.jpg" class="img-responsive">
+        </div>
+        <div class="spazio5">
+          <img src="img/marchi/platek-logo.jpg" class="img-responsive">
+        </div>
+        <div class="spazio5">
+          <img src="img/marchi/renzo-serafini-logo.jpg" class="img-responsive">
+        </div>
+        
+        <div class="spazio5">
+          <img src="img/marchi/simes-logo.jpg" class="img-responsive">
+        </div>
+        <div class="spazio5">
+          <img src="img/marchi/slamp-logo.jpg" class="img-responsive">
+        </div>
+        <div class="spazio5">
+          <img src="img/marchi/sylcom-logo.jpg" class="img-responsive">
+        </div>
+        <div class="spazio5">
+          <img src="img/marchi/valtolina-logo.jpg" class="img-responsive">
+        </div>
+        <div class="spazio5">
+          <img src="img/marchi/vistosi-logo.jpg" class="img-responsive">
+        </div>
+        
+    </div>
+
+ 
+
+	
+	<div id="footer" class="container">
+		<div class="col-xs-12"><img src="img/luce_footer.png" class="img-responsive"></div>
+		<div class="col-xs-12"><p></p>Copyright ©2016 stucchiluce 2016 | Stucchi Luce snc | Via Provinciale, 7 | 24050 Ghisalba (BG) | piva: 02180950160 <span style="float: right; font-size: 10px">designed by sabrinatrezzi | grafica e pubblicità</span></p></div>
+	</div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

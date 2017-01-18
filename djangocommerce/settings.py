@@ -16,8 +16,6 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
@@ -26,115 +24,27 @@ SECRET_KEY = 'c))rm1@rg@xux-+$h437e!c971gfyafbfofxa=@rihs*6@x13z'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+#DEBUG = False
 
+#ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'shop.bergeitalia.com', 'bergeitalia.com']
 ALLOWED_HOSTS = []
 
 
+
 # Application definition
-
 INSTALLED_APPS = [
-    'grappelli',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'taggit',
-    'tinymce',
-    'easy_thumbnails',
-    'filer',
-    'mptt',
-    'image_cropping',
-    'product',
-    'cart',
-    'order',
-    'customer',
-    'django_filters',
-    'nested_inline',
-    'sito',
-]
-
-MIDDLEWARE_CLASSES = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
-
-ROOT_URLCONF = 'djangocommerce.urls'
-
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'sito.views.CategoryMenuView',
-                'sito.languages.translation_processor',
-
-            ],
-        },
-    },
-]
-
-WSGI_APPLICATION = 'djangocommerce.wsgi.application'
-
-GRAPPELLI_ADMIN_TITLE = "Berge Urban Couture"
-
-
-
-'''
-STATICFILES_DIRS = [
-    'djangobower.finders.BowerFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-]
-'''
-
-
-
-
-
-# Database
-# https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bergeshop',
-        'USER': 'root',
-        'PASSWORD': 'alnitek',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
-
-
-# Password validation
-# https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    rib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
+        },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
+        },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+        },
 ]
 
 
@@ -151,19 +61,22 @@ USE_L10N = True
 
 USE_TZ = True
 
+GRAPPELLI_ADMIN_TITLE = "Berge Urban Couture"
+
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = '/Users/pierangelo/Desktop/Django/djangocommercebox/djangocommerce'
+STATIC_ROOT = '/var/www/bergebox/djangocommerce'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-MEDIA_ROOT = '/Users/pierangelo/Desktop/Django/djangocommercebox/djangocommerce/media/'
+MEDIA_ROOT = '/var/www/bergebox/djangocommerce/media/'
 
-MEDIA_URL = "http://127.0.0.1:8000/media/"
+MEDIA_URL = "http://shop.bergeitalia.com/media/"
 
 
 
@@ -180,8 +93,8 @@ THUMBNAIL_PROCESSORS = (
     'image_cropping.thumbnail_processors.crop_corners',
 ) + thumbnail_settings.THUMBNAIL_PROCESSORS
 
-IMAGE_CROPPING_THUMB_SIZE = (1425, 500)
-#cropping = ImageRatioField('image', '1425x500', size_warning=True)
+    IMAGE_CROPPING_THUMB_SIZE = (1425, 500)
+    #cropping = ImageRatioField('image', '1425x500', size_warning=True)
 IMAGE_CROPPING_SIZE_WARNING = True
 
 
@@ -211,20 +124,3 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 #TINYMCE_SPELLCHECKER = True
 #TINYMCE_COMPRESSOR = True
-
-
-
-# SESSION
-# Cookie name. This can be whatever you want.
-SESSION_COOKIE_NAME = 'sessionid'
-# The module to store sessions data.
-SESSION_ENGINE = 'django.contrib.sessions.backends.db' 
-# Age of cookie, in seconds (default: 2 weeks). 
-SESSION_COOKIE_AGE = 60 * 60 * 24 * 7 * 2
-# Whether a user's session cookie expires when the Web browser is closed 
-SESSION_EXPIRE_AT_BROWSER_CLOSE = False
-# Whether the session cookie should be secure (https:// only). 
-SESSION_COOKIE_SECURE = False
-
-
-
