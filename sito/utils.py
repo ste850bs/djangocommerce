@@ -7,17 +7,14 @@ from django.views.generic import ListView, DetailView
 from django.template.loader import render_to_string
 
 
+def spedizione(request):
+	status = "40gg"
+	session_status = "null"
+	if 'status' in request.session:
+		session_status = request.session['status']
 
-
-def translation_processor(request):
-	language = "it"
-	session_language = "it"
-	#if 'lang' in request.COOKIES:
-	#	language = request.COOKIES['lang']
-	if 'lang' in request.session:
-		session_language = request.session['lang']
-
-	context = {'language':language,
-			'session_language': session_language}
+	context = {'status':status,
+				'session_status':session_status}
 	return context
+
 
