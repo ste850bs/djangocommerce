@@ -81,6 +81,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'sito.views.CategoryMenuView',
                 'sito.languages.translation_processor',
+                'sito.helper.session_status_delivery', #sessione printa consegna o 40gg
             ],
         },
     },
