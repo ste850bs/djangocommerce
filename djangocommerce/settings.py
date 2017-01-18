@@ -164,6 +164,8 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 MEDIA_ROOT = '/Users/pierangelo/Desktop/Django/djangocommercebox/djangocommerce/media/'
 
 MEDIA_URL = "http://127.0.0.1:8000/media/"
+#MEDIA_URL = "http://berge.web-dev.info/media/"
+
 
 
 
