@@ -100,7 +100,7 @@ def ProductQuarantaCategory(request, post_id):
 
 @login_required(login_url="/login/")
 def ProductPronta(request):
-    request.session['status'] = "prompt_delivery" # creo sessione filtro consegna pronta consegna
+    request.session['status'] = "prompt_delivery" #creo sessione filtro consegna pronta consegna
     product_list = Product.objects.filter(active=True).filter(prompt_delivery=True)
     context = {'product_list': product_list}
     return render_to_response('price_list.html', context, context_instance=RequestContext(request))
