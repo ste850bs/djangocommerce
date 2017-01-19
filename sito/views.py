@@ -72,8 +72,7 @@ def HomePage(request):
 
 @login_required(login_url="/login/")
 def ProductFilterCategory(request, post_id):
-    mydict = delivery_filter(request.session['status'])
-    product_list = Product.objects.filter(active=True).filter(category__in=post_id).filter(**mydict)
+    product_list = Product.objects.filter(active=True).filter(category__in=post_id).filter(**delivery_filter(request.session['status']))
     categoria = Category.objects.get(pk=post_id)
     context = {'product_list': product_list, 'categoria':categoria}
     return render_to_response('price_list.html', context, context_instance=RequestContext(request))
@@ -120,7 +119,7 @@ def ProductProntaCategory(request, post_id):
 @login_required(login_url="/login/")
 def ProductCategoryAtoZ(request, post_id):
     categoria = Category.objects.get(pk=post_id)
-    product_list = Product.objects.filter(active=True).filter(category__in=post_id).order_by('code')
+    product_list = Product.objects.filter(active=True).filter(category__in=post_id).order_by('code').filter(**delivery_filter(request.session['status']))
     context = {
             'product_list': product_list, 
             'categoria':categoria}
@@ -129,7 +128,7 @@ def ProductCategoryAtoZ(request, post_id):
 @login_required(login_url="/login/")
 def ProductCategoryZtoA(request, post_id):
     categoria = Category.objects.get(pk=post_id)
-    product_list = Product.objects.filter(active=True).filter(category__in=post_id).order_by('-code')
+    product_list = Product.objects.filter(active=True).filter(category__in=post_id).order_by('-code').filter(**delivery_filter(request.session['status']))
     context = {
             'product_list': product_list, 
             'categoria':categoria}
@@ -187,6 +186,13 @@ def product_list(request):
     product_list = ProductFilter(request.GET, queryset=Product.objects.all())
     return render(request, 'price_list.html', {'product_list': product_list})
 
+
+
+@login_required(login_url="/login/")
+def product_category_list(request, post_id):
+    categoria = Category.objects.get(pk=post_id)
+    product_list = ProductFilter(request.GET, queryset=Product.objects.filter(category__in=post_id))
+    return render(request, 'price_list.html', {'product_list': product_list, 'categoria':categoria})
 
 
 @login_required(login_url="/login/")
