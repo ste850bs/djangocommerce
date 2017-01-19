@@ -1,0 +1,17 @@
+from datetime import *
+
+
+def get_stagione(inizio, fine):
+    oggi = datetime.now().date()
+    if inizio < oggi < fine:
+        return "inverno"
+    else:
+        return "estate"
+    
+    
+'''
+inizio = date(2017, 02, 01)
+fine = date(2017, 8, 30)
+stagione = get_stagione(inizio, fine)
+print stagione
+'''

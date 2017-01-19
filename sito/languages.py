@@ -20,4 +20,3 @@ def translation_processor(request):
 	context = {'language':language,
 			'session_language': session_language}
 	return context
-

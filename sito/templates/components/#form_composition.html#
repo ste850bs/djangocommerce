@@ -1,0 +1,73 @@
+
+
+{% if product.category.first == 3 or product.category.first == 4 or product.category.first == 1 %}
+
+{% for comp in product.composition_set.all %}
+<div class="col-xs-12 col-sm-2">{% load cropping %}
+  <img src="{% cropped_thumbnail comp "thumb" %}" class="img-responsive">
+  <p><input type="radio" name="composition" value="{{comp.id}}"/> {{comp.name}}</p>
+  <p>Disponibili: {{ comp.quantity }}pz.</p>
+  {% if comp.cintureLunghezza  %}
+  <p>Lunghezza: {{comp.cintureLunghezza}}</p>
+  {% endif %}
+  {% if comp.scarpemisura %}
+  <p>Misura: {{comp.scarpemisura}}</p>
+  {% endif %}
+</div>
+{% endfor %}
+
+
+
+
+{% else %}
+
+
+
+<div id="tabs">
+  <ul>
+    {% for color in color_list %}
+    <li>
+    	<a href="#tabs-{{color.id}}">
+    		<img src="{% cropped_thumbnail color 'thumb' %}" class="img-responsive" style="width:200px;">
+    		{{color}}
+    	</a>
+    </li>
+    {% endfor %}
+  </ul>
+
+  {% for color in color_list %}
+  <div id="tabs-{{color.id}}">
+    <ul id="sub-choice">
+      {% for comp in composition_list %}
+      {% if comp.color_id == color.id %}
+      <li>
+	<p>
+	  <input type="radio" name="composition" value="{{comp.id}}"/>
+	  {% if comp.cintureLunghezza  %}
+	  Lunghezza: {{comp.cintureLunghezza}}
+	  {% endif %}
+	  {% if comp.scarpemisura %}
+	  Misura: {{comp.scarpemisura}}
+	  {% endif %}  
+	</p>
+	<p>Disponibili: {{ comp.quantity }}pz.</p>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+  {% endfor %}
+
+</div>
+
+
+
+
+
+{% endif %}
+
+
+
+
+<label>Quantità:</label>
+<input name="quantity" type="number" min="1" step="1" value="0" class="form-control"/>

@@ -49,7 +49,6 @@ from django.contrib.auth.models import User
 
 @login_required(login_url="/login/")
 def HomePage(request):
-    request.session['status'] = "" ## resetto session filtro consegna
     slider_list = Slider.objects.filter(active=True).order_by('id')
     last_list = Product.objects.filter(active=True).order_by('-pub_date')[:30]
     promo_list = Product.objects.filter(promo=True).filter(slide = True).filter(active=True).order_by('?')
@@ -72,7 +71,7 @@ def HomePage(request):
 
 @login_required(login_url="/login/")
 def ProductFilterCategory(request, post_id):
-    product_list = Product.objects.filter(active=True).filter(category__in=post_id).filter(**delivery_filter(request.session['status']))
+    product_list = Product.objects.filter(active=True).filter(category__in=post_id)
     categoria = Category.objects.get(pk=post_id)
     context = {'product_list': product_list, 'categoria':categoria}
     return render_to_response('price_list.html', context, context_instance=RequestContext(request))
@@ -81,7 +80,6 @@ def ProductFilterCategory(request, post_id):
 
 @login_required(login_url="/login/")
 def ProductQuaranta(request):
-    request.session['status'] = "40gg" #creo sessione filtro consegna 40gg
     product_list = Product.objects.filter(active=True).filter(delivery=True)
     context = {'product_list': product_list}
     return render_to_response('price_list.html', context, context_instance=RequestContext(request))
@@ -99,7 +97,6 @@ def ProductQuarantaCategory(request, post_id):
 
 @login_required(login_url="/login/")
 def ProductPronta(request):
-    request.session['status'] = "prompt_delivery" #creo sessione filtro consegna pronta consegna
     product_list = Product.objects.filter(active=True).filter(prompt_delivery=True)
     context = {'product_list': product_list}
     return render_to_response('price_list.html', context, context_instance=RequestContext(request))
@@ -119,7 +116,7 @@ def ProductProntaCategory(request, post_id):
 @login_required(login_url="/login/")
 def ProductCategoryAtoZ(request, post_id):
     categoria = Category.objects.get(pk=post_id)
-    product_list = Product.objects.filter(active=True).filter(category__in=post_id).order_by('code').filter(**delivery_filter(request.session['status']))
+    product_list = Product.objects.filter(active=True).filter(category__in=post_id).order_by('code')
     context = {
             'product_list': product_list, 
             'categoria':categoria}
@@ -128,7 +125,7 @@ def ProductCategoryAtoZ(request, post_id):
 @login_required(login_url="/login/")
 def ProductCategoryZtoA(request, post_id):
     categoria = Category.objects.get(pk=post_id)
-    product_list = Product.objects.filter(active=True).filter(category__in=post_id).order_by('-code').filter(**delivery_filter(request.session['status']))
+    product_list = Product.objects.filter(active=True).filter(category__in=post_id).order_by('-code')
     context = {
             'product_list': product_list, 
             'categoria':categoria}
@@ -186,13 +183,6 @@ def product_list(request):
     product_list = ProductFilter(request.GET, queryset=Product.objects.all())
     return render(request, 'price_list.html', {'product_list': product_list})
 
-
-
-@login_required(login_url="/login/")
-def product_category_list(request, post_id):
-    categoria = Category.objects.get(pk=post_id)
-    product_list = ProductFilter(request.GET, queryset=Product.objects.filter(category__in=post_id))
-    return render(request, 'price_list.html', {'product_list': product_list, 'categoria':categoria})
 
 
 @login_required(login_url="/login/")
@@ -647,20 +637,6 @@ def language(request, language='it'):
     response.set_cookie('lang', language)
     request.session['lang'] = language
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
-
-
-
-## ORDINI X AMMINISTRATORI
-def OrdineAdmin(request):
-    order_list = Order.objects.all()
-    context = {'order_list':order_list}
-    return render_to_response('ordini.html', context_instance=RequestContext(request))
-
-def OrdineDettaglioAdmin(request, post_id):
-    order = Order.objects.get(pk=post_id)
-    context = {'order':order}
-    return render_to_response('ordini-dettaglio.html', context_instance=RequestContext(request))
 
 
 

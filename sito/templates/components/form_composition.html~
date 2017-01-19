@@ -1,0 +1,15 @@
+
+{% for comp in product.composition_set.all %}
+
+<div class="col-xs-12 col-sm-2">{% load cropping %}
+  <img src="{% cropped_thumbnail comp "thumb" %}" class="img-responsive">
+  <p>Disponibili: {{ comp.quantity }}pz.</p>
+  {% if comp.lunghezzaCinture  %}
+  <p>Lunghezza: {{comp.lunghezzaCinture}}</p>
+  {% endif %}
+  {% if comp.scarpemisura %}
+  <p>Misura: {{comp.scarpemisura}}</p>
+  {% endif %}
+</div>
+
+{% endfor %}
