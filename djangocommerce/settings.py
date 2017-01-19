@@ -24,7 +24,7 @@ SECRET_KEY = 'c))rm1@rg@xux-+$h437e!c971gfyafbfofxa=@rihs*6@x13z'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = True
-DEBUG = False
+DEBUG = True
 
 #ALLOWED_HOSTS = []
 #ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'shop.bergeitalia.com', 'bergeitalia.com']
